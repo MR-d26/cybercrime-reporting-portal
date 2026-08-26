@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Bengali', 'Noto Sans Tamil', 'Noto Sans Telugu', sans-serif;
+    background-color: #FAF9F6;
+    color: #1E293B;
+  }
+}
+
+/* Accessibility Modifiers */
+
+/* Font Sizing */
+.font-scale-sm {
+  font-size: 90%;
+}
+.font-scale-normal {
+  font-size: 100%;
+}
+.font-scale-lg {
+  font-size: 112.5%;
+}
+.font-scale-xl {
+  font-size: 125%;
+}
+
+/* Line Height */
+.line-height-normal {
+  line-height: 1.5;
+}
+.line-height-relaxed {
+  line-height: 1.75;
+}
+.line-height-loose {
+  line-height: 2;
+}
+
+/* Letter Spacing */
+.letter-spacing-normal {
+  letter-spacing: normal;
+}
+.letter-spacing-wide {
+  letter-spacing: 0.05em;
+}
+
+/* High Contrast Light Mode */
+.contrast-high {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+}
+.contrast-high button,
+.contrast-high a {
+  border-width: 2px !important;
+}
+
+/* High Contrast Dark Mode */
+.contrast-dark {
+  background-color: #0F172A !important;
+  color: #F8FAFC !important;
+}
+.contrast-dark .bg-white,
+.contrast-dark .bg-\[\#FAF9F6\] {
+  background-color: #1E293B !important;
+  color: #F8FAFC !important;
+}
+.contrast-dark .text-gov-navy,
+.contrast-dark .text-slate-800 {
+  color: #F8FAFC !important;
+}
+.contrast-dark .text-gov-saffron {
+  color: #FB923C !important;
+}
+.contrast-dark .bg-gov-navy {
+  background-color: #3B82F6 !important;
+  color: #FFFFFF !important;
+}
+
+/* Focus Highlighting */
+.focus-highlight *:focus-visible {
+  outline: 3px solid #D9480F !important;
+  outline-offset: 2px !important;
+}
