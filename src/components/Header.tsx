@@ -96,13 +96,13 @@ export const Header: React.FC = () => {
               </div>
             </div>
 
-            {/* Official I4C / ICCCC Logo Asset */}
+            {/* Official I4C / ICCCC Logo Asset from UXDT NIC India */}
             <div className="flex items-center gap-2 border-r border-gray-300 pr-3 md:pr-4">
               {!i4cLogoError ? (
                 <img
-                  src="https://www.uxdt.nic.in/wp-content/uploads/2024/02/icccc-logo-preview.png"
+                  src="https://www.uxdt.nic.in/wp-content/uploads/2024/02/icccc-01.jpg"
                   alt="Indian Cybercrime Coordination Centre (I4C)"
-                  className="h-8 sm:h-9 md:h-11 w-auto object-contain shrink-0"
+                  className="h-8 sm:h-9 md:h-11 w-auto object-contain shrink-0 rounded-full"
                   onError={() => setI4cLogoError(true)}
                 />
               ) : (
