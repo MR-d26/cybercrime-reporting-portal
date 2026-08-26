@@ -69,46 +69,32 @@ function serverApiPlugin(): Plugin {
             return formData;
           };
 
-          // Try primary model: saarika:v2
-          console.log(`[Sarvam Proxy Debug] Stage 6: Attempting Sarvam STT POST with model "saarika:v2" and language_code "${langCode}"...`);
+          // Updated models per Sarvam API spec: Primary "saarika:v2.5", Fallbacks "saaras:v3", "saarika:flash"
+          console.log(`[Sarvam Proxy Debug] Stage 6: Sending Sarvam STT POST with model "saarika:v2.5" and language_code "${langCode}"...`);
           
           let response = await fetch('https://api.sarvam.ai/speech-to-text', {
             method: 'POST',
             headers: {
               'api-subscription-key': apiKey.trim()
             },
-            body: createSarvamFormData('saarika:v2', true)
+            body: createSarvamFormData('saarika:v2.5', true)
           });
 
           let responseText = await response.text();
-          console.log(`[Sarvam Proxy Debug] Model "saarika:v2" HTTP Status: ${response.status}. Response:`, responseText);
+          console.log(`[Sarvam Proxy Debug] Model "saarika:v2.5" HTTP Status: ${response.status}. Response:`, responseText);
 
-          // Retry with saaras:v2 if saarika:v2 failed
+          // Retry with saaras:v3 if saarika:v2.5 failed
           if (!response.ok) {
-            console.warn(`[Sarvam Proxy Debug] Model "saarika:v2" failed (${response.status}). Retrying model "saaras:v2"...`);
+            console.warn(`[Sarvam Proxy Debug] Model "saarika:v2.5" failed (${response.status}). Retrying model "saaras:v3"...`);
             response = await fetch('https://api.sarvam.ai/speech-to-text', {
               method: 'POST',
               headers: {
                 'api-subscription-key': apiKey.trim()
               },
-              body: createSarvamFormData('saaras:v2', true)
+              body: createSarvamFormData('saaras:v3', true)
             });
             responseText = await response.text();
-            console.log(`[Sarvam Proxy Debug] Model "saaras:v2" HTTP Status: ${response.status}. Response:`, responseText);
-          }
-
-          // Retry without language_code (auto-detect) if still failed
-          if (!response.ok) {
-            console.warn(`[Sarvam Proxy Debug] Retrying model "saarika:v2" without explicit language_code...`);
-            response = await fetch('https://api.sarvam.ai/speech-to-text', {
-              method: 'POST',
-              headers: {
-                'api-subscription-key': apiKey.trim()
-              },
-              body: createSarvamFormData('saarika:v2', false)
-            });
-            responseText = await response.text();
-            console.log(`[Sarvam Proxy Debug] Model "saarika:v2" (no lang) HTTP Status: ${response.status}. Response:`, responseText);
+            console.log(`[Sarvam Proxy Debug] Model "saaras:v3" HTTP Status: ${response.status}. Response:`, responseText);
           }
 
           if (!response.ok) {
@@ -126,7 +112,7 @@ function serverApiPlugin(): Plugin {
           }
 
           const transcript = jsonResponse?.transcript || jsonResponse?.text || jsonResponse?.results?.[0]?.transcript || '';
-          console.log(`[Sarvam Proxy Debug] Stage 8 Success: Parsed transcript: "${transcript}"`);
+          console.log(`[Sarvam Proxy Debug] Stage 8 Success: Parsed transcript (${transcript.length} chars): "${transcript}"`);
 
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
@@ -234,7 +220,7 @@ Return ONLY valid JSON matching this exact schema:
 
           let response = await fetch(primaryEndpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json font-utf-8' },
             body: JSON.stringify(payload)
           });
 
