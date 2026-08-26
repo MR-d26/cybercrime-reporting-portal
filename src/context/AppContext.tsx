@@ -96,13 +96,17 @@ export interface AppContextType {
   reviewConfirmed: boolean;
   setReviewConfirmed: (val: boolean) => void;
 
+  // Page 08 OTP Verification State
+  otpVerified: boolean;
+  setOtpVerified: (val: boolean) => void;
+
   saveDraft: (additionalData?: any) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const STORAGE_KEY_SETTINGS = 'ncrp_prototype_settings';
-const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v7';
+const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v8';
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<LanguageCode>('en');
@@ -148,6 +152,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Page 07 Confirmation Field
   const [reviewConfirmed, setReviewConfirmed] = useState<boolean>(false);
 
+  // Page 08 OTP Verification State
+  const [otpVerified, setOtpVerified] = useState<boolean>(false);
+
   // Load saved settings & draft from localStorage
   useEffect(() => {
     try {
@@ -190,6 +197,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         if (parsedDraft.additionalEvidenceNotes) setAdditionalEvidenceNotes(parsedDraft.additionalEvidenceNotes);
 
         if (parsedDraft.reviewConfirmed !== undefined) setReviewConfirmed(parsedDraft.reviewConfirmed);
+        if (parsedDraft.otpVerified !== undefined) setOtpVerified(parsedDraft.otpVerified);
 
         if (parsedDraft.currentPage) setCurrentPage(parsedDraft.currentPage);
         if (parsedDraft.savedAt) setLastSavedTime(parsedDraft.savedAt);
@@ -227,6 +235,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         noEvidenceChecked,
         additionalEvidenceNotes,
         reviewConfirmed,
+        otpVerified,
         currentPage,
         language,
         savedAt: timestamp,
@@ -239,14 +248,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   useEffect(() => {
-    if (complaintText || selectedCategory || extractedIncident || uploadedFiles.length > 0 || reviewConfirmed) {
+    if (complaintText || selectedCategory || extractedIncident || uploadedFiles.length > 0 || reviewConfirmed || otpVerified) {
       saveDraft();
     }
   }, [
     complaintText, selectedCategory, extractedIncident, extractedAmount, extractedMethod,
     incidentDate, incidentTime, dontKnowDate, detailAmount, dontKnowAmount,
     transactionId, dontHaveTxnId, bankService, dontKnowBank, platformName, accountUsername, companyName, contactDetail,
-    uploadedFiles, noEvidenceChecked, additionalEvidenceNotes, reviewConfirmed
+    uploadedFiles, noEvidenceChecked, additionalEvidenceNotes, reviewConfirmed, otpVerified
   ]);
 
   const setLanguage = (lang: LanguageCode) => {
@@ -356,6 +365,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setAdditionalEvidenceNotes,
       reviewConfirmed,
       setReviewConfirmed,
+      otpVerified,
+      setOtpVerified,
       saveDraft
     }}>
       {children}

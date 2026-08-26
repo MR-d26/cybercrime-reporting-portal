@@ -8,7 +8,8 @@ import { Page04ReviewInfo } from './components/Page04ReviewInfo';
 import { Page05AddDetails } from './components/Page05AddDetails';
 import { Page06AddEvidence } from './components/Page06AddEvidence';
 import { Page07ReviewSubmit } from './components/Page07ReviewSubmit';
-import { Page08Placeholder } from './components/Page08Placeholder';
+import { Page08OtpVerification } from './components/Page08OtpVerification';
+import { Page09Placeholder } from './components/Page09Placeholder';
 import { Footer } from './components/Footer';
 import { AccessibilityModal } from './components/AccessibilityModal';
 import { MenuModal } from './components/MenuModal';
@@ -56,7 +57,8 @@ const MainLayout: React.FC = () => {
         {currentPage === 5 && <Page05AddDetails />}
         {currentPage === 6 && <Page06AddEvidence />}
         {currentPage === 7 && <Page07ReviewSubmit />}
-        {currentPage >= 8 && <Page08Placeholder />}
+        {currentPage === 8 && <Page08OtpVerification />}
+        {currentPage >= 9 && <Page09Placeholder />}
       </main>
 
       {/* Government Portal Footer */}

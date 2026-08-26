@@ -177,6 +177,21 @@ export interface TranslationSchema {
   confirmCheckboxLabel: string;
   continueToOtpBtn: string;
 
+  // Page 08 OTP Verification
+  otpTitle: string;
+  otpSubtitle: string;
+  maskedNumberNotice: string;
+  demoModeBadge: string;
+  otpLabel: string;
+  resendBtn: string;
+  resendCooldownText: string;
+  otpErrorText: string;
+  otpVerifiedSuccess: string;
+  securityNoticeTitle: string;
+  securityNoticeSub: string;
+  backToReviewBtn: string;
+  continueToSubmissionBtn: string;
+
   // Footer & Modals
   footerNotice: string;
   footerGovInfo: string;
@@ -354,6 +369,20 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     confirmCheckboxLabel: "I have reviewed the information above and confirm that it is correct to the best of my knowledge.",
     continueToOtpBtn: "Continue to OTP verification →",
 
+    otpTitle: "Verify your mobile number",
+    otpSubtitle: "We'll send a one-time password to verify your identity before your complaint is submitted.",
+    maskedNumberNotice: "OTP sent to +91 ••••••4821",
+    demoModeBadge: "Demo mode: use 123456",
+    otpLabel: "Enter 6-digit OTP",
+    resendBtn: "Resend OTP",
+    resendCooldownText: "Resend OTP in {sec}s",
+    otpErrorText: "That OTP doesn't match. Please check the code and try again.",
+    otpVerifiedSuccess: "Mobile number verified",
+    securityNoticeTitle: "Your information is protected",
+    securityNoticeSub: "Your complaint details are saved securely during this prototype experience.",
+    backToReviewBtn: "← Back to review",
+    continueToSubmissionBtn: "Continue to submission →",
+
     footerNotice: "This website is a UX prototype for research and evaluation purposes only. Not for official filing.",
     footerGovInfo: "National Cyber Crime Reporting Portal | Ministry of Home Affairs, Government of India",
     accessibilityTitle: "Accessibility Controls",
@@ -527,6 +556,20 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     readySub: "आपकी शिकायत आगे ओटीपी सत्यापन पर जाएगी। यह अभी सबमिट नहीं हुई है।",
     confirmCheckboxLabel: "मैंने ऊपर दी गई जानकारी की समीक्षा कर ली है और पुष्टि करता हूँ कि यह मेरी जानकारी के अनुसार सही है।",
     continueToOtpBtn: "ओटीपी सत्यापन पर आगे बढ़ें →",
+
+    otpTitle: "अपना मोबाइल नंबर सत्यापित करें",
+    otpSubtitle: "आपकी शिकायत सबमिट करने से पहले आपकी पहचान सत्यापित करने के लिए हम एक ओटीपी भेजेंगे।",
+    maskedNumberNotice: "ओटीपी +91 ••••••4821 पर भेजा गया",
+    demoModeBadge: "डेमो मोड: 123456 का उपयोग करें",
+    otpLabel: "6 अंकों का ओटीपी दर्ज करें",
+    resendBtn: "ओटीपी पुनः भेजें",
+    resendCooldownText: "{sec}s में पुनः भेजें",
+    otpErrorText: "वह ओटीपी मेल नहीं खाता। कृपया कोड जांचें और पुनः प्रयास करें।",
+    otpVerifiedSuccess: "मोबाइल नंबर सत्यापित हो गया",
+    securityNoticeTitle: "आपकी जानकारी सुरक्षित है",
+    securityNoticeSub: "इस प्रोटोटाइप अनुभव के दौरान आपकी शिकायत के विवरण सुरक्षित रूप से सहेजे गए हैं।",
+    backToReviewBtn: "← समीक्षा पर वापस जाएं",
+    continueToSubmissionBtn: "सबमिशन पर आगे बढ़ें →",
 
     footerNotice: "यह वेबसाइट केवल अनुसंधान और मूल्यांकन उद्देश्यों के लिए एक यूक्स प्रोटोटाइप है। यह आधिकारिक रिपोर्टिंग के लिए नहीं है।",
     footerGovInfo: "राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
@@ -702,6 +745,20 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     confirmCheckboxLabel: "मी वरील माहितीची पुनरावलोकन केली आहे आणि माझ्या माहितीनुसार ती बरोबर आहे याची खात्री करतो.",
     continueToOtpBtn: "OTP पडताळणीकडे पुढे जा →",
 
+    otpTitle: "तुमचा मोबाईल नंबर पडताळा",
+    otpSubtitle: "तुमची तक्रार सबमिट करण्यापूर्वी तुमची ओळख पडताळण्यासाठी आम्ही एक OTP पाठवू.",
+    maskedNumberNotice: "OTP +91 ••••••4821 वर पाठवला",
+    demoModeBadge: "डेमो मोड: 123456 वापरा",
+    otpLabel: "6 अंकी OTP प्रविष्ट करा",
+    resendBtn: "OTP पुन्हा पाठवा",
+    resendCooldownText: "{sec}s मध्ये पुन्हा पाठवा",
+    otpErrorText: "तो OTP जुळत नाही. कृपया कोड तपासा आणि पुन्हा प्रयत्न करा.",
+    otpVerifiedSuccess: "मोबाईल नंबर पडताळला गेला",
+    securityNoticeTitle: "तुमची माहिती सुरक्षित आहे",
+    securityNoticeSub: "या प्रोटोटाइप अनुभवादरम्यान तुमच्या तक्रारीचे तपशील सुरक्षितपणे सेव्ह केले जातात.",
+    backToReviewBtn: "← पुनरावलोकनाकडे परत जा",
+    continueToSubmissionBtn: "सबमिशनकडे पुढे जा →",
+
     footerNotice: "ही वेबसाइट केवळ संशोधन आणि मूल्यमापनासाठी एक UX प्रोटोटाइप आहे. अधिकृत तक्रारीसाठी नाही.",
     footerGovInfo: "राष्ट्रीय सायबर गुन्हे रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
     accessibilityTitle: "सुलभता नियंत्रणे (Accessibility)",
@@ -875,6 +932,20 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     readySub: "உங்கள் புகார் அடுத்து OTP சரிபார்ப்பிற்கு செல்லும். இது இன்னும் சமர்ப்பிக்கப்படவில்லை.",
     confirmCheckboxLabel: "மேலே உள்ள தகவலை நான் மதிப்பாய்வு செய்து, எனது அறிவுக்கு எட்டிய வரை அது சரியானது என்பதை உறுதிப்படுத்துகிறேன்.",
     continueToOtpBtn: "OTP சரிபார்ப்பிற்குத் தொடரவும் →",
+
+    otpTitle: "உங்கள் மொபைல் எண்ணைச் சரிபார்க்கவும்",
+    otpSubtitle: "புகார் சமர்ப்பிக்கப்படுவதற்கு முன்பு உங்கள் அடையாளத்தைச் சரிபார்க்க ஒரு முறை கடவுச்சொல் அனுப்பப்படும்.",
+    maskedNumberNotice: "OTP +91 ••••••4821 க்கு அனுப்பப்பட்டது",
+    demoModeBadge: "டெமோ முறை: 123456 ஐப் பயன்படுத்தவும்",
+    otpLabel: "6 இலக்க OTP ஐ உள்ளிடவும்",
+    resendBtn: "OTP ஐ மீண்டும் அனுப்பு",
+    resendCooldownText: "{sec} வினாடிகளில் மீண்டும் அனுப்பு",
+    otpErrorText: "அந்த OTP பொருந்தவில்லை. குறியீட்டைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
+    otpVerifiedSuccess: "மொபைல் எண் சரிபார்க்கப்பட்டது",
+    securityNoticeTitle: "உங்கள் தகவல் பாதுகாக்கப்படுகிறது",
+    securityNoticeSub: "இந்த மாதிரி அனுபவத்தின் போது உங்கள் புகார்களின் விவரங்கள் பாதுகாப்பாக சேமிக்கப்படும்.",
+    backToReviewBtn: "← மதிப்பாய்விற்குத் திரும்பு",
+    continueToSubmissionBtn: "சமர்ப்பிப்பிற்குத் தொடரவும் →",
 
     footerNotice: "இந்த இணையதளம் ஆராய்ச்சி மற்றும் மதிப்பீட்டு நோக்கங்களுக்கான UX மாதிரி மட்டுமே. அதிகாரப்பூர்வ தாக்கல் செய்ய அல்ல.",
     footerGovInfo: "தேசிய இணையக் குற்றப் புகாரளிப்பு தளம் | உள்துறை அமைச்சகம், இந்திய அரசு",
@@ -1050,6 +1121,20 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     confirmCheckboxLabel: "আমি উপরের তথ্য পর্যালোচনা করেছি এবং নিশ্চিত করছি যে এটি আমার জানা মতে সঠিক।",
     continueToOtpBtn: "ওটিপি যাচাইকরণে এগিয়ে যান →",
 
+    otpTitle: "আপনার মোবাইল নম্বর যাচাই করুন",
+    otpSubtitle: "আপনার অভিযোগ জমা দেওয়ার আগে আপনার পরিচয় যাচাই করতে আমরা একটি ওয়ান-টাইম পাসওয়ার্ড পাঠাব।",
+    maskedNumberNotice: "ওটিপি পাঠানো হয়েছে +91 ••••••4821 নম্বরে",
+    demoModeBadge: "ডেমো মোড: 123456 ব্যবহার করুন",
+    otpLabel: "৬ সংখ্যার ওটিপি লিখুন",
+    resendBtn: "ওটিপি পুনরায় পাঠান",
+    resendCooldownText: "{sec} সেকেন্ডে পুনরায় পাঠান",
+    otpErrorText: "সেই ওটিপি মিলছে না। অনুগ্রহ করে কোড পরীক্ষা করুন এবং আবার চেষ্টা করুন।",
+    otpVerifiedSuccess: "মোবাইল নম্বর যাচাই করা হয়েছে",
+    securityNoticeTitle: "আপনার তথ্য সুরক্ষিত",
+    securityNoticeSub: "এই প্রোটোটাইপ অভিজ্ঞতার সময় আপনার অভিযোগের বিবরণ নিরাপদে সংরক্ষিত থাকে।",
+    backToReviewBtn: "← পর্যালোচনায় ফিরে যান",
+    continueToSubmissionBtn: "জমা দেওয়ার জন্য এগিয়ে যান →",
+
     footerNotice: "এই ওয়েবসাইটটি কেবল গবেষণা এবং মূল্যায়নের উদ্দেশ্যে একটি ইউএক্স প্রোটোটাইপ। এটি অফিসিয়াল দাখিলের জন্য নয়।",
     footerGovInfo: "জাতীয় সাইবার অপরাধ রিপোর্টিং পোর্টাল | স্বরাষ্ট্র মন্ত্রক, ভারত সরকার",
     accessibilityTitle: "অ্যাক্সেসিবিলিটি সেটিংস",
@@ -1223,6 +1308,20 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     readySub: "మీ ఫిర్యాదు తదుపరి OTP ప్రామాణీకరణకు వెళుతుంది. ఇది ఇంకా సమర్పించబడలేదు.",
     confirmCheckboxLabel: "నేను పైన పేర్కొన్న సమాచారాన్ని సమీక్షించాను మరియు నా జ్ఞానం మేరకు అది సరైనదని ధృవీకరిస్తున్నాను.",
     continueToOtpBtn: "OTP ప్రామాణీకరణకు కొనసాగించండి →",
+
+    otpTitle: "మీ మొబైల్ నంబర్‌ను ధృవీకరించండి",
+    otpSubtitle: "మీ ఫిర్యాదు సమర్పించబడటానికి ముందు మీ గుర్తింపును ధృవీకరించడానికి మేము ఒక నిమిషం పాస్‌వర్డ్‌ను పంపుతాము.",
+    maskedNumberNotice: "OTP +91 ••••••4821 కి పంపబడింది",
+    demoModeBadge: "డెమో మోడ్: 123456 ఉపయోగించండి",
+    otpLabel: "6 అంకెల OTP నమోదు చేయండి",
+    resendBtn: "OTP మళ్లీ పంపండి",
+    resendCooldownText: "{sec} సెకన్లలో మళ్లీ పంపండి",
+    otpErrorText: "ఆ OTP సరిపోలడం లేదు. దయచేసి కోడ్‌ని తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.",
+    otpVerifiedSuccess: "మొబైల్ నంబర్ ధృవీకరించబడింది",
+    securityNoticeTitle: "మీ సమాచారం రక్షించబడుతుంది",
+    securityNoticeSub: "ఈ ప్రోటోటైప్ అనుభవంలో మీ ఫిర్యాదు వివరాలు సురక్షితంగా సేవ్ చేయబడతాయి.",
+    backToReviewBtn: "← సమీక్షకు తిరిగి వెళ్లండి",
+    continueToSubmissionBtn: "సమర్పణకు కొనసాగించండి →",
 
     footerNotice: "ఈ వెబ్‌సైట్ పరిశోధన మరియు మూల్యాంకన అవసరాల కోసం రూపొందించబడిన UX ప్రోటోటైప్ మాత్రమే. అధికారిక నమోదు కోసం కాదు.",
     footerGovInfo: "జాతీయ సైబర్ నేరాల నివేదిక పోర్టల్ | హోం వ్యవహారాల మంత్రిత్వ శాఖ, భారత ప్రభుత్వం",
