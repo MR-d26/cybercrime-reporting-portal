@@ -104,11 +104,20 @@ export const Page02TellUs: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#FAF9F6]">
-      {/* 1. Stepper Bar */}
+    <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-hidden">
+      {/* 1. Official Approved Background Image Asset for Page 02 */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-85"
+        style={{ backgroundImage: "url('/images/indian-cybercrime-background.png')" }}
+        aria-hidden="true"
+      />
+      {/* Soft warm overlay to ensure 100% text readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6]/90 via-[#FAF9F6]/75 to-transparent pointer-events-none" aria-hidden="true" />
+
+      {/* 2. Stepper Bar */}
       <ProgressStepper />
 
-      {/* 2. Main Page Container */}
+      {/* 3. Main Page Container */}
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8 flex-1 flex flex-col justify-between relative z-10">
         {/* Main Intake Card Container */}
         <div className="bg-white rounded-2xl border border-gray-200 shadow-gov overflow-hidden">
@@ -282,7 +291,7 @@ export const Page02TellUs: React.FC = () => {
 
           </div>
 
-          {/* 3. Bottom Drawer: Collapsible Sample Scenarios */}
+          {/* 4. Bottom Drawer: Collapsible Sample Scenarios */}
           <div className="bg-[#F1F8E9]/80 border-t border-emerald-200/80 px-6 py-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center gap-2.5 text-left">
               <Lightbulb className="w-5 h-5 text-emerald-700 shrink-0" />
@@ -321,7 +330,7 @@ export const Page02TellUs: React.FC = () => {
           )}
         </div>
 
-        {/* 4. Bottom Action Bar (Continue Button) */}
+        {/* 5. Bottom Action Bar (Continue Button) */}
         <div className="mt-6 flex items-center justify-end">
           <button
             onClick={handleContinue}
