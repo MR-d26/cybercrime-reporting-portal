@@ -1,19 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { ProgressStepper } from './ProgressStepper';
+import { useVoiceRecorder } from '../hooks/useVoiceRecorder';
+import { transcribeAudio } from '../services/sarvamService';
 import {
-  MessageSquareText,
   Mic,
   Square,
-  Lock,
-  ShieldCheck,
-  Lightbulb,
+  Sparkles,
   ChevronDown,
   ChevronUp,
-  ArrowRight,
-  RotateCcw,
+  ShieldCheck,
+  Edit3,
+  RefreshCw,
   Check,
-  Edit3
+  ArrowRight,
+  AlertCircle,
+  Loader2
 } from 'lucide-react';
 
 export const Page02TellUs: React.FC = () => {
@@ -28,61 +30,59 @@ export const Page02TellUs: React.FC = () => {
     saveDraft
   } = useApp();
 
-  const [isRecording, setIsRecording] = useState(false);
-  const [recordingSeconds, setRecordingSeconds] = useState(0);
-  const [showTranscriptModal, setShowTranscriptModal] = useState(false);
-  const [editableTranscript, setEditableTranscript] = useState('');
-  const [isEditingTranscript, setIsEditingTranscript] = useState(false);
-  const [showExamples, setShowExamples] = useState(false);
+  const {
+    isRecording,
+    permissionDenied,
+    recordingError,
+    startRecording,
+    stopRecording,
+    formattedTime
+  } = useVoiceRecorder();
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [isTranscribing, setIsTranscribing] = useState<boolean>(false);
+  const [transcribeError, setTranscribeError] = useState<string | null>(null);
+  const [isEditingTranscript, setIsEditingTranscript] = useState<boolean>(false);
+  const [editableTranscript, setEditableTranscript] = useState<string>('');
+  const [showExamples, setShowExamples] = useState<boolean>(false);
 
-  // Voice recording timer (Does NOT stop on silence - user must explicitly press Stop recording)
-  useEffect(() => {
-    if (isRecording) {
-      setRecordingSeconds(0);
-      timerRef.current = setInterval(() => {
-        setRecordingSeconds((prev) => prev + 1);
-      }, 1000);
-    } else {
-      if (timerRef.current) clearInterval(timerRef.current);
-    }
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [isRecording]);
-
-  const handleStartSpeaking = () => {
-    setIsRecording(true);
-    setShowTranscriptModal(false);
+  const handleStartSpeaking = async () => {
+    setTranscribeError(null);
+    setIsEditingTranscript(false);
+    await startRecording();
   };
 
-  const handleStopRecording = () => {
-    setIsRecording(false);
-    // Generate mock transcript based on current language
-    let mockText = "";
-    if (language === 'hi') {
-      mockText = "मेरे बैंक खाते से ₹15,000 कट गए जब मैंने बिजली बिल अपडेट का एक एसएमएस लिंक खोला।";
-    } else if (language === 'mr') {
-      mockText = "मला एका अनोळखी नंबरवरून कॉल आला आणि लाईट बिल अपडेट करण्याच्या नावाखाली ₹10,000 फसवून घेतले.";
-    } else if (language === 'ta') {
-      mockText = "மின்சாரக் கட்டண லிங்கைக் கிளிக் செய்த பிறகு எனது வங்கிக் கணக்கிலிருந்து ₹12,000 பிடிக்கப்பட்டது.";
-    } else if (language === 'bn') {
-      mockText = "একটি বিদ্যুৎ বিলের এসএমএস লিঙ্কে ক্লিক করার পর আমার ব্যাঙ্ক অ্যাকাউন্ট থেকে ₹১০,০০০ কেটে নেওয়া হয়েছে।";
-    } else if (language === 'te') {
-      mockText = "కరెంట్ బిల్లు లింక్ క్లిక్ చేసిన తర్వాత నా బ్యాంక్ ఖాతా నుండి ₹10,000 విత్‌డ్రా అయ్యాయి.";
-    } else {
-      mockText = "Someone sent me a fake electricity bill SMS and ₹10,000 was deducted from my account after I clicked the payment link.";
+  const handleStopSpeaking = async () => {
+    const audioBlob = await stopRecording();
+    if (!audioBlob || audioBlob.size === 0) {
+      setTranscribeError("No audio was recorded. Please try speaking again.");
+      return;
     }
-    setVoiceTranscript(mockText);
-    setEditableTranscript(mockText);
-    setShowTranscriptModal(true);
+
+    setIsTranscribing(true);
+    setTranscribeError(null);
+
+    try {
+      const result = await transcribeAudio(audioBlob, language);
+      setVoiceTranscript(result.transcript);
+      setEditableTranscript(result.transcript);
+      saveDraft({ voiceTranscript: result.transcript });
+    } catch (err: any) {
+      console.error("Transcription error:", err);
+      const errMsg = err?.message || '';
+      if (errMsg.includes('SARVAM_API_KEY')) {
+        setTranscribeError("Sarvam API key is not configured. Please add SARVAM_API_KEY in .env file or type your complaint below.");
+      } else {
+        setTranscribeError("We couldn't transcribe that recording. Please try again or type your complaint instead.");
+      }
+    } finally {
+      setIsTranscribing(false);
+    }
   };
 
   const handleUseTranscript = () => {
-    setComplaintText(editableTranscript);
-    setShowTranscriptModal(false);
-    saveDraft({ complaintText: editableTranscript });
+    const finalText = isEditingTranscript ? editableTranscript : (voiceTranscript || editableTranscript);
+    setComplaintText(finalText);
+    saveDraft({ complaintText: finalText });
   };
 
   const handleSelectScenario = (scenarioText: string) => {
@@ -92,15 +92,9 @@ export const Page02TellUs: React.FC = () => {
 
   const handleContinue = () => {
     if (complaintText.trim().length > 0) {
-      saveDraft({ step: 2 });
+      saveDraft();
       setCurrentPage(3);
     }
-  };
-
-  const formatTimer = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
   return (
@@ -114,230 +108,202 @@ export const Page02TellUs: React.FC = () => {
       {/* Soft warm overlay to ensure 100% text readability */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6]/90 via-[#FAF9F6]/75 to-transparent pointer-events-none" aria-hidden="true" />
 
-      {/* 2. Stepper Bar */}
-      <ProgressStepper />
+      {/* 2. Progress Stepper Bar (Step 1 Active) */}
+      <ProgressStepper activeStep={1} />
 
-      {/* 3. Main Page Container */}
-      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8 flex-1 flex flex-col justify-between relative z-10">
-        {/* Main Intake Card Container */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-gov overflow-hidden">
-          {/* Card Content Grid */}
-          <div className="p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative">
+      {/* 3. Main Content Container */}
+      <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8 flex-1 flex flex-col justify-between relative z-10">
+        
+        <div className="space-y-6">
+          {/* Header Title & Subtitle */}
+          <div className="text-left space-y-2">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gov-navy leading-tight">
+              {t.tellUsTitle}
+            </h2>
+            <p className="text-sm sm:text-base font-semibold text-[#E65100]">
+              {t.tellUsSubtitle}
+            </p>
+          </div>
+
+          {/* MAIN FORM CARD */}
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-gov p-6 md:p-8 space-y-6 text-left">
             
-            {/* LEFT COLUMN: Text Input Area */}
-            <div className="lg:col-span-6 space-y-4 text-left">
-              {/* Header Group */}
-              <div className="flex items-start gap-3">
-                <div className="p-2.5 rounded-xl bg-amber-100/80 text-gov-saffron shrink-0">
-                  <MessageSquareText className="w-6 h-6" />
-                </div>
-                <div>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-gov-navy leading-tight">
-                    {t.tellUsTitle}
-                  </h2>
-                  <p className="text-sm sm:text-base font-bold text-[#E65100] mt-1 leading-snug">
-                    {t.tellUsSubtitle}
-                  </p>
-                </div>
-              </div>
-
-              {/* Textarea Input */}
-              <div className="relative pt-2">
-                <textarea
-                  value={complaintText}
-                  onChange={(e) => setComplaintText(e.target.value)}
-                  maxLength={4000}
-                  rows={6}
-                  placeholder={t.textareaPlaceholder}
-                  className="w-full p-4 rounded-xl border border-gray-300 focus:border-gov-navy focus:ring-2 focus:ring-gov-navy/20 outline-none text-base text-gray-800 placeholder-gray-400 resize-none transition-all"
-                  aria-label={t.tellUsTitle}
-                />
-                <div className="absolute bottom-3 right-3 text-xs text-gray-400 font-medium">
-                  {complaintText.length} / 4000
-                </div>
-              </div>
-
-              {/* Security Micro-copy */}
-              <div className="flex items-center gap-2 text-xs text-gray-600 font-medium pt-1">
-                <Lock className="w-4 h-4 text-emerald-700 shrink-0" />
+            {/* NATURAL LANGUAGE TEXTAREA */}
+            <div className="space-y-2">
+              <textarea
+                value={complaintText}
+                onChange={(e) => {
+                  setComplaintText(e.target.value);
+                  saveDraft({ complaintText: e.target.value });
+                }}
+                placeholder={t.textareaPlaceholder}
+                className="w-full min-h-[160px] p-4 rounded-xl border border-gray-300 outline-none text-base text-gray-800 placeholder-gray-400 focus:border-gov-navy focus:ring-2 focus:ring-gov-navy/20 resize-y leading-relaxed font-medium"
+                aria-label={t.tellUsTitle}
+              />
+              <p className="text-xs text-gray-500 font-medium flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>{t.textSecureNotice}</span>
-              </div>
+              </p>
             </div>
 
-            {/* CENTER OR DIVIDER (Desktop Only) */}
-            <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center h-4/5">
-              <div className="w-px h-full bg-gray-200" />
-              <div className="my-2 w-8 h-8 rounded-full bg-white border border-gray-300 flex items-center justify-center text-xs font-bold text-gray-500 shadow-xs">
+            {/* OR DIVIDER */}
+            <div className="relative flex items-center justify-center">
+              <div className="border-t border-gray-200 w-full" />
+              <span className="bg-white px-4 text-xs font-bold text-gray-400 uppercase tracking-widest absolute">
                 {t.orDivider}
-              </div>
-              <div className="w-px h-full bg-gray-200" />
+              </span>
             </div>
 
-            {/* RIGHT COLUMN: Voice Input Area */}
-            <div className="lg:col-span-6 space-y-4 text-left border-t lg:border-t-0 border-gray-200 pt-6 lg:pt-0">
-              {/* Voice Header */}
-              <div className="flex items-start gap-3">
-                <div className="p-2.5 rounded-xl bg-amber-100/80 text-gov-saffron shrink-0">
-                  <Mic className="w-6 h-6" />
-                </div>
+            {/* SARVAM INTEGRATED VOICE INPUT AREA */}
+            <div className="bg-amber-50/50 border border-amber-200/80 rounded-xl p-5 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-gov-navy leading-tight">
-                    {t.speakTitle}
+                  <h3 className="text-sm font-bold text-gov-navy flex items-center gap-1.5">
+                    <Mic className="w-4 h-4 text-gov-saffron" />
+                    <span>{t.speakTitle}</span>
                   </h3>
-                  <p className="text-xs sm:text-sm text-gray-600 mt-0.5">
+                  <p className="text-xs text-gray-600 mt-0.5 font-medium">
                     {t.speakSubtitle}
                   </p>
                 </div>
+
+                {/* RECORDING / PROCESSING / START BUTTON CONTROLS */}
+                <div>
+                  {isRecording ? (
+                    <button
+                      type="button"
+                      onClick={handleStopSpeaking}
+                      className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow-md transition-all animate-pulse cursor-pointer"
+                    >
+                      <Square className="w-4 h-4 fill-white" />
+                      <span>{t.stopRecording} ({formattedTime})</span>
+                    </button>
+                  ) : isTranscribing ? (
+                    <div className="flex items-center gap-2 bg-amber-100 text-amber-900 font-bold px-4 py-2.5 rounded-xl text-xs border border-amber-300">
+                      <Loader2 className="w-4 h-4 animate-spin text-amber-700" />
+                      <span>Processing your recording...</span>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleStartSpeaking}
+                      className="flex items-center gap-2 bg-gov-navy hover:bg-gov-navyHover text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow-sm transition-all cursor-pointer"
+                    >
+                      <Mic className="w-4 h-4 text-amber-300" />
+                      <span>{t.startSpeaking}</span>
+                    </button>
+                  )}
+                </div>
               </div>
 
-              {/* Voice Box Container */}
-              <div className="bg-[#F8FAFC] border border-slate-200 rounded-2xl p-6 text-center space-y-4 shadow-xs">
-                {!showTranscriptModal ? (
-                  <>
-                    {/* Animated Mic Graphic */}
-                    <div className="relative inline-flex items-center justify-center">
-                      {isRecording && (
-                        <div className="absolute inset-0 rounded-full bg-red-400/30 animate-ping" />
-                      )}
-                      <div className={`w-20 h-20 rounded-full flex items-center justify-center transition-colors ${
-                        isRecording ? 'bg-red-500 text-white' : 'bg-blue-100 text-gov-navy'
-                      }`}>
-                        <Mic className="w-9 h-9" />
-                      </div>
-                    </div>
+              {/* RECORDING IN-PROGRESS TIMER STATUS */}
+              {isRecording && (
+                <div className="flex items-center gap-2 text-xs font-bold text-red-700 bg-red-50 p-2.5 rounded-lg border border-red-200 animate-in fade-in duration-150">
+                  <span className="w-2 h-2 rounded-full bg-red-600 animate-ping" />
+                  <span>{t.recordingActive} ({formattedTime}) - Speak naturally in your language. Click "Stop recording" when finished.</span>
+                </div>
+              )}
 
-                    {/* Recording controls */}
-                    {isRecording ? (
-                      <div className="space-y-3 animate-in fade-in duration-150">
-                        <div className="flex items-center justify-center gap-2 text-red-600 font-bold text-sm">
-                          <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse" />
-                          <span>{t.recordingActive} ({formatTimer(recordingSeconds)})</span>
-                        </div>
-                        <button
-                          onClick={handleStopRecording}
-                          className="w-full max-w-xs mx-auto flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl shadow-md transition-colors"
-                        >
-                          <Square className="w-4 h-4 fill-white" />
-                          <span>{t.stopRecording}</span>
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="space-y-2">
-                        <button
-                          onClick={handleStartSpeaking}
-                          className="w-full max-w-xs mx-auto flex items-center justify-center gap-2.5 bg-[#0F2540] hover:bg-[#1A365D] text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition-all active:scale-98 focus:ring-4 focus:ring-amber-300 outline-none"
-                        >
-                          <Mic className="w-5 h-5 text-amber-300" />
-                          <span>{t.startSpeaking}</span>
-                        </button>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  /* Transcript Review Container */
-                  <div className="text-left space-y-3 bg-white p-4 rounded-xl border border-blue-200 shadow-xs animate-in zoom-in-95 duration-150">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-gov-navy uppercase tracking-wider">
-                        {t.transcriptTitle}
-                      </span>
-                      <button
-                        onClick={() => setIsEditingTranscript(!isEditingTranscript)}
-                        className="text-xs font-semibold text-gov-saffron hover:underline flex items-center gap-1"
-                      >
-                        <Edit3 className="w-3.5 h-3.5" />
-                        <span>{t.editBtn}</span>
-                      </button>
-                    </div>
+              {/* FRIENDLY PERMISSION / TRANSCRIBE ERROR NOTICE */}
+              {(permissionDenied || recordingError || transcribeError) && (
+                <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 text-red-700 text-xs font-semibold rounded-lg animate-in fade-in duration-150">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+                  <span>{recordingError || transcribeError || "Microphone access is required to use voice input."}</span>
+                </div>
+              )}
 
-                    {isEditingTranscript ? (
-                      <textarea
-                        value={editableTranscript}
-                        onChange={(e) => setEditableTranscript(e.target.value)}
-                        rows={3}
-                        className="w-full p-2.5 border border-gray-300 rounded-lg text-sm text-gray-800 outline-none focus:border-gov-navy"
-                      />
-                    ) : (
-                      <p className="text-sm text-gray-800 bg-amber-50/60 p-3 rounded-lg border border-amber-200/60 italic">
-                        "{editableTranscript}"
-                      </p>
-                    )}
-
-                    <div className="flex flex-wrap items-center gap-2 pt-1">
-                      <button
-                        onClick={handleUseTranscript}
-                        className="flex-1 flex items-center justify-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 px-3 rounded-lg text-xs transition-colors"
-                      >
-                        <Check className="w-4 h-4" />
-                        <span>{t.useThisBtn}</span>
-                      </button>
-                      <button
-                        onClick={handleStartSpeaking}
-                        className="flex items-center justify-center gap-1.5 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-3 rounded-lg text-xs transition-colors"
-                      >
-                        <RotateCcw className="w-3.5 h-3.5" />
-                        <span>{t.recordAgainBtn}</span>
-                      </button>
-                    </div>
+              {/* TRANSCRIPT REVIEW AREA (HERES WHAT WE HEARD) */}
+              {voiceTranscript && !isRecording && !isTranscribing && (
+                <div className="bg-white border border-amber-300 rounded-xl p-4 space-y-3 shadow-xs animate-in fade-in duration-200">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-gov-navy uppercase tracking-wider flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-gov-saffron" />
+                      <span>{t.transcriptTitle}</span>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setIsEditingTranscript(!isEditingTranscript)}
+                      className="text-xs font-bold text-gov-saffron hover:underline flex items-center gap-1"
+                    >
+                      <Edit3 className="w-3 h-3" />
+                      <span>{t.editBtn}</span>
+                    </button>
                   </div>
-                )}
-              </div>
 
-              {/* Voice Privacy Disclaimer */}
-              <div className="flex items-center gap-2 text-xs text-gray-600 font-medium">
-                <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span>{t.privacyNotice}</span>
-              </div>
+                  {isEditingTranscript ? (
+                    <textarea
+                      value={editableTranscript}
+                      onChange={(e) => setEditableTranscript(e.target.value)}
+                      rows={3}
+                      className="w-full p-3 rounded-lg border border-amber-300 outline-none text-sm text-gray-800 focus:ring-2 focus:ring-amber-400/20"
+                    />
+                  ) : (
+                    <p className="text-sm font-semibold text-gray-800 bg-amber-50/50 p-3 rounded-lg border border-amber-200/60 leading-relaxed italic">
+                      "{voiceTranscript}"
+                    </p>
+                  )}
+
+                  <div className="flex flex-wrap items-center justify-end gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={handleStartSpeaking}
+                      className="flex items-center gap-1 text-xs font-bold text-gray-600 hover:text-gov-navy px-3 py-1.5 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+                    >
+                      <RefreshCw className="w-3 h-3" />
+                      <span>{t.recordAgainBtn}</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleUseTranscript}
+                      className="flex items-center gap-1 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold px-4 py-1.5 rounded-lg shadow-xs transition-colors cursor-pointer"
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                      <span>{t.useThisBtn}</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* COLLAPSIBLE SAMPLE SCENARIOS */}
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => setShowExamples(!showExamples)}
+                className="flex items-center gap-1.5 text-xs font-bold text-gov-navy hover:text-gov-saffron transition-colors"
+              >
+                <span>{showExamples ? t.hideExamples : t.viewExamples}</span>
+                {showExamples ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              </button>
+
+              {showExamples && (
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs animate-in fade-in duration-200">
+                  {[t.scenario1, t.scenario2, t.scenario3, t.scenario4].map((scenario, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      onClick={() => handleSelectScenario(scenario)}
+                      className="p-3 bg-gray-50 hover:bg-amber-50/70 border border-gray-200 hover:border-amber-300 rounded-xl text-left font-medium text-gray-700 hover:text-gov-navy transition-all"
+                    >
+                      "{scenario}"
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
           </div>
-
-          {/* 4. Bottom Drawer: Collapsible Sample Scenarios */}
-          <div className="bg-[#F1F8E9]/80 border-t border-emerald-200/80 px-6 py-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5 text-left">
-              <Lightbulb className="w-5 h-5 text-emerald-700 shrink-0" />
-              <div>
-                <span className="font-bold text-sm text-gov-navy block">{t.notSureTitle}</span>
-                <span className="text-xs text-gray-600 block">{t.notSureDesc}</span>
-              </div>
-            </div>
-            <button
-              onClick={() => setShowExamples(!showExamples)}
-              className="flex items-center gap-1.5 bg-white border border-emerald-300 text-gov-navy font-bold px-3.5 py-1.5 rounded-lg text-xs shadow-xs hover:bg-emerald-50 transition-colors shrink-0 outline-none"
-            >
-              <span>{showExamples ? t.hideExamples : t.viewExamples}</span>
-              {showExamples ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-            </button>
-          </div>
-
-          {/* Expanded Sample Scenarios Options */}
-          {showExamples && (
-            <div className="bg-emerald-50/60 p-4 border-t border-emerald-200/60 grid grid-cols-1 sm:grid-cols-2 gap-2.5 animate-in fade-in duration-150">
-              {[
-                t.scenario1,
-                t.scenario2,
-                t.scenario3,
-                t.scenario4
-              ].map((scenario, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleSelectScenario(scenario)}
-                  className="text-left p-3 bg-white hover:bg-emerald-100/60 border border-emerald-200 rounded-xl text-xs sm:text-sm font-medium text-gov-navy transition-all shadow-xs hover:shadow-sm"
-                >
-                  "{scenario}"
-                </button>
-              ))}
-            </div>
-          )}
         </div>
 
-        {/* 5. Bottom Action Bar (Continue Button) */}
-        <div className="mt-6 flex items-center justify-end">
+        {/* 4. Bottom Action Navigation Bar */}
+        <div className="mt-8 flex items-center justify-end pt-4 border-t border-gray-200/80">
           <button
+            type="button"
             onClick={handleContinue}
             disabled={complaintText.trim().length === 0}
             className={`flex items-center gap-2.5 font-bold px-8 py-3.5 rounded-xl shadow-md transition-all ${
               complaintText.trim().length > 0
-                ? 'bg-[#0F2540] hover:bg-[#1A365D] text-white cursor-pointer hover:shadow-lg active:scale-98'
+                ? 'bg-[#0F2540] hover:bg-[#1A365D] text-white cursor-pointer hover:shadow-lg active:scale-98 focus:ring-4 focus:ring-amber-300'
                 : 'bg-gray-300 text-gray-500 cursor-not-allowed'
             }`}
           >
