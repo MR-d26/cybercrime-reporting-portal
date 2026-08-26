@@ -101,6 +101,20 @@ export interface TranslationSchema {
   catOtherTitle: string;
   catOtherDesc: string;
 
+  // Page 04 Review Your Information
+  reviewTitle: string;
+  reviewSubtitle: string;
+  fieldIncident: string;
+  fieldAmount: string;
+  fieldMethod: string;
+  fieldPath: string;
+  saveFieldBtn: string;
+  cancelFieldBtn: string;
+  confirmQuestion: string;
+  confirmSubtitle: string;
+  backToPathBtn: string;
+  yesContinueBtn: string;
+
   // Footer & Modals
   footerNotice: string;
   footerGovInfo: string;
@@ -206,6 +220,19 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     catOtherTitle: "Other Cybercrime",
     catOtherDesc: "We couldn't confidently identify a specific reporting path. You can review your story or choose the closest option below.",
 
+    reviewTitle: "Here's what we understood.",
+    reviewSubtitle: "We extracted the key details from your story. Please review them carefully before continuing.",
+    fieldIncident: "Incident / Summary",
+    fieldAmount: "Amount Involved",
+    fieldMethod: "Method / Channel",
+    fieldPath: "Reporting Path",
+    saveFieldBtn: "Save",
+    cancelFieldBtn: "Cancel",
+    confirmQuestion: "Is this information correct?",
+    confirmSubtitle: "You can edit any detail now or continue to the next step.",
+    backToPathBtn: "← Back to reporting path",
+    yesContinueBtn: "Yes, continue →",
+
     footerNotice: "This website is a UX prototype for research and evaluation purposes only. Not for official filing.",
     footerGovInfo: "National Cyber Crime Reporting Portal | Ministry of Home Affairs, Government of India",
     accessibilityTitle: "Accessibility Controls",
@@ -308,7 +335,20 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     catOtherTitle: "अन्य साइबर अपराध",
     catOtherDesc: "हम निश्चित रूप से किसी विशिष्ट श्रेणी की पहचान नहीं कर सके। आप अपना विवरण देख सकते हैं या नीचे उपयुक्त विकल्प चुन सकते हैं।",
 
-    footerNotice: "यह वेबसाइट केवल अनुसंधान और मूल्यांकन उद्देश्यों के लिए एक यूक्स प्रोटोटाइप है। यह आधिकारिक रिपोर्टिंग के लिए नहीं है।",
+    reviewTitle: "यह हमें समझ आया।",
+    reviewSubtitle: "हमने आपके विवरण से मुख्य जानकारी निकाली है। कृपया आगे बढ़ने से पहले ध्यानपूर्वक समीक्षा करें।",
+    fieldIncident: "घटना / सारांश",
+    fieldAmount: "शामिल राशि",
+    fieldMethod: "तरीका / माध्यम",
+    fieldPath: "रिपोर्टिंग मार्ग",
+    saveFieldBtn: "सहेजें",
+    cancelFieldBtn: "रद्द करें",
+    confirmQuestion: "क्या यह जानकारी सही है?",
+    confirmSubtitle: "आप अभी किसी भी विवरण को संपादित कर सकते हैं या अगले चरण पर जा सकते हैं।",
+    backToPathBtn: "← रिपोर्टिंग मार्ग पर वापस जाएं",
+    yesContinueBtn: "हाँ, आगे बढ़ें →",
+
+    footerNotice: "यह वेबसाइट केवल अनुसंधान और मूल्यांकन उद्देश्यों के लिए एक यूएक्स प्रोटोटाइप है। यह आधिकारिक रिपोर्टिंग के लिए नहीं है।",
     footerGovInfo: "राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
     accessibilityTitle: "सुगम्यता नियंत्रण (Accessibility)",
     fontSizeLabel: "फ़ॉन्ट का आकार",
@@ -409,6 +449,19 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     catJobDesc: "बनावट नोकरीच्या ऑफर किंवा वर्क-फ्रॉम-होम नोंदणी शुल्काशी संबंधित फसवणुकीसाठी हा मार्ग आहे.",
     catOtherTitle: "इतर सायबर गुन्हे",
     catOtherDesc: "आम्ही विशिष्ट मार्ग निश्चित करू शकलो नाही. तुम्ही तुमची तक्रार तपासून खालील योग्य पर्याय निवडू शकता.",
+
+    reviewTitle: "आम्हाला हे समजले.",
+    reviewSubtitle: "आम्ही तुमच्या तक्रारीतून मुख्य तपशील काढले आहेत. पुढे जाण्यापूर्वी काळजीपूर्वक पुनरावलोकन करा.",
+    fieldIncident: "घटना / सारांश",
+    fieldAmount: "रक्कम",
+    fieldMethod: "पद्धत / माध्यम",
+    fieldPath: "रिपोर्टिंग मार्ग",
+    saveFieldBtn: "सेव्ह करा",
+    cancelFieldBtn: "रद्द करा",
+    confirmQuestion: "ही माहिती बरोबर आहे का?",
+    confirmSubtitle: "तुम्ही आता कोणताही तपशील संपादित करू शकता किंवा पुढील पायरीवर जाऊ शकता.",
+    backToPathBtn: "← रिपोर्टिंग मार्गावर परत जा",
+    yesContinueBtn: "होय, पुढे जा →",
 
     footerNotice: "ही वेबसाइट केवळ संशोधन आणि मूल्यमापनासाठी एक UX प्रोटोटाइप आहे. अधिकृत तक्रारीसाठी नाही.",
     footerGovInfo: "राष्ट्रीय सायबर गुन्हे रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
@@ -512,6 +565,19 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     catOtherTitle: "இதர இணையக் குற்றங்கள்",
     catOtherDesc: "குறிப்பிட்ட வழியைக் கண்டறிய முடியவில்லை. உங்கள் புகாரை மதிப்பாய்வு செய்து கீழே தேர்வு செய்யவும்.",
 
+    reviewTitle: "நாங்கள் புரிந்துகொண்டது இதுதான்.",
+    reviewSubtitle: "உங்கள் புகாரிலிருந்து முக்கிய விவரங்களை எடுத்துள்ளோம். தொடர்வதற்கு முன் கவனமாக மதிப்பாய்வு செய்யவும்.",
+    fieldIncident: "நிகழ்வு / சுருக்கம்",
+    fieldAmount: "பாதிக்கப்பட்ட தொகை",
+    fieldMethod: "முறை / ஊடகம்",
+    fieldPath: "புகாரளிப்பு வழி",
+    saveFieldBtn: "சேமி",
+    cancelFieldBtn: "ரத்து செய்",
+    confirmQuestion: "இந்தத் தகவல் சரியானதா?",
+    confirmSubtitle: "நீங்கள் இப்போது எந்த விவரத்தையும் திருத்தலாம் அல்லது அடுத்த கட்டத்திற்குத் தொடரலாம்.",
+    backToPathBtn: "← புகாரளிப்பு வழிக்குத் திரும்பு",
+    yesContinueBtn: "ஆம், தொடரவும் →",
+
     footerNotice: "இந்த இணையதளம் ஆராய்ச்சி மற்றும் மதிப்பீட்டு நோக்கங்களுக்கான UX மாதிரி மட்டுமே. அதிகாரப்பூர்வ தாக்கல் செய்ய அல்ல.",
     footerGovInfo: "தேசிய இணையக் குற்றப் புகாரளிப்பு தளம் | உள்துறை அமைச்சகம், இந்திய அரசு",
     accessibilityTitle: "அணுகல்தன்மை கட்டுப்பாடுகள்",
@@ -614,6 +680,19 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     catOtherTitle: "অন্যান্য সাইবার অপরাধ",
     catOtherDesc: "আমরা নিশ্চিতভাবে নির্দিষ্ট পথ চিহ্নিত করতে পারিনি। আপনি নিচে সবচেয়ে নিকটতম বিকল্প বেছে নিতে পারেন।",
 
+    reviewTitle: "আমরা যা বুঝেছি।",
+    reviewSubtitle: "আমরা আপনার বিবরণ থেকে মূল তথ্য বের করেছি। এগিয়ে যাওয়ার আগে অনুগ্রহ করে যত্ন সহকারে পর্যালোচনা করুন।",
+    fieldIncident: "ঘটনা / সারসংক্ষেপ",
+    fieldAmount: "জড়িত অর্থ",
+    fieldMethod: "পদ্ধতি / মাধ্যম",
+    fieldPath: "রিপোর্টিং পথ",
+    saveFieldBtn: "সংরক্ষণ করুন",
+    cancelFieldBtn: "বাতিল করুন",
+    confirmQuestion: "এই তথ্য কি সঠিক?",
+    confirmSubtitle: "আপনি এখন যেকোনো তথ্য সম্পাদনা করতে পারেন বা পরবর্তী ধাপে যেতে পারেন।",
+    backToPathBtn: "← রিপোর্টিং পথে ফিরে যান",
+    yesContinueBtn: "হ্যাঁ, এগিয়ে যান →",
+
     footerNotice: "এই ওয়েবসাইটটি কেবল গবেষণা এবং মূল্যায়নের উদ্দেশ্যে একটি ইউএক্স প্রোটোটাইপ। এটি অফিসিয়াল দাখিলের জন্য নয়।",
     footerGovInfo: "জাতীয় সাইবার অপরাধ রিপোর্টিং পোর্টাল | স্বরাষ্ট্র মন্ত্রক, ভারত সরকার",
     accessibilityTitle: "অ্যাক্সেসিবিলিটি সেটিংস",
@@ -690,7 +769,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     scenario1: "లింక్ క్లిక్ చేసిన తర్వాత నా బ్యాంక్ ఖాతా నుండి డబ్బు కట్ అయింది.",
     scenario2: "ఎవరైనా నాకు UPI / QR కోడ్‌పై అనుమానాస్పద చెల్లింపు అభ్యర్థనను పంపారు.",
     scenario3: "నా సోషల్ మీడియా ఖాతా హ్యాక్ అయింది లేదా ఎవరైనా నకిలీ ప్రొఫైల్ సృష్టించారు.",
-    scenario4: "రిజిస్ట్రేషన్ ఫీజు అడిగే నకిలీ ఉద్యోగ ఆఫర్ లెటర్ எனக்கு వచ్చింది.",
+    scenario4: "రిజిస్ట్రేషన్ ఫీజు అడిగే నకిలీ ఉద్యోగ ఆఫర్ లెటర్ నాకు వచ్చింది.",
     continueBtn: "కొనసాగించండి →",
 
     findPathTitle: "సరైన నివేదిక మార్గాన్ని కనుగొనడంలో మేము మీకు సహాయం చేయగలము",
@@ -715,6 +794,19 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     catJobDesc: "నకిలీ ఉద్యోగ ఆఫర్లు లేదా రిజిస్ట్రేషన్ ఫీజుల పేరుతో జరిగే మోసాల కోసం ఈ మార్గం.",
     catOtherTitle: "ఇతర సైబర్ నేరాలు",
     catOtherDesc: "మేము నిర్దిష్ట మార్గాన్ని గురించలేకపోయాము. మీరు మీ వివరాలను సమీక్షించి క్రింది సరైన మార్గాన్ని ఎంచుకోవచ్చు.",
+
+    reviewTitle: "మేము గ్రహించిన వివరాలు ఇవిగో.",
+    reviewSubtitle: "మీ వివరాల నుండి మేము ముఖ్యమైన విషయాలను సేకరించాము. కొనసాగే ముందు దయచేసి జాగ్రత్తగా సమీక్షించండి.",
+    fieldIncident: "సంఘటన / సారాంశం",
+    fieldAmount: "బాధిత మొత్తం",
+    fieldMethod: "పద్ధతి / మార్గం",
+    fieldPath: "నివేదిక మార్గం",
+    saveFieldBtn: "సేవ్ చేయండి",
+    cancelFieldBtn: "రద్దు చేయండి",
+    confirmQuestion: "ఈ సమాచారం సరైనదేనా?",
+    confirmSubtitle: "మీరు ఇప్పుడు ఏ వివరాలనైనా సవరించవచ్చు లేదా తదుపరి దశకు వెళ్ళవచ్చు.",
+    backToPathBtn: "← నివేదిక మార్గానికి తిరిగి వెళ్ళండి",
+    yesContinueBtn: "అవును, కొనసాగించండి →",
 
     footerNotice: "ఈ వెబ్‌సైట్ పరిశోధన మరియు మూల్యాంకన అవసరాల కోసం రూపొందించబడిన UX ప్రోటోటైప్ మాత్రమే. అధికారిక నమోదు కోసం కాదు.",
     footerGovInfo: "జాతీయ సైబర్ నేరాల నివేదిక పోర్టల్ | హోం వ్యవహారాల మంత్రిత్వ శాఖ, భారత ప్రభుత్వం",

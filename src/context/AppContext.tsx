@@ -30,20 +30,26 @@ export interface AppContextType {
   resetAccessibility: () => void;
   lastSavedTime: string | null;
 
-  // Complaint & Router State
+  // Complaint, Router & Extracted State
   complaintText: string;
   setComplaintText: (text: string) => void;
   voiceTranscript: string;
   setVoiceTranscript: (transcript: string) => void;
   selectedCategory: CategoryId | null;
   setSelectedCategory: (cat: CategoryId | null) => void;
+  extractedIncident: string;
+  setExtractedIncident: (incident: string) => void;
+  extractedAmount: string;
+  setExtractedAmount: (amount: string) => void;
+  extractedMethod: string;
+  setExtractedMethod: (method: string) => void;
   saveDraft: (additionalData?: any) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const STORAGE_KEY_SETTINGS = 'ncrp_prototype_settings';
-const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v3';
+const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v4';
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<LanguageCode>('en');
@@ -58,10 +64,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [lastSavedTime, setLastSavedTime] = useState<string | null>(null);
 
-  // Complaint & Router state
+  // Complaint, Router & Extraction state
   const [complaintText, setComplaintTextState] = useState<string>('');
   const [voiceTranscript, setVoiceTranscriptState] = useState<string>('');
   const [selectedCategory, setSelectedCategoryState] = useState<CategoryId | null>(null);
+  const [extractedIncident, setExtractedIncidentState] = useState<string>('');
+  const [extractedAmount, setExtractedAmountState] = useState<string>('');
+  const [extractedMethod, setExtractedMethodState] = useState<string>('');
 
   // Load saved settings & draft from localStorage
   useEffect(() => {
@@ -82,6 +91,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         if (parsedDraft.complaintText) setComplaintTextState(parsedDraft.complaintText);
         if (parsedDraft.voiceTranscript) setVoiceTranscriptState(parsedDraft.voiceTranscript);
         if (parsedDraft.selectedCategory) setSelectedCategoryState(parsedDraft.selectedCategory);
+        if (parsedDraft.extractedIncident) setExtractedIncidentState(parsedDraft.extractedIncident);
+        if (parsedDraft.extractedAmount) setExtractedAmountState(parsedDraft.extractedAmount);
+        if (parsedDraft.extractedMethod) setExtractedMethodState(parsedDraft.extractedMethod);
         if (parsedDraft.currentPage) setCurrentPage(parsedDraft.currentPage);
         if (parsedDraft.savedAt) setLastSavedTime(parsedDraft.savedAt);
       }
@@ -98,6 +110,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         complaintText,
         voiceTranscript,
         selectedCategory,
+        extractedIncident,
+        extractedAmount,
+        extractedMethod,
         currentPage,
         language,
         savedAt: timestamp,
@@ -110,10 +125,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   useEffect(() => {
-    if (complaintText || selectedCategory) {
+    if (complaintText || selectedCategory || extractedIncident) {
       saveDraft();
     }
-  }, [complaintText, selectedCategory]);
+  }, [complaintText, selectedCategory, extractedIncident, extractedAmount, extractedMethod]);
 
   const setLanguage = (lang: LanguageCode) => {
     setLanguageState(lang);
@@ -129,6 +144,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const setSelectedCategory = (cat: CategoryId | null) => {
     setSelectedCategoryState(cat);
+  };
+
+  const setExtractedIncident = (incident: string) => {
+    setExtractedIncidentState(incident);
+  };
+
+  const setExtractedAmount = (amount: string) => {
+    setExtractedAmountState(amount);
+  };
+
+  const setExtractedMethod = (method: string) => {
+    setExtractedMethodState(method);
   };
 
   const resetAccessibility = () => {
@@ -170,6 +197,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setVoiceTranscript,
       selectedCategory,
       setSelectedCategory,
+      extractedIncident,
+      setExtractedIncident,
+      extractedAmount,
+      setExtractedAmount,
+      extractedMethod,
+      setExtractedMethod,
       saveDraft
     }}>
       {children}
