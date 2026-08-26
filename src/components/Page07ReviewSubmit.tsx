@@ -75,7 +75,7 @@ export const Page07ReviewSubmit: React.FC = () => {
       <div className="relative z-10 flex-1 flex flex-col justify-between">
         <ProgressStepper activeStep={6} />
 
-        <main className="max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8 flex-1 flex flex-col justify-between">
+        <main className="max-w-2xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8 flex-1 flex flex-col justify-between">
           
           <div className="space-y-6">
             {/* Header Title & Subtitle */}
