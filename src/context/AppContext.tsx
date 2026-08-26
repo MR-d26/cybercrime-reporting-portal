@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { LanguageCode, TRANSLATIONS, TranslationSchema } from '../i18n/translations';
+import { CategoryId } from '../utils/complaintRouter';
 
 export type FontScale = 'sm' | 'normal' | 'lg' | 'xl';
 export type ContrastMode = 'normal' | 'high-light' | 'high-dark';
@@ -29,18 +30,20 @@ export interface AppContextType {
   resetAccessibility: () => void;
   lastSavedTime: string | null;
 
-  // Page 02 State & Persistence
+  // Complaint & Router State
   complaintText: string;
   setComplaintText: (text: string) => void;
   voiceTranscript: string;
   setVoiceTranscript: (transcript: string) => void;
+  selectedCategory: CategoryId | null;
+  setSelectedCategory: (cat: CategoryId | null) => void;
   saveDraft: (additionalData?: any) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const STORAGE_KEY_SETTINGS = 'ncrp_prototype_settings';
-const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v2';
+const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v3';
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<LanguageCode>('en');
@@ -55,9 +58,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [lastSavedTime, setLastSavedTime] = useState<string | null>(null);
 
-  // Complaint state for Page 02
+  // Complaint & Router state
   const [complaintText, setComplaintTextState] = useState<string>('');
   const [voiceTranscript, setVoiceTranscriptState] = useState<string>('');
+  const [selectedCategory, setSelectedCategoryState] = useState<CategoryId | null>(null);
 
   // Load saved settings & draft from localStorage
   useEffect(() => {
@@ -77,6 +81,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         const parsedDraft = JSON.parse(savedDraft);
         if (parsedDraft.complaintText) setComplaintTextState(parsedDraft.complaintText);
         if (parsedDraft.voiceTranscript) setVoiceTranscriptState(parsedDraft.voiceTranscript);
+        if (parsedDraft.selectedCategory) setSelectedCategoryState(parsedDraft.selectedCategory);
         if (parsedDraft.currentPage) setCurrentPage(parsedDraft.currentPage);
         if (parsedDraft.savedAt) setLastSavedTime(parsedDraft.savedAt);
       }
@@ -92,6 +97,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       localStorage.setItem(STORAGE_KEY_DRAFT, JSON.stringify({
         complaintText,
         voiceTranscript,
+        selectedCategory,
         currentPage,
         language,
         savedAt: timestamp,
@@ -103,12 +109,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
-  // Sync draft when complaintText or voiceTranscript changes
   useEffect(() => {
-    if (complaintText || voiceTranscript) {
+    if (complaintText || selectedCategory) {
       saveDraft();
     }
-  }, [complaintText, voiceTranscript]);
+  }, [complaintText, selectedCategory]);
 
   const setLanguage = (lang: LanguageCode) => {
     setLanguageState(lang);
@@ -120,6 +125,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const setVoiceTranscript = (transcript: string) => {
     setVoiceTranscriptState(transcript);
+  };
+
+  const setSelectedCategory = (cat: CategoryId | null) => {
+    setSelectedCategoryState(cat);
   };
 
   const resetAccessibility = () => {
@@ -159,6 +168,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setComplaintText,
       voiceTranscript,
       setVoiceTranscript,
+      selectedCategory,
+      setSelectedCategory,
       saveDraft
     }}>
       {children}

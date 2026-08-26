@@ -3,7 +3,8 @@ import { AppProvider, useApp } from './context/AppContext';
 import { Header } from './components/Header';
 import { WelcomeHero } from './components/WelcomeHero';
 import { Page02TellUs } from './components/Page02TellUs';
-import { Page03Placeholder } from './components/Page03Placeholder';
+import { Page03FindPath } from './components/Page03FindPath';
+import { Page04Placeholder } from './components/Page04Placeholder';
 import { Footer } from './components/Footer';
 import { AccessibilityModal } from './components/AccessibilityModal';
 import { MenuModal } from './components/MenuModal';
@@ -46,7 +47,8 @@ const MainLayout: React.FC = () => {
       <main className="flex-1 flex flex-col">
         {currentPage === 1 && <WelcomeHero />}
         {currentPage === 2 && <Page02TellUs />}
-        {currentPage >= 3 && <Page03Placeholder />}
+        {currentPage === 3 && <Page03FindPath />}
+        {currentPage >= 4 && <Page04Placeholder />}
       </main>
 
       {/* Government Portal Footer */}

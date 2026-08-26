@@ -2,16 +2,19 @@ import React from 'react';
 import { useApp } from '../context/AppContext';
 import { CheckCircle } from 'lucide-react';
 
-export const ProgressStepper: React.FC = () => {
-  const { t, lastSavedTime } = useApp();
+export const ProgressStepper: React.FC<{ activeStep?: number }> = ({ activeStep = 1 }) => {
+  const { t, lastSavedTime, currentPage } = useApp();
+
+  // If activeStep prop is omitted, infer from currentPage
+  const stepNum = activeStep || (currentPage >= 3 ? 2 : 1);
 
   const steps = [
-    { number: 1, label: t.step1Label, active: true },
-    { number: 2, label: t.step2Label, active: false },
-    { number: 3, label: t.step3Label, active: false },
-    { number: 4, label: t.step4Label, active: false },
-    { number: 5, label: t.step5Label, active: false },
-    { number: 6, label: t.step6Label, active: false },
+    { number: 1, label: t.step1Label, active: stepNum === 1 },
+    { number: 2, label: t.step2Label, active: stepNum === 2 },
+    { number: 3, label: t.step3Label, active: stepNum === 3 },
+    { number: 4, label: t.step4Label, active: stepNum === 4 },
+    { number: 5, label: t.step5Label, active: stepNum === 5 },
+    { number: 6, label: t.step6Label, active: stepNum === 6 },
   ];
 
   return (

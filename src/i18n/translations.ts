@@ -76,6 +76,31 @@ export interface TranslationSchema {
   scenario4: string;
   continueBtn: string;
 
+  // Page 03 Find The Right Path
+  findPathTitle: string;
+  findPathSubtitle: string;
+  suggestedBadge: string;
+  basedOnStory: string;
+  guidanceNotice: string;
+  yourStoryTitle: string;
+  editStoryBtn: string;
+  continueWithPathBtn: string;
+  chooseDifferentPathBtn: string;
+  hideDifferentPathBtn: string;
+  selectCategoryPrompt: string;
+
+  // Category Titles & Descriptions
+  catFinancialTitle: string;
+  catFinancialDesc: string;
+  catAccountTitle: string;
+  catAccountDesc: string;
+  catHarassmentTitle: string;
+  catHarassmentDesc: string;
+  catJobTitle: string;
+  catJobDesc: string;
+  catOtherTitle: string;
+  catOtherDesc: string;
+
   // Footer & Modals
   footerNotice: string;
   footerGovInfo: string;
@@ -158,6 +183,29 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     scenario4: "I received a fake job offer letter asking for registration fees.",
     continueBtn: "Continue →",
 
+    findPathTitle: "We can help you find the right reporting path",
+    findPathSubtitle: "Based on what you told us, we've identified a possible reporting path. Please review it before continuing.",
+    suggestedBadge: "SUGGESTED REPORTING PATH",
+    basedOnStory: "Based on what you told us, this appears to relate to:",
+    guidanceNotice: "This is guidance only. You remain in control.",
+    yourStoryTitle: "Your story",
+    editStoryBtn: "Edit story",
+    continueWithPathBtn: "Continue with this path →",
+    chooseDifferentPathBtn: "Choose a different path",
+    hideDifferentPathBtn: "Hide path choices",
+    selectCategoryPrompt: "Select a reporting path that fits your complaint best:",
+
+    catFinancialTitle: "Financial Fraud",
+    catFinancialDesc: "This path is for cases where money was lost or someone attempted to obtain money through a digital payment, bank account, UPI, payment link, or similar method.",
+    catAccountTitle: "Online / Account Fraud",
+    catAccountDesc: "This path is for cases where a social media, email, or digital account was compromised or someone is impersonating you online.",
+    catHarassmentTitle: "Cyber Harassment",
+    catHarassmentDesc: "This path is for cases involving online threats, blackmail, harassment, abusive messages, or unauthorized sharing of private media.",
+    catJobTitle: "Online Job / Employment Fraud",
+    catJobDesc: "This path is for cases where fake job offers, recruitment scams, or work-from-home tasks requested upfront registration fees.",
+    catOtherTitle: "Other Cybercrime",
+    catOtherDesc: "We couldn't confidently identify a specific reporting path. You can review your story or choose the closest option below.",
+
     footerNotice: "This website is a UX prototype for research and evaluation purposes only. Not for official filing.",
     footerGovInfo: "National Cyber Crime Reporting Portal | Ministry of Home Affairs, Government of India",
     accessibilityTitle: "Accessibility Controls",
@@ -237,7 +285,30 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     scenario4: "मुझे एक फर्जी नौकरी का ऑफर लेटर मिला जिसमें पंजीकरण शुल्क मांगा गया।",
     continueBtn: "आगे बढ़ें →",
 
-    footerNotice: "यह वेबसाइट केवल अनुसंधान और मूल्यांकन उद्देश्यों के लिए एक यूएक्स प्रोटोटाइप है। यह आधिकारिक रिपोर्टिंग के लिए नहीं है।",
+    findPathTitle: "हम सही रिपोर्टिंग मार्ग खोजने में आपकी सहायता कर सकते हैं",
+    findPathSubtitle: "आपके विवरण के आधार पर, हमने एक संभावित रिपोर्टिंग मार्ग की पहचान की है। कृपया आगे बढ़ने से पहले इसकी समीक्षा करें।",
+    suggestedBadge: "सुझाया गया रिपोर्टिंग मार्ग",
+    basedOnStory: "आपके विवरण के आधार पर, यह संबंधित प्रतीत होता है:",
+    guidanceNotice: "यह केवल मार्गदर्शन है। आप नियंत्रण में रहते हैं।",
+    yourStoryTitle: "आपका विवरण",
+    editStoryBtn: "विवरण संपादित करें",
+    continueWithPathBtn: "इस मार्ग के साथ आगे बढ़ें →",
+    chooseDifferentPathBtn: "दूसरा मार्ग चुनें",
+    hideDifferentPathBtn: "विकल्प छिपाएं",
+    selectCategoryPrompt: "एक रिपोर्टिंग मार्ग चुनें जो आपकी शिकायत के सबसे अनुकूल हो:",
+
+    catFinancialTitle: "वित्तीय धोखाधड़ी (Financial Fraud)",
+    catFinancialDesc: "यह मार्ग उन मामलों के लिए है जहां डिजिटल भुगतान, बैंक खाते, UPI या भुगतान लिंक के माध्यम से पैसे का नुकसान हुआ है।",
+    catAccountTitle: "ऑनलाइन / अकाउंट धोखाधड़ी",
+    catAccountDesc: "यह मार्ग उन मामलों के लिए है जहां सोशल मीडिया या डिजिटल अकाउंट हैक हो गया है या कोई आपका नाम इस्तेमाल कर रहा है।",
+    catHarassmentTitle: "साइबर उत्पीड़न (Cyber Harassment)",
+    catHarassmentDesc: "यह मार्ग ऑनलाइन धमकी, ब्लैकमेल, उत्पीड़न या अनुचित संदेशों से संबंधित मामलों के लिए है।",
+    catJobTitle: "ऑनलाइन नौकरी धोखाधड़ी",
+    catJobDesc: "यह मार्ग फर्जी नौकरी के प्रस्तावों या वर्क-फ्रॉम-होम के नाम पर ली गई पंजीकरण फीस से संबंधित है।",
+    catOtherTitle: "अन्य साइबर अपराध",
+    catOtherDesc: "हम निश्चित रूप से किसी विशिष्ट श्रेणी की पहचान नहीं कर सके। आप अपना विवरण देख सकते हैं या नीचे उपयुक्त विकल्प चुन सकते हैं।",
+
+    footerNotice: "यह वेबसाइट केवल अनुसंधान और मूल्यांकन उद्देश्यों के लिए एक यूक्स प्रोटोटाइप है। यह आधिकारिक रिपोर्टिंग के लिए नहीं है।",
     footerGovInfo: "राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
     accessibilityTitle: "सुगम्यता नियंत्रण (Accessibility)",
     fontSizeLabel: "फ़ॉन्ट का आकार",
@@ -315,6 +386,29 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     scenario3: "माझे सोशल मीडिया अकाउंट हॅक झाले किंवा कोणीतरी बनावट प्रोफाइल बनवली.",
     scenario4: "मला नोंदणी शुल्काची मागणी करणारे बनावट नोकरीचे ऑफर लेटर मिळाले.",
     continueBtn: "पुढे जा →",
+
+    findPathTitle: "योग्य रिपोर्टिंग मार्ग शोधण्यात आम्ही मदत करू शकतो",
+    findPathSubtitle: "तुम्ही दिलेल्या माहितीच्या आधारे आम्ही एक संभाव्य मार्ग ओळखला आहे. पुढे जाण्यापूर्वी पुनरावलोकन करा.",
+    suggestedBadge: "सुचवलेला रिपोर्टिंग मार्ग",
+    basedOnStory: "तुमच्या तक्रारीनुसार, हे याशी संबंधित आहे:",
+    guidanceNotice: "हे केवळ मार्गदर्शक आहे. अंतिम निर्णय तुमचाच असेल.",
+    yourStoryTitle: "तुमची तक्रार",
+    editStoryBtn: "तक्रार संपादित करा",
+    continueWithPathBtn: "या मार्गाने पुढे जा →",
+    chooseDifferentPathBtn: "दूसरा मार्ग निवडा",
+    hideDifferentPathBtn: "पर्याय लपवा",
+    selectCategoryPrompt: "तुमच्या तक्रारीसाठी सर्वात योग्य मार्ग निवडा:",
+
+    catFinancialTitle: "आर्थिक फसवणूक (Financial Fraud)",
+    catFinancialDesc: "डिजिटल पेमेंट, बँक खाते, UPI किंवा पेमेंट लिंकद्वारे पैसे गमावलेल्या प्रकरणांसाठी हा मार्ग आहे.",
+    catAccountTitle: "ऑनलाईन / अकाउंट फसवणूक",
+    catAccountDesc: "सोशल मीडिया किंवा डिजिटल अकाउंट हॅक झाले असल्यास किंवा कोणीतरी तुमचे नाव वापरत असल्यास हा मार्ग वापरा.",
+    catHarassmentTitle: "सायबर छळ (Cyber Harassment)",
+    catHarassmentDesc: "ऑनलाईन धमक्या, ब्लॅकमेलिंग किंवा त्रासदायक संदेशांशी संबंधित प्रकरणांसाठी हा मार्ग आहे.",
+    catJobTitle: "ऑनलाईन नोकरी फसवणूक",
+    catJobDesc: "बनावट नोकरीच्या ऑफर किंवा वर्क-फ्रॉम-होम नोंदणी शुल्काशी संबंधित फसवणुकीसाठी हा मार्ग आहे.",
+    catOtherTitle: "इतर सायबर गुन्हे",
+    catOtherDesc: "आम्ही विशिष्ट मार्ग निश्चित करू शकलो नाही. तुम्ही तुमची तक्रार तपासून खालील योग्य पर्याय निवडू शकता.",
 
     footerNotice: "ही वेबसाइट केवळ संशोधन आणि मूल्यमापनासाठी एक UX प्रोटोटाइप आहे. अधिकृत तक्रारीसाठी नाही.",
     footerGovInfo: "राष्ट्रीय सायबर गुन्हे रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
@@ -395,6 +489,29 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     scenario4: "பதிவுக் கட்டணம் கேட்கும் போலி வேலை வாய்ப்பு கடிதம் எனக்கு வந்தது.",
     continueBtn: "தொடரவும் →",
 
+    findPathTitle: "சரியான புகாரளிக்கும் வழியைக் கண்டறிய நாங்கள் உதவுகிறோம்",
+    findPathSubtitle: "நீங்கள் கூறியதன் அடிப்படையில், சாத்தியமான புகாரளிப்பு வழியை நாங்கள் கண்டறிந்துள்ளோம். தொடர்வதற்கு முன் மதிப்பாய்வு செய்யவும்.",
+    suggestedBadge: "பரிந்துரைக்கப்பட்ட புகாரளிப்பு வழி",
+    basedOnStory: "உங்கள் விவரங்களின்படி, இது இதனுடன் தொடர்புடையது:",
+    guidanceNotice: "இது வழிகாட்டுதல் மட்டுமே. இறுதி முடிவு உங்களுடையதே.",
+    yourStoryTitle: "உங்கள் புகார் விவரம்",
+    editStoryBtn: "விவரத்தைத் திருத்து",
+    continueWithPathBtn: "இந்த வழியில் தொடரவும் →",
+    chooseDifferentPathBtn: "வேறு வழியைத் தேர்வு செய்க",
+    hideDifferentPathBtn: "தேர்வுகளை மறை",
+    selectCategoryPrompt: "உங்கள் புகாருக்கு மிகவும் பொருத்தமான வழியைத் தேர்ந்தெடுக்கவும்:",
+
+    catFinancialTitle: "நிதி மோசடி (Financial Fraud)",
+    catFinancialDesc: "டிஜிட்டல் கட்டணம், வங்கி கணக்கு அல்லது UPI மூலம் பணம் இழந்த வழக்குகளுக்கானது.",
+    catAccountTitle: "ஆன்லைன் கணக்கு மோசடி",
+    catAccountDesc: "சமூக ஊடகக் கணக்கு ஹேக் செய்யப்பட்ட அல்லது போலி சுயவிவர வழக்குகளுக்கானது.",
+    catHarassmentTitle: "இணைய துன்புறுத்தல்",
+    catHarassmentDesc: "ஆன்லைன் மிரட்டல்கள், அச்சுறுத்தல்கள் அல்லது தொல்லைகளுக்கானது.",
+    catJobTitle: "போலி வேலைவாய்ப்பு மோசடி",
+    catJobDesc: "போலி வேலை வாய்ப்புகள் அல்லது கட்டணம் கேட்ட வேலை மோசடிகளுக்கானது.",
+    catOtherTitle: "இதர இணையக் குற்றங்கள்",
+    catOtherDesc: "குறிப்பிட்ட வழியைக் கண்டறிய முடியவில்லை. உங்கள் புகாரை மதிப்பாய்வு செய்து கீழே தேர்வு செய்யவும்.",
+
     footerNotice: "இந்த இணையதளம் ஆராய்ச்சி மற்றும் மதிப்பீட்டு நோக்கங்களுக்கான UX மாதிரி மட்டுமே. அதிகாரப்பூர்வ தாக்கல் செய்ய அல்ல.",
     footerGovInfo: "தேசிய இணையக் குற்றப் புகாரளிப்பு தளம் | உள்துறை அமைச்சகம், இந்திய அரசு",
     accessibilityTitle: "அணுகல்தன்மை கட்டுப்பாடுகள்",
@@ -474,6 +591,29 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     scenario4: "আমি একটি ভুয়া চাকরির অফার লেটার পেয়েছি যেখানে রেজিস্ট্রেশন ফি চাওয়া হয়েছে।",
     continueBtn: "চালিয়ে যান →",
 
+    findPathTitle: "আমরা আপনাকে সঠিক রিপোর্টিং পথ খুঁজে পেতে সাহায্য করতে পারি",
+    findPathSubtitle: "আপনার দেওয়া তথ্যের ভিত্তিতে আমরা একটি সম্ভাব্য রিপোর্টিং পথ চিহ্নিত করেছি। এগিয়ে যাওয়ার আগে এটি পর্যালোচনা করুন।",
+    suggestedBadge: "সুপ্রস্তাবিত রিপোর্টিং পথ",
+    basedOnStory: "আপনার তথ্যের ভিত্তিতে এটি সম্পর্কিত বলে মনে হচ্ছে:",
+    guidanceNotice: "এটি কেবল একটি নির্দেশিকা। সিদ্ধান্ত আপনারই।",
+    yourStoryTitle: "আপনার বিবরণ",
+    editStoryBtn: "বিবরণ সম্পাদনা করুন",
+    continueWithPathBtn: "এই পথে এগিয়ে যান →",
+    chooseDifferentPathBtn: "অন্য পথ বেছে নিন",
+    hideDifferentPathBtn: "বিকল্পগুলো লুকান",
+    selectCategoryPrompt: "আপনার অভিযোগের জন্য সবচেয়ে উপযুক্ত একটি পথ বেছে নিন:",
+
+    catFinancialTitle: "আর্থিক জালিয়াতি (Financial Fraud)",
+    catFinancialDesc: "ডিজিটাল পেমেন্ট, ব্যাঙ্ক অ্যাকাউন্ট বা UPI এর মাধ্যমে অর্থ হারানো মামলার জন্য এই পথ।",
+    catAccountTitle: "অনলাইন / অ্যাকাউন্ট জালিয়াতি",
+    catAccountDesc: "সোশ্যাল মিডিয়া বা ডিজিটাল অ্যাকাউন্ট হ্যাক হওয়া মামলার জন্য এই পথ।",
+    catHarassmentTitle: "সাইবার হয়রানি (Cyber Harassment)",
+    catHarassmentDesc: "অনলাইন হুমকি, ব্ল্যাকমেইল বা হয়রানি সংক্রান্ত মামলার জন্য এই পথ।",
+    catJobTitle: "অনলাইন চাকরি জালিয়াতি",
+    catJobDesc: "ভুয়া চাকরির অফার বা কাজের নামে রেজিস্ট্রেশন ফি নেওয়ার জন্য এই পথ।",
+    catOtherTitle: "অন্যান্য সাইবার অপরাধ",
+    catOtherDesc: "আমরা নিশ্চিতভাবে নির্দিষ্ট পথ চিহ্নিত করতে পারিনি। আপনি নিচে সবচেয়ে নিকটতম বিকল্প বেছে নিতে পারেন।",
+
     footerNotice: "এই ওয়েবসাইটটি কেবল গবেষণা এবং মূল্যায়নের উদ্দেশ্যে একটি ইউএক্স প্রোটোটাইপ। এটি অফিসিয়াল দাখিলের জন্য নয়।",
     footerGovInfo: "জাতীয় সাইবার অপরাধ রিপোর্টিং পোর্টাল | স্বরাষ্ট্র মন্ত্রক, ভারত সরকার",
     accessibilityTitle: "অ্যাক্সেসিবিলিটি সেটিংস",
@@ -552,6 +692,29 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     scenario3: "నా సోషల్ మీడియా ఖాతా హ్యాక్ అయింది లేదా ఎవరైనా నకిలీ ప్రొఫైల్ సృష్టించారు.",
     scenario4: "రిజిస్ట్రేషన్ ఫీజు అడిగే నకిలీ ఉద్యోగ ఆఫర్ లెటర్ எனக்கு వచ్చింది.",
     continueBtn: "కొనసాగించండి →",
+
+    findPathTitle: "సరైన నివేదిక మార్గాన్ని కనుగొనడంలో మేము మీకు సహాయం చేయగలము",
+    findPathSubtitle: "మీరు చెప్పిన సమాచారం ఆధారంగా, మేము ఒక నివేదిక మార్గాన్ని గుర్తించాము. దయచేసి ముందుకు వెళ్లేముందు దానిని సమీక్షించండి.",
+    suggestedBadge: "సూచించబడిన నివేదిక మార్గం",
+    basedOnStory: "మీరు ఇచ్చిన సమాచారం ఆధారంగా, ఇది దీనికి సంబంధించినది:",
+    guidanceNotice: "ఇది మార్గదర్శకత్వం మాత్రమే. చివరి నిర్ణయం మీదే.",
+    yourStoryTitle: "మీ ఫిర్యాదు వివరాలు",
+    editStoryBtn: "వివరాలను సవరించండి",
+    continueWithPathBtn: "ఈ మార్గంలో కొనసాగించండి →",
+    chooseDifferentPathBtn: "వేరొక మార్గాన్ని ఎంచుకోండి",
+    hideDifferentPathBtn: "ఎంపికలను దాచండి",
+    selectCategoryPrompt: "మీ ఫిర్యాదుకు బాగా సరిపోయే నివేదిక మార్గాన్ని ఎంచుకోండి:",
+
+    catFinancialTitle: "ఆర్థిక మోసం (Financial Fraud)",
+    catFinancialDesc: "డిజిటల్ చెల్లింపులు, బ్యాంక్ ఖాతా లేదా UPI ద్వారా డబ్బు కోల్పోయిన కేసుల కోసం ఈ మార్గం.",
+    catAccountTitle: "ఆన్‌లైన్ / ఖాతా మోసం",
+    catAccountDesc: "సోషల్ మీడియా లేదా డిజిటల్ ఖాతా హ్యాక్ అయిన కేసుల కోసం ఈ మార్గం.",
+    catHarassmentTitle: "సైబర్ వేధింపులు (Cyber Harassment)",
+    catHarassmentDesc: "ఆన్‌లైన్ బెదిరింపులు, బ్లాక్‌మెయిలింగ్ లేదా వేధింపులకు సంబంధించిన కేసుల కోసం ఈ మార్గం.",
+    catJobTitle: "ఆన్‌లైన్ ఉద్యోగ మోసం",
+    catJobDesc: "నకిలీ ఉద్యోగ ఆఫర్లు లేదా రిజిస్ట్రేషన్ ఫీజుల పేరుతో జరిగే మోసాల కోసం ఈ మార్గం.",
+    catOtherTitle: "ఇతర సైబర్ నేరాలు",
+    catOtherDesc: "మేము నిర్దిష్ట మార్గాన్ని గురించలేకపోయాము. మీరు మీ వివరాలను సమీక్షించి క్రింది సరైన మార్గాన్ని ఎంచుకోవచ్చు.",
 
     footerNotice: "ఈ వెబ్‌సైట్ పరిశోధన మరియు మూల్యాంకన అవసరాల కోసం రూపొందించబడిన UX ప్రోటోటైప్ మాత్రమే. అధికారిక నమోదు కోసం కాదు.",
     footerGovInfo: "జాతీయ సైబర్ నేరాల నివేదిక పోర్టల్ | హోం వ్యవహారాల మంత్రిత్వ శాఖ, భారత ప్రభుత్వం",
