@@ -3,7 +3,6 @@ import { CategoryId } from '../utils/complaintRouter';
 export interface GeminiAnalysisResult {
   suggestedCategory: string;
   explanation: string;
-  confidence?: 'high' | 'medium' | 'low';
   whatHappened: string;
   amount: string | null;
   date: string | null;
@@ -27,11 +26,12 @@ export interface GeminiAnalysisResult {
 export const mapCategoryNameToId = (categoryName: string): CategoryId => {
   const lower = (categoryName || '').toLowerCase();
   
-  // 1. Account / Identity Takeover Check (Must take precedence over financial keywords if account takeover occurred)
+  // 1. Account / Identity Takeover / Identity Theft Check
   if (
     lower.includes('account') ||
     lower.includes('identity') ||
     lower.includes('takeover') ||
+    lower.includes('theft') ||
     lower.includes('instagram') ||
     lower.includes('facebook') ||
     lower.includes('whatsapp') ||
@@ -43,7 +43,7 @@ export const mapCategoryNameToId = (categoryName: string): CategoryId => {
     return 'account_identity';
   }
 
-  // 2. Harassment Check
+  // 2. Cyber Harassment / Online Abuse Check
   if (
     lower.includes('harassment') ||
     lower.includes('threat') ||
@@ -55,7 +55,7 @@ export const mapCategoryNameToId = (categoryName: string): CategoryId => {
     return 'harassment';
   }
 
-  // 3. Job Fraud Check
+  // 3. Online Job / Employment Fraud Check
   if (
     lower.includes('job') ||
     lower.includes('employment') ||
@@ -65,13 +65,16 @@ export const mapCategoryNameToId = (categoryName: string): CategoryId => {
     return 'job_fraud';
   }
 
-  // 4. Financial Fraud Check
+  // 4. Financial Fraud / Shopping / Lottery Scam Check
   if (
     lower.includes('financial') ||
+    lower.includes('shopping') ||
+    lower.includes('e-commerce') ||
     lower.includes('money') ||
     lower.includes('upi') ||
     lower.includes('bank') ||
     lower.includes('payment') ||
+    lower.includes('lottery') ||
     lower.includes('deducted') ||
     lower.includes('card')
   ) {
@@ -124,7 +127,6 @@ export const analyzeComplaintWithGemini = async (
   return {
     suggestedCategory: categoryName,
     explanation: analysis.explanation || "Based on what you described, this path fits your complaint best.",
-    confidence: analysis.confidence || 'medium',
     whatHappened: analysis.whatHappened || complaintText,
     amount: analysis.amount || null,
     date: analysis.date || null,

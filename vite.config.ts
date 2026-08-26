@@ -145,7 +145,7 @@ function serverApiPlugin(): Plugin {
           const apiKey = env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
 
           const isApiKeyConfigured = !!apiKey && apiKey.trim().length > 0;
-          console.log(`[Gemini Proxy Debug] Request received. Gemini API Key configured: ${isApiKeyConfigured}`);
+          console.log(`[Gemini Proxy Debug] Gemini API key configured: ${isApiKeyConfigured}`);
 
           // Parse incoming JSON body
           const chunks: Buffer[] = [];
@@ -156,7 +156,8 @@ function serverApiPlugin(): Plugin {
           const requestBody = JSON.parse(bodyString || '{}');
           const complaintText = requestBody.text || '';
 
-          console.log(`[Gemini Proxy Debug] Received text length: ${complaintText.length} chars`);
+          console.log(`[Gemini Proxy Debug] Gemini request received: true`);
+          console.log(`[Gemini Proxy Debug] Text length: ${complaintText.length} chars`);
 
           if (!complaintText.trim()) {
             res.statusCode = 400;
@@ -166,7 +167,7 @@ function serverApiPlugin(): Plugin {
           }
 
           if (!isApiKeyConfigured) {
-            console.warn('[Gemini Proxy Debug] Warning: GEMINI_API_KEY is not set.');
+            console.warn('[Gemini Proxy Debug] Error: GEMINI_API_KEY is not set in environment.');
             res.statusCode = 400;
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify({
@@ -176,46 +177,50 @@ function serverApiPlugin(): Plugin {
             return;
           }
 
-          const systemInstruction = `You are an assistant helping citizens navigate a cybercrime reporting service.
-Your job is to understand the citizen's own description (in Hindi, English, Marathi, Tamil, Bengali, Telugu or mixed languages) and extract structured information into form fields.
-You are not a legal authority. Never determine severity, priority, legal validity, authenticity, or police action.
-STRICT EXTRACTION RULE: Only extract information EXPLICITLY present in the user's text. If a field is not mentioned, return null. DO NOT guess, fabricate, or infer dates, usernames, transaction IDs, or platforms if unmentioned.
+          const systemInstruction = `You are an assistant helping citizens navigate a national cybercrime reporting service.
+Your job is to analyze the citizen's description of what happened (which may be in Hindi, English, Marathi, Tamil, Bengali, Telugu or mixed languages), understand the situation, suggest the single most appropriate reporting category, and extract key details into structured form fields.
 
-CRITICAL CATEGORY SELECTION RULE:
-The suggestedCategory MUST be EXACTLY ONE of the following 5 strings:
-1. "Account Takeover / Identity Related Cybercrime" -> Use when an Instagram, Facebook, WhatsApp, email, or social media account was hacked, compromised, locked, password changed, or credentials stolen, even if the hacker later requests money from friends.
-2. "Financial Fraud" -> Use when money was lost or stolen via bank account, UPI, payment link, QR code, fake electricity bill payment, or credit/debit card.
-3. "Cyber Harassment / Online Abuse" -> Use for online threats, blackmail, stalking, abusive messages, or extortion.
-4. "Online Job / Employment Fraud" -> Use for fake job offers, recruitment scams, or work-from-home registration fee demands.
-5. "Other Cybercrime" -> Use if none of the above categories fit.
+YOU ARE NOT A LEGAL AUTHORITY.
+DO NOT assign priority, urgency, critical score, severity score, risk probability, fraud score, or legal validity.
+Suggestions must be presented strictly as guidance.
+
+CATEGORY SELECTION RULE:
+The suggestedCategory MUST be EXACTLY ONE of the following 5 allowed application categories:
+1. "Financial Fraud" -> Use when money, bank accounts, UPI, payment links, fake online shopping payments, card theft, lottery fee scams, or financial loss is involved.
+2. "Account Takeover / Identity Related Cybercrime" -> Use when social media (Instagram, Facebook, WhatsApp), email, or online accounts are hacked, compromised, locked, password changed, or credentials stolen.
+3. "Cyber Harassment / Online Abuse" -> Use for online threats, blackmail, stalking, abusive messages, extortion, or non-consensual image sharing.
+4. "Online Job / Employment Fraud" -> Use for fake job offers, work-from-home scams, or recruitment fee demands.
+5. "Other Cybercrime" -> Use if none of the above fit.
+
+STRICT EXTRACTION RULE: Only extract information EXPLICITLY present in the text. Return null for unmentioned fields.
 
 Return ONLY valid JSON matching this exact schema:
 {
-  "suggestedCategory": "Account Takeover / Identity Related Cybercrime" | "Financial Fraud" | "Cyber Harassment / Online Abuse" | "Online Job / Employment Fraud" | "Other Cybercrime",
-  "explanation": "string explaining in simple language why this path fits the complaint",
-  "confidence": "high" | "medium" | "low",
+  "suggestedCategory": "Financial Fraud" | "Account Takeover / Identity Related Cybercrime" | "Cyber Harassment / Online Abuse" | "Online Job / Employment Fraud" | "Other Cybercrime",
+  "explanation": "string explaining in 1-2 clear sentences why this reporting category fits what happened",
+  "needsConfirmation": true,
   "whatHappened": "short summary string of incident",
   "amount": "string amount e.g. ₹10,000" | null,
   "date": "YYYY-MM-DD" | null,
   "time": "HH:MM" | null,
-  "method": "string method e.g. Phishing link / SMS" | null,
-  "platform": "Instagram" | "WhatsApp" | "Facebook" | "PhonePe" | null,
-  "suspectUsername": "@username or handle mentioned" | null,
-  "suspectProfileUrl": "http... URL mentioned" | null,
-  "phoneNumber": "contact phone number mentioned" | null,
-  "email": "email mentioned" | null,
-  "transactionId": "UTR / Txn ID mentioned" | null,
-  "bank": "Bank or Payment app mentioned e.g. SBI, Paytm" | null,
-  "upiId": "UPI handle mentioned" | null,
-  "website": "website URL mentioned" | null,
-  "companyName": "company or suspect name mentioned" | null,
+  "method": "string method e.g. E-commerce website / UPI payment" | null,
+  "platform": "Website / App name mentioned" | null,
+  "suspectUsername": "@username or handle" | null,
+  "suspectProfileUrl": "http... URL" | null,
+  "phoneNumber": "contact phone number" | null,
+  "email": "email address" | null,
+  "transactionId": "UTR / Txn ID" | null,
+  "bank": "Bank or Payment app e.g. SBI, PhonePe" | null,
+  "upiId": "UPI handle" | null,
+  "website": "website URL" | null,
+  "companyName": "company name" | null,
   "missingInformation": ["string description of helpful missing info"],
   "helpfulEvidence": ["string suggestion of helpful evidence"]
 }`;
 
-          // Correct Gemini REST API endpoints: gemini-2.0-flash (primary), gemini-1.5-flash (fallback)
-          const primaryEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey.trim()}`;
-          const fallbackEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey.trim()}`;
+          // Active Gemini models: gemini-3.6-flash (primary), gemini-3.5-flash (fallback)
+          const primaryEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey.trim()}`;
+          const fallbackEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey.trim()}`;
 
           const payload = {
             systemInstruction: {
@@ -233,23 +238,23 @@ Return ONLY valid JSON matching this exact schema:
             }
           };
 
-          console.log(`[Gemini Proxy Debug] Sending POST to Gemini API (gemini-2.0-flash)...`);
+          console.log(`[Gemini Proxy Debug] Sending POST to Gemini API (model: gemini-3.6-flash)...`);
           let response = await fetch(primaryEndpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
           });
 
-          console.log(`[Gemini Proxy Debug] gemini-2.0-flash HTTP Status: ${response.status}`);
+          console.log(`[Gemini Proxy Debug] gemini-3.6-flash HTTP status: ${response.status}`);
 
           if (!response.ok) {
-            console.warn(`[Gemini Proxy Debug] Model gemini-2.0-flash returned status ${response.status}. Retrying gemini-1.5-flash...`);
+            console.warn(`[Gemini Proxy Debug] Primary model gemini-3.6-flash returned status ${response.status}. Retrying fallback gemini-3.5-flash...`);
             response = await fetch(fallbackEndpoint, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(payload)
             });
-            console.log(`[Gemini Proxy Debug] gemini-1.5-flash HTTP Status: ${response.status}`);
+            console.log(`[Gemini Proxy Debug] gemini-3.5-flash HTTP status: ${response.status}`);
           }
 
           const responseText = await response.text();
@@ -264,7 +269,7 @@ Return ONLY valid JSON matching this exact schema:
 
           const geminiData = JSON.parse(responseText);
           const candidateText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
-          console.log(`[Gemini Proxy Debug] Candidate text received:`, candidateText);
+          console.log(`[Gemini Proxy Debug] Candidate JSON text received:`, candidateText);
 
           let parsedStructuredOutput = null;
           try {
