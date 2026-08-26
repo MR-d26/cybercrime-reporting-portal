@@ -2,13 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { LANGUAGES, LanguageCode } from '../i18n/translations';
 import { AshokaEmblemSVG, I4CLogoSVG } from './Emblems';
-import { PhoneCall, Globe, Accessibility, Menu, ChevronDown, Check } from 'lucide-react';
+import { Home, PhoneCall, Globe, Accessibility, Menu, ChevronDown, Check } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const {
     t,
     language,
     setLanguage,
+    setCurrentPage,
     setIsAccessibilityModalOpen,
     setIsMenuModalOpen
   } = useApp();
@@ -53,58 +54,77 @@ export const Header: React.FC = () => {
 
       {/* 2. Official Header Row */}
       <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-4">
-        {/* Left Branding Group */}
-        <div className="flex items-center gap-3 md:gap-5">
-          {/* Official Government Emblem Asset from UXDT NIC India */}
-          <div className="flex items-center gap-2.5">
-            {!emblemError ? (
-              <img
-                src="https://www.uxdt.nic.in/wp-content/uploads/2019/12/emblem-dark.png"
-                alt="State Emblem of India"
-                className="h-10 md:h-12 w-auto object-contain shrink-0"
-                onError={() => setEmblemError(true)}
-              />
-            ) : (
-              <AshokaEmblemSVG className="w-7 h-10 md:w-9 md:h-12 shrink-0" />
-            )}
-            <div className="hidden sm:block text-left border-r border-gray-300 pr-3 md:pr-4">
-              <span className="block text-[10px] md:text-[11px] font-black tracking-wider text-gov-navy uppercase leading-tight">
-                {t.govTitle}
-              </span>
-              <span className="block text-[10px] md:text-[11px] text-gray-600 font-semibold leading-tight">
-                {t.govMinistry}
+        {/* Left Branding Group & Direct Page 1 Home Button */}
+        <div className="flex items-center gap-3 md:gap-4">
+          {/* Top Left Direct Home Button (Page 1) */}
+          <button
+            type="button"
+            onClick={() => setCurrentPage(1)}
+            title="Go directly to Page 1 (Home)"
+            className="flex items-center gap-1.5 bg-[#0F2540] hover:bg-[#1A365D] text-white font-bold px-2.5 sm:px-3 py-1.5 rounded-lg text-xs transition-all shadow-xs shrink-0 cursor-pointer active:scale-95"
+          >
+            <Home className="w-4 h-4 text-amber-300" />
+            <span className="hidden xs:inline sm:inline">Home</span>
+          </button>
+
+          {/* Clickable Government Emblem & Portal Title (Navigates to Page 1) */}
+          <button
+            type="button"
+            onClick={() => setCurrentPage(1)}
+            title="Go to Welcome / Page 1"
+            className="flex items-center gap-3 md:gap-4 cursor-pointer hover:opacity-90 transition-opacity text-left outline-none"
+          >
+            {/* Official Government Emblem Asset */}
+            <div className="flex items-center gap-2.5">
+              {!emblemError ? (
+                <img
+                  src="https://www.uxdt.nic.in/wp-content/uploads/2019/12/emblem-dark.png"
+                  alt="State Emblem of India"
+                  className="h-10 md:h-12 w-auto object-contain shrink-0"
+                  onError={() => setEmblemError(true)}
+                />
+              ) : (
+                <AshokaEmblemSVG className="w-7 h-10 md:w-9 md:h-12 shrink-0" />
+              )}
+              <div className="hidden sm:block text-left border-r border-gray-300 pr-3 md:pr-4">
+                <span className="block text-[10px] md:text-[11px] font-black tracking-wider text-gov-navy uppercase leading-tight">
+                  {t.govTitle}
+                </span>
+                <span className="block text-[10px] md:text-[11px] text-gray-600 font-semibold leading-tight">
+                  {t.govMinistry}
+                </span>
+              </div>
+            </div>
+
+            {/* Official I4C / ICCCC Logo Asset */}
+            <div className="flex items-center gap-2 border-r border-gray-300 pr-3 md:pr-4">
+              {!i4cLogoError ? (
+                <img
+                  src="https://www.uxdt.nic.in/wp-content/uploads/2024/02/icccc-logo-preview.png"
+                  alt="Indian Cybercrime Coordination Centre (I4C)"
+                  className="h-8 sm:h-9 md:h-11 w-auto object-contain shrink-0"
+                  onError={() => setI4cLogoError(true)}
+                />
+              ) : (
+                <I4CLogoSVG className="w-8 h-8 md:w-10 md:h-10 shrink-0" />
+              )}
+              <div className="hidden lg:block text-left">
+                <span className="block text-[11px] font-bold text-gov-navy leading-tight">
+                  {t.i4cTitle}
+                </span>
+              </div>
+            </div>
+
+            {/* Portal Title & UX Prototype Badge */}
+            <div className="text-left">
+              <h1 className="text-base sm:text-lg md:text-xl font-extrabold text-gov-navy leading-tight">
+                {t.portalName}
+              </h1>
+              <span className="inline-block bg-[#E65100] text-white text-[9px] font-bold px-1.5 py-0.2 rounded uppercase tracking-wider mt-0.5">
+                {t.uxPrototype}
               </span>
             </div>
-          </div>
-
-          {/* Official I4C / ICCCC Logo Asset from UXDT NIC India */}
-          <div className="flex items-center gap-2 border-r border-gray-300 pr-3 md:pr-4">
-            {!i4cLogoError ? (
-              <img
-                src="https://www.uxdt.nic.in/wp-content/uploads/2024/02/icccc-logo-preview.png"
-                alt="Indian Cybercrime Coordination Centre (I4C)"
-                className="h-8 sm:h-9 md:h-11 w-auto object-contain shrink-0"
-                onError={() => setI4cLogoError(true)}
-              />
-            ) : (
-              <I4CLogoSVG className="w-8 h-8 md:w-10 md:h-10 shrink-0" />
-            )}
-            <div className="hidden lg:block text-left">
-              <span className="block text-[11px] font-bold text-gov-navy leading-tight">
-                {t.i4cTitle}
-              </span>
-            </div>
-          </div>
-
-          {/* Portal Title & UX Prototype Badge */}
-          <div className="text-left">
-            <h1 className="text-base sm:text-lg md:text-xl font-extrabold text-gov-navy leading-tight">
-              {t.portalName}
-            </h1>
-            <span className="inline-block bg-[#E65100] text-white text-[9px] font-bold px-1.5 py-0.2 rounded uppercase tracking-wider mt-0.5">
-              {t.uxPrototype}
-            </span>
-          </div>
+          </button>
         </div>
 
         {/* Right Header Action Controls */}
