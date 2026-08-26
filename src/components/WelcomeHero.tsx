@@ -1,6 +1,6 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
-import { NamasteCitizenSVG, IndiaGateWatermarkSVG, AshokaChakraWatermarkSVG } from './Emblems';
+import { NamasteCitizenSVG } from './Emblems';
 import { ReassuranceCards } from './ReassuranceCards';
 import { ArrowRight, Lock } from 'lucide-react';
 
@@ -16,20 +16,15 @@ export const WelcomeHero: React.FC = () => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#FAF9F6] pt-5 pb-6 md:pt-7 md:pb-7 px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-between">
-      {/* 1. Indian Visual Identity Background Motifs */}
-      {/* Subtle Saffron Accent Gradient at top left - 3-5% Opacity */}
-      <div className="absolute top-0 left-0 w-80 h-36 bg-gradient-to-br from-[#E65100]/10 via-amber-400/5 to-transparent rounded-br-full pointer-events-none -translate-x-8 -translate-y-8 blur-xl" />
-      
-      {/* Ashoka Chakra Watermark Center Background - 3.5% Opacity */}
-      <div className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-        <AshokaChakraWatermarkSVG className="w-[420px] h-[420px] md:w-[540px] md:h-[540px]" />
-      </div>
-
-      {/* India Gate Architectural Silhouette Watermark Right Background */}
-      <div className="absolute right-0 top-0 w-full max-w-md h-full pointer-events-none flex justify-end items-center opacity-80">
-        <IndiaGateWatermarkSVG className="w-full h-auto max-h-[400px]" />
-      </div>
+    <section className="relative overflow-hidden bg-[#FAF9F6] pt-6 pb-6 md:pt-8 md:pb-8 px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-between">
+      {/* 1. Official Approved Background Image Asset */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-85"
+        style={{ backgroundImage: "url('/images/indian-cybercrime-background.png')" }}
+        aria-hidden="true"
+      />
+      {/* Soft warm overlay to ensure 100% text readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6]/90 via-[#FAF9F6]/75 to-transparent pointer-events-none" aria-hidden="true" />
 
       {/* 2. Main Welcome Content Container */}
       <div className="max-w-7xl mx-auto w-full relative z-10 my-auto">
@@ -55,7 +50,7 @@ export const WelcomeHero: React.FC = () => {
             </p>
 
             {/* Core UX Explanation Paragraph: 16-18px */}
-            <p className="text-base sm:text-lg md:text-[17px] text-gray-700 leading-relaxed max-w-2xl font-normal">
+            <p className="text-base sm:text-lg md:text-[17px] text-gray-800 leading-relaxed max-w-2xl font-medium">
               {t.welcomeExplanation}
             </p>
 
@@ -71,16 +66,16 @@ export const WelcomeHero: React.FC = () => {
               </button>
 
               {/* Micro-trust indicator below button */}
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 font-medium pt-1">
-                <Lock className="w-4 h-4 text-emerald-700 shrink-0" />
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700 font-semibold pt-1">
+                <Lock className="w-4 h-4 text-emerald-800 shrink-0" />
                 <span>{t.trustBadge}</span>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Secondary Namaste Citizen SVG (Reduced Size, Non-dominant) */}
+          {/* Right Column: Secondary Namaste Citizen SVG (Secondary to Government Identity & Background) */}
           <div className="lg:col-span-4 flex justify-center lg:justify-end relative">
-            <div className="w-full max-w-[220px] sm:max-w-[250px] lg:max-w-[270px]">
+            <div className="w-full max-w-[210px] sm:max-w-[240px] lg:max-w-[260px]">
               <NamasteCitizenSVG className="w-full h-auto drop-shadow-xs" />
             </div>
           </div>
