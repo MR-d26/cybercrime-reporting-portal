@@ -14,7 +14,8 @@ export const Header: React.FC = () => {
   } = useApp();
 
   const [isLangOpen, setIsLangOpen] = useState(false);
-  const [imgError, setImgError] = useState(false);
+  const [emblemError, setEmblemError] = useState(false);
+  const [i4cLogoError, setI4cLogoError] = useState(false);
   const langDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -56,12 +57,12 @@ export const Header: React.FC = () => {
         <div className="flex items-center gap-3 md:gap-5">
           {/* Official Government Emblem Asset from UXDT NIC India */}
           <div className="flex items-center gap-2.5">
-            {!imgError ? (
+            {!emblemError ? (
               <img
                 src="https://www.uxdt.nic.in/wp-content/uploads/2019/12/emblem-dark.png"
                 alt="State Emblem of India"
                 className="h-10 md:h-12 w-auto object-contain shrink-0"
-                onError={() => setImgError(true)}
+                onError={() => setEmblemError(true)}
               />
             ) : (
               <AshokaEmblemSVG className="w-7 h-10 md:w-9 md:h-12 shrink-0" />
@@ -76,9 +77,18 @@ export const Header: React.FC = () => {
             </div>
           </div>
 
-          {/* I4C Logo & Title */}
+          {/* Official I4C / ICCCC Logo Asset from UXDT NIC India */}
           <div className="flex items-center gap-2 border-r border-gray-300 pr-3 md:pr-4">
-            <I4CLogoSVG className="w-8 h-8 md:w-10 md:h-10 shrink-0" />
+            {!i4cLogoError ? (
+              <img
+                src="https://www.uxdt.nic.in/wp-content/uploads/2024/02/icccc-logo-preview.png"
+                alt="Indian Cybercrime Coordination Centre (I4C)"
+                className="h-8 sm:h-9 md:h-11 w-auto object-contain shrink-0"
+                onError={() => setI4cLogoError(true)}
+              />
+            ) : (
+              <I4CLogoSVG className="w-8 h-8 md:w-10 md:h-10 shrink-0" />
+            )}
             <div className="hidden lg:block text-left">
               <span className="block text-[11px] font-bold text-gov-navy leading-tight">
                 {t.i4cTitle}
@@ -103,7 +113,7 @@ export const Header: React.FC = () => {
           <div className="relative" ref={langDropdownRef}>
             <button
               onClick={() => setIsLangOpen(!isLangOpen)}
-              className="flex items-center gap-1.5 bg-gray-50 hover:bg-gray-100 border border-gray-300 text-gov-navy font-semibold px-3 py-1.5 rounded-lg text-xs sm:text-sm transition-colors focus:ring-2 focus:ring-gov-navy outline-none"
+              className="flex items-center gap-1.5 bg-gray-50 hover:bg-gray-100 border border-gray-300 text-gov-navy font-semibold px-3 py-1.5 rounded-lg text-xs sm:text-sm transition-colors focus:ring-2 focus:ring-gov-navy outline-none cursor-pointer"
               aria-expanded={isLangOpen}
             >
               <Globe className="w-4 h-4 text-gov-navy" />
@@ -123,7 +133,7 @@ export const Header: React.FC = () => {
                       setLanguage(lang.code as LanguageCode);
                       setIsLangOpen(false);
                     }}
-                    className={`w-full text-left px-3 py-2 text-xs sm:text-sm flex items-center justify-between hover:bg-amber-50 ${
+                    className={`w-full text-left px-3 py-2 text-xs sm:text-sm flex items-center justify-between hover:bg-amber-50 cursor-pointer ${
                       language === lang.code ? 'font-bold text-gov-saffron bg-amber-50/60' : 'text-gray-700'
                     }`}
                   >
@@ -138,7 +148,7 @@ export const Header: React.FC = () => {
           {/* Accessibility Control Button */}
           <button
             onClick={() => setIsAccessibilityModalOpen(true)}
-            className="flex items-center gap-1.5 bg-gray-50 hover:bg-gray-100 border border-gray-300 text-gov-navy font-semibold px-3 py-1.5 rounded-lg text-xs sm:text-sm transition-colors focus:ring-2 focus:ring-gov-navy outline-none"
+            className="flex items-center gap-1.5 bg-gray-50 hover:bg-gray-100 border border-gray-300 text-gov-navy font-semibold px-3 py-1.5 rounded-lg text-xs sm:text-sm transition-colors focus:ring-2 focus:ring-gov-navy outline-none cursor-pointer"
           >
             <Accessibility className="w-4 h-4 text-gov-navy" />
             <span className="hidden sm:inline">{t.accessibility}</span>
@@ -147,7 +157,7 @@ export const Header: React.FC = () => {
           {/* Menu Button */}
           <button
             onClick={() => setIsMenuModalOpen(true)}
-            className="flex items-center gap-1.5 bg-gray-50 hover:bg-gray-100 border border-gray-300 text-gov-navy font-semibold px-3 py-1.5 rounded-lg text-xs sm:text-sm transition-colors focus:ring-2 focus:ring-gov-navy outline-none"
+            className="flex items-center gap-1.5 bg-gray-50 hover:bg-gray-100 border border-gray-300 text-gov-navy font-semibold px-3 py-1.5 rounded-lg text-xs sm:text-sm transition-colors focus:ring-2 focus:ring-gov-navy outline-none cursor-pointer"
           >
             <Menu className="w-4 h-4 text-gov-navy" />
             <span className="hidden sm:inline">{t.quickMenu}</span>
