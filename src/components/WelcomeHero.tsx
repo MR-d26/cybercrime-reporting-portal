@@ -72,13 +72,13 @@ export const WelcomeHero: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Provided lady.png Asset (Shifted left and increased height further) */}
+          {/* Right Column: Provided lady.png Asset (Increased height to 700px) */}
           <div className="lg:col-span-5 flex justify-center lg:justify-start items-end relative h-full lg:-ml-8">
-            <div className="w-full max-w-[380px] sm:max-w-[460px] lg:max-w-[550px] -mb-8 lg:-mb-10 z-10">
+            <div className="w-full max-w-[420px] sm:max-w-[520px] lg:max-w-[620px] -mb-10 lg:-mb-12 z-10">
               <img
                 src="/images/lady.png"
                 alt="Indian Welcome Assistance"
-                className="w-full h-auto max-h-[540px] lg:max-h-[630px] object-contain drop-shadow-xl"
+                className="w-full h-auto max-h-[600px] lg:max-h-[700px] object-contain drop-shadow-2xl"
               />
             </div>
           </div>
