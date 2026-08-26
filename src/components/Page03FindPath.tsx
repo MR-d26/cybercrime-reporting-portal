@@ -4,14 +4,14 @@ import { ProgressStepper } from './ProgressStepper';
 import { CategoryId } from '../utils/complaintRouter';
 import {
   Sparkles,
+  ArrowLeft,
   ArrowRight,
   Edit2,
   ChevronDown,
   ChevronUp,
   CheckCircle2,
   AlertCircle,
-  Loader2,
-  HelpCircle
+  Loader2
 } from 'lucide-react';
 
 export const Page03FindPath: React.FC = () => {
@@ -48,6 +48,10 @@ export const Page03FindPath: React.FC = () => {
   const handleContinue = () => {
     saveDraft();
     setCurrentPage(4);
+  };
+
+  const handleBackToStory = () => {
+    setCurrentPage(2);
   };
 
   const handleEditStory = () => {
@@ -284,7 +288,16 @@ export const Page03FindPath: React.FC = () => {
         </div>
 
         {/* 4. Bottom Action Navigation Bar */}
-        <div className="mt-8 flex items-center justify-end pt-4 border-t border-gray-200/80">
+        <div className="mt-8 flex items-center justify-between pt-4 border-t border-gray-200/80">
+          <button
+            type="button"
+            onClick={handleBackToStory}
+            className="flex items-center gap-1.5 text-gray-700 hover:text-gov-navy font-bold text-sm hover:underline outline-none cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>{t.backBtn}</span>
+          </button>
+
           <button
             type="button"
             onClick={handleContinue}
