@@ -27,6 +27,8 @@ export interface TranslationSchema {
   langSelect: string;
   accessibility: string;
   quickMenu: string;
+
+  // Page 01 Welcome
   welcomeTitle: string;
   welcomeSubtitle: string;
   welcomeExplanation: string;
@@ -40,6 +42,41 @@ export interface TranslationSchema {
   reassurance3Desc: string;
   reassurance4Title: string;
   reassurance4Desc: string;
+
+  // Page 02 Tell Us What Happened
+  step1Label: string;
+  step2Label: string;
+  step3Label: string;
+  step4Label: string;
+  step5Label: string;
+  step6Label: string;
+  savedJustNow: string;
+  tellUsTitle: string;
+  tellUsSubtitle: string;
+  textareaPlaceholder: string;
+  textSecureNotice: string;
+  orDivider: string;
+  speakTitle: string;
+  speakSubtitle: string;
+  startSpeaking: string;
+  stopRecording: string;
+  recordingActive: string;
+  privacyNotice: string;
+  transcriptTitle: string;
+  editBtn: string;
+  recordAgainBtn: string;
+  useThisBtn: string;
+  notSureTitle: string;
+  notSureDesc: string;
+  viewExamples: string;
+  hideExamples: string;
+  scenario1: string;
+  scenario2: string;
+  scenario3: string;
+  scenario4: string;
+  continueBtn: string;
+
+  // Footer & Modals
   footerNotice: string;
   footerGovInfo: string;
   accessibilityTitle: string;
@@ -74,6 +111,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     langSelect: "Language",
     accessibility: "Accessibility",
     quickMenu: "Menu",
+
     welcomeTitle: "Welcome to the National Cyber Crime Reporting Portal",
     welcomeSubtitle: "We're here to help you report cybercrime.",
     welcomeExplanation: "You don't need to know which category your complaint belongs to. Tell us what happened and we'll guide you through the process.",
@@ -87,6 +125,39 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     reassurance3Desc: "Continue your report without losing your progress.",
     reassurance4Title: "Need help?",
     reassurance4Desc: "For financial cyber fraud, call 1930 immediately.",
+
+    step1Label: "Tell us what happened",
+    step2Label: "Find the right path",
+    step3Label: "Review information",
+    step4Label: "Add details",
+    step5Label: "Add evidence",
+    step6Label: "Review & submit",
+    savedJustNow: "Saved just now",
+    tellUsTitle: "Tell us what happened",
+    tellUsSubtitle: "Describe the incident in your own words. You don't need to know the category.",
+    textareaPlaceholder: "For example: Someone sent me a fake electricity bill SMS and ₹10,000 was deducted after I clicked the payment link.",
+    textSecureNotice: "Your information is secure and will only be used for investigation.",
+    orDivider: "OR",
+    speakTitle: "Speak instead",
+    speakSubtitle: "You can describe the incident using voice. We'll convert it to text.",
+    startSpeaking: "Start speaking",
+    stopRecording: "Stop recording",
+    recordingActive: "Recording...",
+    privacyNotice: "We respect your privacy. Recordings are not stored.",
+    transcriptTitle: "Here's what we heard",
+    editBtn: "Edit",
+    recordAgainBtn: "Record again",
+    useThisBtn: "Use this text",
+    notSureTitle: "Not sure what to write?",
+    notSureDesc: "Choose an example below or write in your own words.",
+    viewExamples: "View examples",
+    hideExamples: "Hide examples",
+    scenario1: "Money was deducted from my bank account after clicking a link.",
+    scenario2: "Someone sent me a suspicious payment request on UPI / QR code.",
+    scenario3: "My social media account was hacked or someone made a fake profile.",
+    scenario4: "I received a fake job offer letter asking for registration fees.",
+    continueBtn: "Continue →",
+
     footerNotice: "This website is a UX prototype for research and evaluation purposes only. Not for official filing.",
     footerGovInfo: "National Cyber Crime Reporting Portal | Ministry of Home Affairs, Government of India",
     accessibilityTitle: "Accessibility Controls",
@@ -119,6 +190,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     langSelect: "भाषा",
     accessibility: "सुगम्यता (Accessibility)",
     quickMenu: "मेनू",
+
     welcomeTitle: "राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल में आपका स्वागत है",
     welcomeSubtitle: "हम साइबर अपराध की रिपोर्ट करने में आपकी सहायता के लिए यहाँ हैं।",
     welcomeExplanation: "आपको यह जानने की आवश्यकता नहीं है कि आपकी शिकायत किस श्रेणी की है। हमें बताएं कि क्या हुआ और हम पूरी प्रक्रिया में आपका मार्गदर्शन करेंगे।",
@@ -132,6 +204,39 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     reassurance3Desc: "बिना कोई जानकारी खोए अपनी रिपोर्ट जारी रखें।",
     reassurance4Title: "सहायता चाहिए?",
     reassurance4Desc: "वित्तीय साइबर धोखाधड़ी के लिए तुरंत 1930 पर कॉल करें।",
+
+    step1Label: "हमें बताएं कि क्या हुआ",
+    step2Label: "सही मार्ग चुनें",
+    step3Label: "जानकारी की समीक्षा करें",
+    step4Label: "विवरण जोड़ें",
+    step5Label: "साक्ष्य जोड़ें",
+    step6Label: "समीक्षा और सबमिट करें",
+    savedJustNow: "अभी सहेजा गया",
+    tellUsTitle: "हमें बताएं कि क्या हुआ",
+    tellUsSubtitle: "अपने शब्दों में घटना का वर्णन करें। आपको श्रेणी जानने की आवश्यकता नहीं है।",
+    textareaPlaceholder: "उदाहरण के लिए: किसी ने मुझे नकली बिजली बिल का एसएमएस भेजा और भुगतान लिंक पर क्लिक करने के बाद ₹10,000 कट गए।",
+    textSecureNotice: "आपकी जानकारी सुरक्षित है और इसका उपयोग केवल जांच के लिए किया जाएगा।",
+    orDivider: "अथवा",
+    speakTitle: "बोलकर दर्ज करें",
+    speakSubtitle: "आप अपनी आवाज में घटना का विवरण दे सकते हैं। हम इसे टेक्स्ट में बदल देंगे।",
+    startSpeaking: "बोलना शुरू करें",
+    stopRecording: "रिकॉर्डिंग रोकें",
+    recordingActive: "रिकॉर्डिंग जारी है...",
+    privacyNotice: "हम आपकी गोपनीयता का सम्मान करते हैं। वॉइस रिकॉर्डिंग सहेजी नहीं जाती हैं।",
+    transcriptTitle: "यह हमें सुनाई दिया",
+    editBtn: "संपादित करें",
+    recordAgainBtn: "पुनः रिकॉर्ड करें",
+    useThisBtn: "इस टेक्स्ट का उपयोग करें",
+    notSureTitle: "समझ नहीं आ रहा क्या लिखें?",
+    notSureDesc: "नीचे दिए गए उदाहरणों में से चुनें या अपने शब्दों में लिखें।",
+    viewExamples: "उदाहरण देखें",
+    hideExamples: "उदाहरण छिपाएं",
+    scenario1: "एक लिंक पर क्लिक करने के बाद मेरे बैंक खाते से पैसे कट गए।",
+    scenario2: "किसी ने मुझे UPI / QR कोड पर संदिग्ध भुगतान अनुरोध भेजा।",
+    scenario3: "मेरा सोशल मीडिया अकाउंट हैक हो गया या किसी ने फर्जी प्रोफाइल बना ली।",
+    scenario4: "मुझे एक फर्जी नौकरी का ऑफर लेटर मिला जिसमें पंजीकरण शुल्क मांगा गया।",
+    continueBtn: "आगे बढ़ें →",
+
     footerNotice: "यह वेबसाइट केवल अनुसंधान और मूल्यांकन उद्देश्यों के लिए एक यूएक्स प्रोटोटाइप है। यह आधिकारिक रिपोर्टिंग के लिए नहीं है।",
     footerGovInfo: "राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
     accessibilityTitle: "सुगम्यता नियंत्रण (Accessibility)",
@@ -164,6 +269,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     langSelect: "भाषा",
     accessibility: "सुलभता (Accessibility)",
     quickMenu: "मेनू",
+
     welcomeTitle: "राष्ट्रीय सायबर गुन्हे रिपोर्टिंग पोर्टलवर आपले स्वागत आहे",
     welcomeSubtitle: "सायबर गुन्ह्याची तक्रार नोंदवण्यासाठी आम्ही तुम्हाला मदत करण्यास तयार आहोत.",
     welcomeExplanation: "तुमची तक्रार कोणत्या प्रकारात येते हे तुम्हाला माहीत असण्याची गरज नाही. काय घडले ते आम्हाला सांगा आणि आम्ही तुम्हाला मार्गदर्शन करू.",
@@ -177,6 +283,39 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     reassurance3Desc: "कोणतीही माहिती न गमावता तुमची तक्रार पुढे सुरू ठेवा.",
     reassurance4Title: "मदत हवी आहे?",
     reassurance4Desc: "आर्थिक सायबर फसवणुकीसाठी त्वरित 1930 वर कॉल करा.",
+
+    step1Label: "काय घडले ते सांगा",
+    step2Label: "योग्य मार्ग निवडा",
+    step3Label: "माहितीची पुनरावलोकन करा",
+    step4Label: "तपशील जोडा",
+    step5Label: "पुरावा जोडा",
+    step6Label: "पुनरावलोकन आणि सबमिट करा",
+    savedJustNow: "आत्ताच सेव्ह झाले",
+    tellUsTitle: "काय घडले ते सांगा",
+    tellUsSubtitle: "तुमच्या स्वतःच्या शब्दांत घटनेचे वर्णन करा. तुम्हाला वर्गवारी माहीत असण्याची गरज नाही.",
+    textareaPlaceholder: "उदाहरणार्थ: कोणीतरी मला बनावट वीज बिलाचा SMS पाठवला आणि पेमेंट लिंकवर क्लिक केल्यानंतर ₹10,000 कापले गेले.",
+    textSecureNotice: "तुमची माहिती सुरक्षित आहे आणि ती केवळ तपासासाठी वापरली जाईल.",
+    orDivider: "किंवा",
+    speakTitle: "बोलून सांगा",
+    speakSubtitle: "तुम्ही आवाजाद्वारे घटनेचे वर्णन करू शकता. आम्ही त्याचे मजकुरात रूपांतर करू.",
+    startSpeaking: "बोलणे सुरू करा",
+    stopRecording: "रेकॉर्डिंग थांबवा",
+    recordingActive: "रेकॉर्डिंग सुरू आहे...",
+    privacyNotice: "आम्ही तुमच्या गोपनीयतेचा आदर करतो. व्हॉईस रेकॉर्डिंग सेव्ह केले जात नाहीत.",
+    transcriptTitle: "आम्हाला हे ऐकू आले",
+    editBtn: "संपादित करा",
+    recordAgainBtn: "पुन्हा रेकॉर्ड करा",
+    useThisBtn: "हा मजकूर वापरा",
+    notSureTitle: "काय लिहावे हे समजत नाही?",
+    notSureDesc: "खालील उदाहरणांमधून निवडा किंवा तुमच्या शब्दांत लिहा.",
+    viewExamples: "उदाहरणे पहा",
+    hideExamples: "उदाहरणे लपवा",
+    scenario1: "लिंकवर क्लिक केल्यानंतर माझ्या बँक खात्यातून पैसे कापले गेले.",
+    scenario2: "कोणीतरी मला UPI / QR कोडवर संशयास्पद पेमेंट विनंती पाठवली.",
+    scenario3: "माझे सोशल मीडिया अकाउंट हॅक झाले किंवा कोणीतरी बनावट प्रोफाइल बनवली.",
+    scenario4: "मला नोंदणी शुल्काची मागणी करणारे बनावट नोकरीचे ऑफर लेटर मिळाले.",
+    continueBtn: "पुढे जा →",
+
     footerNotice: "ही वेबसाइट केवळ संशोधन आणि मूल्यमापनासाठी एक UX प्रोटोटाइप आहे. अधिकृत तक्रारीसाठी नाही.",
     footerGovInfo: "राष्ट्रीय सायबर गुन्हे रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
     accessibilityTitle: "सुलभता नियंत्रणे (Accessibility)",
@@ -209,6 +348,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     langSelect: "மொழி",
     accessibility: "அணுகல்தன்மை (Accessibility)",
     quickMenu: "பட்டியல்",
+
     welcomeTitle: "தேசிய இணையக் குற்றப் புகாரளிப்பு தளத்திற்கு நல்வரவு",
     welcomeSubtitle: "இணையக் குற்றங்களைப் புகாரளிக்க உங்களுக்கு உதவ நாங்கள் தயாராக உள்ளோம்.",
     welcomeExplanation: "உங்கள் புகார் எந்தப் பிரிவைச் சேர்ந்தது என்பதை நீங்கள் அறிய வேண்டிய அவசியமில்லை. என்ன நடந்தது என்பதை எங்களிடம் கூறுங்கள், நாங்கள் உங்களுக்கு வழிகாட்டுவோம்.",
@@ -222,6 +362,39 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     reassurance3Desc: "எந்தத் தகவலையும் இழக்காமல் உங்கள் புகாரைத் தொடரவும்.",
     reassurance4Title: "உதவி தேவையா?",
     reassurance4Desc: "நிதி இணையக் குற்றங்களுக்கு உடனடியாக 1930 ஐ அழைக்கவும்.",
+
+    step1Label: "என்ன நடந்தது என்று சொல்லுங்கள்",
+    step2Label: "சரியான வழியைத் தேர்வு செய்யவும்",
+    step3Label: "தகவலை மதிப்பாய்வு செய்யவும்",
+    step4Label: "விவரங்களைச் சேர்க்கவும்",
+    step5Label: "ஆதாரங்களைச் சேர்க்கவும்",
+    step6Label: "மதிப்பாய்வு செய்து சமர்ப்பிக்கவும்",
+    savedJustNow: "இப்போது சேமிக்கப்பட்டது",
+    tellUsTitle: "என்ன நடந்தது என்று சொல்லுங்கள்",
+    tellUsSubtitle: "நிகழ்வை உங்கள் சொந்த வார்த்தைகளில் விவரிக்கவும். பிரிவு எதுவென்று அறிய வேண்டியதில்லை.",
+    textareaPlaceholder: "உதாரணம்: யாரோ போலி மின்சார கட்டண SMS அனுப்பினர், கட்டண இணைப்பைக் கிளிக் செய்த பிறகு ₹10,000 பிடிக்கப்பட்டது.",
+    textSecureNotice: "உங்கள் தகவல்கள் பாதுகாப்பானவை மற்றும் விசாரணைக்கு மட்டுமே பயன்படுத்தப்படும்.",
+    orDivider: "அல்லது",
+    speakTitle: "பேசிப் புகாரளிக்கவும்",
+    speakSubtitle: "குரல் மூலம் நிகழ்வை விவரிக்கலாம். அதை உரை வடிவமாக மாற்றுவோம்.",
+    startSpeaking: "பேசத் தொடங்குங்கள்",
+    stopRecording: "பதிவை நிறுத்துங்கள்",
+    recordingActive: "பதிவாகிறது...",
+    privacyNotice: "உங்கள் தனியுரிமையை நாங்கள் மதிக்கிறோம். குரல் பதிவுகள் சேமிக்கப்படாது.",
+    transcriptTitle: "நாங்கள் கேட்டது இதுதான்",
+    editBtn: "திருத்து",
+    recordAgainBtn: "மீண்டும் பதிவு செய்",
+    useThisBtn: "இந்த உரையைப் பயன்படுத்து",
+    notSureTitle: "என்ன எழுதுவது என்று தெரியவில்லையா?",
+    notSureDesc: "கீழே உள்ள உதாரணங்களில் இருந்து தேர்வு செய்யவும் அல்லது சொந்தமாக எழுதவும்.",
+    viewExamples: "உதாரணங்களைப் பார்க்கவும்",
+    hideExamples: "உதாரணங்களை மறைக்கவும்",
+    scenario1: "இணைப்பைக் கிளிக் செய்த பிறகு எனது வங்கி கணக்கிலிருந்து பணம் பிடிக்கப்பட்டது.",
+    scenario2: "UPI / QR குறியீட்டில் யாரோ சந்தேகத்திற்கிடமான கட்டணக் கோரிக்கையை அனுப்பினர்.",
+    scenario3: "எனது சமூக ஊடகக் கணக்கு ஹேக் செய்யப்பட்டது அல்லது போலி சுயவிவரம் உருவாக்கப்பட்டது.",
+    scenario4: "பதிவுக் கட்டணம் கேட்கும் போலி வேலை வாய்ப்பு கடிதம் எனக்கு வந்தது.",
+    continueBtn: "தொடரவும் →",
+
     footerNotice: "இந்த இணையதளம் ஆராய்ச்சி மற்றும் மதிப்பீட்டு நோக்கங்களுக்கான UX மாதிரி மட்டுமே. அதிகாரப்பூர்வ தாக்கல் செய்ய அல்ல.",
     footerGovInfo: "தேசிய இணையக் குற்றப் புகாரளிப்பு தளம் | உள்துறை அமைச்சகம், இந்திய அரசு",
     accessibilityTitle: "அணுகல்தன்மை கட்டுப்பாடுகள்",
@@ -254,6 +427,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     langSelect: "ভাষা",
     accessibility: "অ্যাক্সেসিবিলিটি",
     quickMenu: "মেনু",
+
     welcomeTitle: "জাতীয় সাইবার অপরাধ রিপোর্টিং পোর্টালে আপনাকে স্বাগতম",
     welcomeSubtitle: "সাইবার অপরাধের রিপোর্ট করতে আমরা আপনাকে সাহায্য করতে এখানে আছি।",
     welcomeExplanation: "আপনার অভিযোগটি কোন বিভাগের অন্তর্গত তা আপনার জানার প্রয়োজন নেই। কী ঘটেছে আমাদের বলুন এবং আমরা আপনাকে পুরো প্রক্রিয়াটিতে নির্দেশিকা দেব।",
@@ -267,6 +441,39 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     reassurance3Desc: "কোনো তথ্য না হারিয়ে আপনার রিপোর্ট চালিয়ে যান।",
     reassurance4Title: "সাহায্য প্রয়োজন?",
     reassurance4Desc: "আর্থিক সাইবার জালিয়াতির জন্য অবিলম্বে ১৯৩০ এ কল করুন।",
+
+    step1Label: "কী ঘটেছে আমাদের বলুন",
+    step2Label: "সঠিক পথ খুঁজুন",
+    step3Label: "তথ্য পর্যালোচনা করুন",
+    step4Label: "বিস্তারিত যোগ করুন",
+    step5Label: "প্রমাণ যোগ করুন",
+    step6Label: "পর্যালোচনা ও জমা দিন",
+    savedJustNow: "এইমাত্র সংরক্ষিত হয়েছে",
+    tellUsTitle: "কী ঘটেছে আমাদের বলুন",
+    tellUsSubtitle: "আপনার নিজের ভাষায় ঘটনা বর্ণনা করুন। বিভাগ জানার প্রয়োজন নেই।",
+    textareaPlaceholder: "উদাহরণস্বরূপ: কেউ আমাকে একটি জাল বিদ্যুৎ বিলের SMS পাঠিয়েছে এবং পেমেন্ট লিঙ্কে ক্লিক করার পরে ₹১০,০০০ কেটে নেওয়া হয়েছে।",
+    textSecureNotice: "আপনার তথ্য সুরক্ষিত এবং কেবল তদন্তের জন্য ব্যবহার করা হবে।",
+    orDivider: "অথবা",
+    speakTitle: "ভয়েস এর মাধ্যমে বলুন",
+    speakSubtitle: "আপনি ভয়েস ব্যবহার করে ঘটনা বর্ণনা করতে পারেন। আমরা এটিকে টেক্সটে রূপান্তর করব।",
+    startSpeaking: "কথা বলা শুরু করুন",
+    stopRecording: "রেকর্ডিং বন্ধ করুন",
+    recordingActive: "রেকর্ডিং হচ্ছে...",
+    privacyNotice: "আমরা আপনার গোপনীয়তাকে সম্মান করি। ভয়েস রেকর্ডিং সংরক্ষণ করা হয় না।",
+    transcriptTitle: "আমরা যা শুনেছি",
+    editBtn: "সম্পাদনা করুন",
+    recordAgainBtn: "পুনরায় রেকর্ড করুন",
+    useThisBtn: "এই টেক্সট ব্যবহার করুন",
+    notSureTitle: "কী লিখবেন বুঝতে পারছেন না?",
+    notSureDesc: "নিচের উদাহরণগুলো থেকে বেছে নিন বা নিজের ভাষায় লিখুন।",
+    viewExamples: "উদাহরণ দেখুন",
+    hideExamples: "উদাহরণ লুকান",
+    scenario1: "একটি লিঙ্কে ক্লিক করার পর আমার ব্যাঙ্ক অ্যাকাউন্ট থেকে টাকা কেটে নেওয়া হয়েছে।",
+    scenario2: "কেউ আমাকে UPI / QR কোডে একটি সন্দেহজনক পেমেন্ট অনুরোধ পাঠিয়েছে।",
+    scenario3: "আমার সোশ্যাল মিডিয়া অ্যাকাউন্ট হ্যাক করা হয়েছে বা কেউ একটি ভুয়া প্রোফাইল তৈরি করেছে।",
+    scenario4: "আমি একটি ভুয়া চাকরির অফার লেটার পেয়েছি যেখানে রেজিস্ট্রেশন ফি চাওয়া হয়েছে।",
+    continueBtn: "চালিয়ে যান →",
+
     footerNotice: "এই ওয়েবসাইটটি কেবল গবেষণা এবং মূল্যায়নের উদ্দেশ্যে একটি ইউএক্স প্রোটোটাইপ। এটি অফিসিয়াল দাখিলের জন্য নয়।",
     footerGovInfo: "জাতীয় সাইবার অপরাধ রিপোর্টিং পোর্টাল | স্বরাষ্ট্র মন্ত্রক, ভারত সরকার",
     accessibilityTitle: "অ্যাক্সেসিবিলিটি সেটিংস",
@@ -299,6 +506,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     langSelect: "భాష",
     accessibility: "యాక్సెసిబిలిటీ",
     quickMenu: "మెనూ",
+
     welcomeTitle: "జాతీయ సైబర్ నేరాల నివేదిక పోర్టల్‌కు స్వాగతం",
     welcomeSubtitle: "సైబర్ నేరాలను నివేదించడంలో మీకు సహాయం చేయడానికి మేము ఇక్కడ ఉన్నాము.",
     welcomeExplanation: "మీ ఫిర్యాదు ఏ వర్గానికి చెందినదో మీరు తెలుసుకోవాల్సిన అవసరం లేదు. ఏమి జరిగిందో మాకు చెప్పండి మరియు మేము మిమ్మల్ని సరైన మార్గంలో నడిపిస్తాము.",
@@ -312,6 +520,39 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     reassurance3Desc: "ఏ సమాచారం కోల్పోకుండా మీ నివేదికను కొనసాగించండి.",
     reassurance4Title: "సహాయం కావాలా?",
     reassurance4Desc: "ఆర్థిక సైబర్ మోసాల కోసం వెంటనే 1930కి కాల్ చేయండి.",
+
+    step1Label: "ఏమి జరిగిందో మాకు చెప్పండి",
+    step2Label: "సరైన మార్గాన్ని ఎంచుకోండి",
+    step3Label: "సమాచారాన్ని సమీక్షించండి",
+    step4Label: "వివరాలను జోడించండి",
+    step5Label: "ఆధారాలను జోడించండి",
+    step6Label: "సమీక్షించి సమర్పించండి",
+    savedJustNow: "ఇప్పుడే సేవ్ చేయబడింది",
+    tellUsTitle: "ఏమి జరిగిందో మాకు చెప్పండి",
+    tellUsSubtitle: "మీ స్వంత మాటలలో సంఘటనను వివరించండి. వర్గం ఏంటో తెలుసుకోవాల్సిన అవసరం లేదు.",
+    textareaPlaceholder: "ఉదాహరణకు: ఎవరైనా నాకు నకిలీ విద్యుత్ బిల్లు SMS పంపారు మరియు నేను చెల్లింపు లింక్‌ను క్లిక్ చేసిన తర్వాత ₹10,000 కట్ అయ్యాయి.",
+    textSecureNotice: "మీ సమాచారం సురక్షితం మరియు దర్యాప్తు కోసం మాత్రమే ఉపయోగించబడుతుంది.",
+    orDivider: "లేదా",
+    speakTitle: "వాయిస్ ద్వారా చెప్పండి",
+    speakSubtitle: "మీరు వాయిస్ ఉపయోగించి సంఘటనను వివరించవచ్చు. మేము దానిని టెక్స్ట్‌గా మారుస్తాము.",
+    startSpeaking: "మాట్లాడటం ప్రారంభించండి",
+    stopRecording: "రికార్డింగ్ ఆపండి",
+    recordingActive: "రికార్డింగ్ జరుగుతోంది...",
+    privacyNotice: "మేము మీ గోప్యతను గౌరవిస్తాము. వాయిస్ రికార్డింగ్‌లు సేవ్ చేయబడవు.",
+    transcriptTitle: "మేము విన్నది ఇదిగో",
+    editBtn: "సవరించండి",
+    recordAgainBtn: "మళ్లీ రికార్డ్ చేయండి",
+    useThisBtn: "ఈ టెక్స్ట్‌ని ఉపయోగించండి",
+    notSureTitle: "ఏమి రాయాలో అర్థం కావడం లేదా?",
+    notSureDesc: "క్రింది ఉదాహరణల నుండి ఎంచుకోండి లేదా మీ ಸ್ವంత మాటలలో రాయండి.",
+    viewExamples: "ఉదాహరణలను చూడండి",
+    hideExamples: "ఉదాహరణలను దాచండి",
+    scenario1: "లింక్ క్లిక్ చేసిన తర్వాత నా బ్యాంక్ ఖాతా నుండి డబ్బు కట్ అయింది.",
+    scenario2: "ఎవరైనా నాకు UPI / QR కోడ్‌పై అనుమానాస్పద చెల్లింపు అభ్యర్థనను పంపారు.",
+    scenario3: "నా సోషల్ మీడియా ఖాతా హ్యాక్ అయింది లేదా ఎవరైనా నకిలీ ప్రొఫైల్ సృష్టించారు.",
+    scenario4: "రిజిస్ట్రేషన్ ఫీజు అడిగే నకిలీ ఉద్యోగ ఆఫర్ లెటర్ எனக்கு వచ్చింది.",
+    continueBtn: "కొనసాగించండి →",
+
     footerNotice: "ఈ వెబ్‌సైట్ పరిశోధన మరియు మూల్యాంకన అవసరాల కోసం రూపొందించబడిన UX ప్రోటోటైప్ మాత్రమే. అధికారిక నమోదు కోసం కాదు.",
     footerGovInfo: "జాతీయ సైబర్ నేరాల నివేదిక పోర్టల్ | హోం వ్యవహారాల మంత్రిత్వ శాఖ, భారత ప్రభుత్వం",
     accessibilityTitle: "యాక్సెసిబిలిటీ నియంత్రణలు",

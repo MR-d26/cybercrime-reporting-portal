@@ -28,13 +28,19 @@ export interface AppContextType {
   setCurrentPage: (page: number) => void;
   resetAccessibility: () => void;
   lastSavedTime: string | null;
-  saveDraft: (data: any) => void;
+
+  // Page 02 State & Persistence
+  complaintText: string;
+  setComplaintText: (text: string) => void;
+  voiceTranscript: string;
+  setVoiceTranscript: (transcript: string) => void;
+  saveDraft: (additionalData?: any) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const STORAGE_KEY_SETTINGS = 'ncrp_prototype_settings';
-const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft';
+const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v2';
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<LanguageCode>('en');
@@ -49,7 +55,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [lastSavedTime, setLastSavedTime] = useState<string | null>(null);
 
-  // Load saved settings from localStorage on initial render
+  // Complaint state for Page 02
+  const [complaintText, setComplaintTextState] = useState<string>('');
+  const [voiceTranscript, setVoiceTranscriptState] = useState<string>('');
+
+  // Load saved settings & draft from localStorage
   useEffect(() => {
     try {
       const savedSettings = localStorage.getItem(STORAGE_KEY_SETTINGS);
@@ -65,31 +75,51 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const savedDraft = localStorage.getItem(STORAGE_KEY_DRAFT);
       if (savedDraft) {
         const parsedDraft = JSON.parse(savedDraft);
+        if (parsedDraft.complaintText) setComplaintTextState(parsedDraft.complaintText);
+        if (parsedDraft.voiceTranscript) setVoiceTranscriptState(parsedDraft.voiceTranscript);
+        if (parsedDraft.currentPage) setCurrentPage(parsedDraft.currentPage);
         if (parsedDraft.savedAt) setLastSavedTime(parsedDraft.savedAt);
       }
     } catch (e) {
-      console.warn("Failed to parse settings from localStorage:", e);
+      console.warn("Failed to parse settings/draft from localStorage:", e);
     }
   }, []);
 
-  // Persist settings whenever they change
-  useEffect(() => {
+  // Save draft to localStorage
+  const saveDraft = (additionalData: any = {}) => {
+    const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     try {
-      localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify({
+      localStorage.setItem(STORAGE_KEY_DRAFT, JSON.stringify({
+        complaintText,
+        voiceTranscript,
+        currentPage,
         language,
-        fontScale,
-        contrastMode,
-        lineHeight,
-        letterSpacing,
-        focusRing
+        savedAt: timestamp,
+        ...additionalData
       }));
+      setLastSavedTime(timestamp);
     } catch (e) {
-      console.warn("Failed to save settings to localStorage:", e);
+      console.warn("Failed to save draft:", e);
     }
-  }, [language, fontScale, contrastMode, lineHeight, letterSpacing, focusRing]);
+  };
+
+  // Sync draft when complaintText or voiceTranscript changes
+  useEffect(() => {
+    if (complaintText || voiceTranscript) {
+      saveDraft();
+    }
+  }, [complaintText, voiceTranscript]);
 
   const setLanguage = (lang: LanguageCode) => {
     setLanguageState(lang);
+  };
+
+  const setComplaintText = (text: string) => {
+    setComplaintTextState(text);
+  };
+
+  const setVoiceTranscript = (transcript: string) => {
+    setVoiceTranscriptState(transcript);
   };
 
   const resetAccessibility = () => {
@@ -98,19 +128,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setLineHeight('normal');
     setLetterSpacing('normal');
     setFocusRing(false);
-  };
-
-  const saveDraft = (data: any) => {
-    const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    try {
-      localStorage.setItem(STORAGE_KEY_DRAFT, JSON.stringify({
-        data,
-        savedAt: timestamp
-      }));
-      setLastSavedTime(timestamp);
-    } catch (e) {
-      console.warn("Failed to save draft:", e);
-    }
   };
 
   const t = TRANSLATIONS[language] || TRANSLATIONS.en;
@@ -138,6 +155,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setCurrentPage,
       resetAccessibility,
       lastSavedTime,
+      complaintText,
+      setComplaintText,
+      voiceTranscript,
+      setVoiceTranscript,
       saveDraft
     }}>
       {children}

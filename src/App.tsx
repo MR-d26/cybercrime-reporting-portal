@@ -2,10 +2,11 @@ import React from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import { Header } from './components/Header';
 import { WelcomeHero } from './components/WelcomeHero';
+import { Page02TellUs } from './components/Page02TellUs';
+import { Page03Placeholder } from './components/Page03Placeholder';
 import { Footer } from './components/Footer';
 import { AccessibilityModal } from './components/AccessibilityModal';
 import { MenuModal } from './components/MenuModal';
-import { Page02Placeholder } from './components/Page02Placeholder';
 
 const MainLayout: React.FC = () => {
   const {
@@ -17,7 +18,6 @@ const MainLayout: React.FC = () => {
     currentPage
   } = useApp();
 
-  // Dynamic CSS class list for accessibility modifiers
   const getAccessibilityClasses = () => {
     const classes = [];
     if (fontScale === 'sm') classes.push('font-scale-sm');
@@ -44,11 +44,9 @@ const MainLayout: React.FC = () => {
 
       {/* Main Page Content */}
       <main className="flex-1 flex flex-col">
-        {currentPage === 1 ? (
-          <WelcomeHero />
-        ) : (
-          <Page02Placeholder />
-        )}
+        {currentPage === 1 && <WelcomeHero />}
+        {currentPage === 2 && <Page02TellUs />}
+        {currentPage >= 3 && <Page03Placeholder />}
       </main>
 
       {/* Government Portal Footer */}
