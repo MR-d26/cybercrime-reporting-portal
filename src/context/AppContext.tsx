@@ -7,6 +7,14 @@ export type ContrastMode = 'normal' | 'high-light' | 'high-dark';
 export type LineHeightMode = 'normal' | 'relaxed' | 'loose';
 export type LetterSpacingMode = 'normal' | 'wide';
 
+export interface UploadedFileItem {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+  uploadedAt: string;
+}
+
 export interface AppContextType {
   language: LanguageCode;
   setLanguage: (lang: LanguageCode) => void;
@@ -76,13 +84,21 @@ export interface AppContextType {
   contactDetail: string;
   setContactDetail: (contact: string) => void;
 
+  // Page 06 Specific Evidence Fields
+  uploadedFiles: UploadedFileItem[];
+  setUploadedFiles: React.Dispatch<React.SetStateAction<UploadedFileItem[]>>;
+  noEvidenceChecked: boolean;
+  setNoEvidenceChecked: (val: boolean) => void;
+  additionalEvidenceNotes: string;
+  setAdditionalEvidenceNotes: (notes: string) => void;
+
   saveDraft: (additionalData?: any) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const STORAGE_KEY_SETTINGS = 'ncrp_prototype_settings';
-const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v5';
+const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v6';
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<LanguageCode>('en');
@@ -109,20 +125,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [incidentDate, setIncidentDate] = useState<string>('');
   const [incidentTime, setIncidentTime] = useState<string>('');
   const [dontKnowDate, setDontKnowDate] = useState<boolean>(false);
-
   const [detailAmount, setDetailAmount] = useState<string>('');
   const [dontKnowAmount, setDontKnowAmount] = useState<boolean>(false);
-
   const [transactionId, setTransactionId] = useState<string>('');
   const [dontHaveTxnId, setDontHaveTxnId] = useState<boolean>(false);
-
   const [bankService, setBankService] = useState<string>('');
   const [dontKnowBank, setDontKnowBank] = useState<boolean>(false);
-
   const [platformName, setPlatformName] = useState<string>('');
   const [accountUsername, setAccountUsername] = useState<string>('');
   const [companyName, setCompanyName] = useState<string>('');
   const [contactDetail, setContactDetail] = useState<string>('');
+
+  // Page 06 Evidence Fields
+  const [uploadedFiles, setUploadedFiles] = useState<UploadedFileItem[]>([]);
+  const [noEvidenceChecked, setNoEvidenceChecked] = useState<boolean>(false);
+  const [additionalEvidenceNotes, setAdditionalEvidenceNotes] = useState<string>('');
 
   // Load saved settings & draft from localStorage
   useEffect(() => {
@@ -150,20 +167,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         if (parsedDraft.incidentDate) setIncidentDate(parsedDraft.incidentDate);
         if (parsedDraft.incidentTime) setIncidentTime(parsedDraft.incidentTime);
         if (parsedDraft.dontKnowDate !== undefined) setDontKnowDate(parsedDraft.dontKnowDate);
-
         if (parsedDraft.detailAmount) setDetailAmount(parsedDraft.detailAmount);
         if (parsedDraft.dontKnowAmount !== undefined) setDontKnowAmount(parsedDraft.dontKnowAmount);
-
         if (parsedDraft.transactionId) setTransactionId(parsedDraft.transactionId);
         if (parsedDraft.dontHaveTxnId !== undefined) setDontHaveTxnId(parsedDraft.dontHaveTxnId);
-
         if (parsedDraft.bankService) setBankService(parsedDraft.bankService);
         if (parsedDraft.dontKnowBank !== undefined) setDontKnowBank(parsedDraft.dontKnowBank);
-
         if (parsedDraft.platformName) setPlatformName(parsedDraft.platformName);
         if (parsedDraft.accountUsername) setAccountUsername(parsedDraft.accountUsername);
         if (parsedDraft.companyName) setCompanyName(parsedDraft.companyName);
         if (parsedDraft.contactDetail) setContactDetail(parsedDraft.contactDetail);
+
+        if (parsedDraft.uploadedFiles) setUploadedFiles(parsedDraft.uploadedFiles);
+        if (parsedDraft.noEvidenceChecked !== undefined) setNoEvidenceChecked(parsedDraft.noEvidenceChecked);
+        if (parsedDraft.additionalEvidenceNotes) setAdditionalEvidenceNotes(parsedDraft.additionalEvidenceNotes);
 
         if (parsedDraft.currentPage) setCurrentPage(parsedDraft.currentPage);
         if (parsedDraft.savedAt) setLastSavedTime(parsedDraft.savedAt);
@@ -197,6 +214,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         accountUsername,
         companyName,
         contactDetail,
+        uploadedFiles,
+        noEvidenceChecked,
+        additionalEvidenceNotes,
         currentPage,
         language,
         savedAt: timestamp,
@@ -209,13 +229,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   useEffect(() => {
-    if (complaintText || selectedCategory || extractedIncident || incidentDate || detailAmount || transactionId) {
+    if (complaintText || selectedCategory || extractedIncident || uploadedFiles.length > 0 || noEvidenceChecked) {
       saveDraft();
     }
   }, [
     complaintText, selectedCategory, extractedIncident, extractedAmount, extractedMethod,
     incidentDate, incidentTime, dontKnowDate, detailAmount, dontKnowAmount,
-    transactionId, dontHaveTxnId, bankService, dontKnowBank, platformName, accountUsername, companyName, contactDetail
+    transactionId, dontHaveTxnId, bankService, dontKnowBank, platformName, accountUsername, companyName, contactDetail,
+    uploadedFiles, noEvidenceChecked, additionalEvidenceNotes
   ]);
 
   const setLanguage = (lang: LanguageCode) => {
@@ -317,6 +338,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setCompanyName,
       contactDetail,
       setContactDetail,
+      uploadedFiles,
+      setUploadedFiles,
+      noEvidenceChecked,
+      setNoEvidenceChecked,
+      additionalEvidenceNotes,
+      setAdditionalEvidenceNotes,
       saveDraft
     }}>
       {children}

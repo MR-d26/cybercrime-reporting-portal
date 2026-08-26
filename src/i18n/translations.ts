@@ -139,6 +139,25 @@ export interface TranslationSchema {
   backBtn: string;
   nextEvidenceBtn: string;
 
+  // Page 06 Add Evidence
+  evidenceTitle: string;
+  evidenceSubtitle: string;
+  whatCanUploadTitle: string;
+  evidenceCheck1: string;
+  evidenceCheck2: string;
+  evidenceCheck3: string;
+  evidenceCheck4: string;
+  uploadAreaTitle: string;
+  uploadAreaSub: string;
+  uploadBtn: string;
+  removeFileBtn: string;
+  invalidFileError: string;
+  noEvidenceOption: string;
+  noEvidenceNotice: string;
+  additionalNotesLabel: string;
+  additionalNotesPlaceholder: string;
+  continueToSubmitBtn: string;
+
   // Footer & Modals
   footerNotice: string;
   footerGovInfo: string;
@@ -280,6 +299,24 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     backBtn: "← Back",
     nextEvidenceBtn: "Next step: Add evidence →",
 
+    evidenceTitle: "Add supporting evidence",
+    evidenceSubtitle: "Upload anything that can help explain what happened. You don't need to have everything.",
+    whatCanUploadTitle: "Helpful evidence suggestions for your complaint:",
+    evidenceCheck1: "Transaction or payment screenshots",
+    evidenceCheck2: "Suspicious SMS or email received",
+    evidenceCheck3: "Bank statement or payment receipt",
+    evidenceCheck4: "Suspect profile, phone number, or link",
+    uploadAreaTitle: "Upload evidence files",
+    uploadAreaSub: "Click to select or drag & drop files here (PNG, JPG, PDF up to 10MB)",
+    uploadBtn: "Select File",
+    removeFileBtn: "Remove",
+    invalidFileError: "This file type isn't supported. Please upload a PNG, JPG, or PDF.",
+    noEvidenceOption: "I don't have evidence to upload right now",
+    noEvidenceNotice: "You can continue without uploading anything. You remain in control.",
+    additionalNotesLabel: "Anything else you'd like us to know? (Optional)",
+    additionalNotesPlaceholder: "Add any additional information that may help explain the evidence you've uploaded.",
+    continueToSubmitBtn: "Continue →",
+
     footerNotice: "This website is a UX prototype for research and evaluation purposes only. Not for official filing.",
     footerGovInfo: "National Cyber Crime Reporting Portal | Ministry of Home Affairs, Government of India",
     accessibilityTitle: "Accessibility Controls",
@@ -417,6 +454,24 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     contactLabel: "संदिग्ध का संपर्क नंबर / लिंक",
     backBtn: "← पीछे जाएं",
     nextEvidenceBtn: "अगला चरण: साक्ष्य जोड़ें →",
+
+    evidenceTitle: "सहायक साक्ष्य जोड़ें",
+    evidenceSubtitle: "ऐसी कोई भी सामग्री अपलोड करें जो घटना को समझाने में मदद कर सके। आपके पास सब कुछ होना आवश्यक नहीं है।",
+    whatCanUploadTitle: "आपकी शिकायत के लिए उपयोगी साक्ष्य सुझाव:",
+    evidenceCheck1: "लेन-देन या भुगतान का स्क्रीनशॉट",
+    evidenceCheck2: "प्राप्त हुआ संदिग्ध एसएमएस या ईमेल",
+    evidenceCheck3: "बैंक स्टेटमेंट या भुगतान रसीद",
+    evidenceCheck4: "संदिग्ध की प्रोफाइल, फोन नंबर या लिंक",
+    uploadAreaTitle: "साक्ष्य फ़ाइलें अपलोड करें",
+    uploadAreaSub: "फ़ाइलें चुनने के लिए क्लिक करें या यहाँ ड्रैग करें (PNG, JPG, PDF अधिकतम 10MB)",
+    uploadBtn: "फ़ाइल चुनें",
+    removeFileBtn: "हटाएं",
+    invalidFileError: "यह फ़ाइल प्रकार समर्थित नहीं है। कृपया PNG, JPG, या PDF अपलोड करें।",
+    noEvidenceOption: "मेरे पास अभी अपलोड करने के लिए साक्ष्य नहीं हैं",
+    noEvidenceNotice: "आप बिना कुछ अपलोड किए भी आगे बढ़ सकते हैं। आप नियंत्रण में रहते हैं।",
+    additionalNotesLabel: "क्या आप हमें कुछ और बताना चाहते हैं? (वैकल्पिक)",
+    additionalNotesPlaceholder: "अपलोड किए गए साक्ष्यों को समझाने में मदद करने वाली कोई अतिरिक्त जानकारी जोड़ें।",
+    continueToSubmitBtn: "आगे बढ़ें →",
 
     footerNotice: "यह वेबसाइट केवल अनुसंधान और मूल्यांकन उद्देश्यों के लिए एक यूक्स प्रोटोटाइप है। यह आधिकारिक रिपोर्टिंग के लिए नहीं है।",
     footerGovInfo: "राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
@@ -556,6 +611,24 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     backBtn: "← मागे जा",
     nextEvidenceBtn: "पुढील पायरी: पुरावा जोडा →",
 
+    evidenceTitle: "पोषक पुरावा जोडा",
+    evidenceSubtitle: "घडलेला प्रकार स्पष्ट करण्यास मदत करणारी कोणतीही माहिती अपलोड करा. सर्व काही असणे आवश्यक नाही.",
+    whatCanUploadTitle: "तुमच्या तक्रारीसाठी उपयुक्त पुराव्यांचे सूचने:",
+    evidenceCheck1: "व्यवहार किंवा पेमेंटचे स्क्रीनशॉट",
+    evidenceCheck2: "मिळालेला संशयास्पद SMS किंवा ईमेल",
+    evidenceCheck3: "बँक स्टेटमेंट किंवा पावती",
+    evidenceCheck4: "संशयिताची प्रोफाइल, फोन नंबर किंवा लिंक",
+    uploadAreaTitle: "पुरावा फाईल्स अपलोड करा",
+    uploadAreaSub: "फाईल्स निवडण्यासाठी क्लिक करा किंवा येथे ड्रॅग करा (PNG, JPG, PDF कमाल 10MB)",
+    uploadBtn: "फाईल निवडा",
+    removeFileBtn: "काढून टाका",
+    invalidFileError: "हा फाईल प्रकार समर्थित नाही. कृपया PNG, JPG, किंवा PDF अपलोड करा.",
+    noEvidenceOption: "माझ्याकडे आत्ता अपलोड करण्यासाठी पुरावा नाही",
+    noEvidenceNotice: "तुम्ही काहीही अपलोड न करता देखील पुढे जाऊ शकता. अंतिम निर्णय तुमचाच असेल.",
+    additionalNotesLabel: "तुम्हाला आम्हाला आणखी काही सांगायचे आहे का? (पर्यायी)",
+    additionalNotesPlaceholder: "अपलोड केलेल्या पुराव्याचे स्पष्टीकरण देणारी कोणतीही अतिरिक्त माहिती जोडा.",
+    continueToSubmitBtn: "पुढे जा →",
+
     footerNotice: "ही वेबसाइट केवळ संशोधन आणि मूल्यमापनासाठी एक UX प्रोटोटाइप आहे. अधिकृत तक्रारीसाठी नाही.",
     footerGovInfo: "राष्ट्रीय सायबर गुन्हे रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
     accessibilityTitle: "सुलभता नियंत्रणे (Accessibility)",
@@ -693,6 +766,24 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     contactLabel: "சந்தேகத்திற்குரிய நபரின் தொடர்பு எண் / இணைப்பு",
     backBtn: "← பின்செல்",
     nextEvidenceBtn: "அடுத்த கட்டம்: ஆதாரம் சேர் →",
+
+    evidenceTitle: "ஆதாரங்களைச் சேர்க்கவும்",
+    evidenceSubtitle: "நிகழ்வை விவரிக்க உதவும் கோப்புகளைப் பதிவேற்றவும். அனைத்தும் இருக்க வேண்டிய அவசியமில்லை.",
+    whatCanUploadTitle: "உங்கள் புகாருக்குப் பயன்படும் ஆதாரப் பரிந்துரைகள்:",
+    evidenceCheck1: "பரிவர்த்தனை திரைப்படங்கள்",
+    evidenceCheck2: "சந்தேகத்திற்குரிய SMS அல்லது மின்னஞ்சல்",
+    evidenceCheck3: "வங்கி அறிக்கை அல்லது ரசீது",
+    evidenceCheck4: "சந்தேகத்திற்குரிய நபரின் சுயவிவரம் அல்லது எண்",
+    uploadAreaTitle: "ஆதாரக் கோப்புகளைப் பதிவேற்றவும்",
+    uploadAreaSub: "பதிவேற்ற கிளிக் செய்யவும் அல்லது இங்கே இழுத்து இடவும் (PNG, JPG, PDF அதிகபட்சம் 10MB)",
+    uploadBtn: "கோப்பைத் தேர்வு செய்",
+    removeFileBtn: "நீக்கு",
+    invalidFileError: "இந்த கோப்பு வகை ஆதரிக்கப்படவில்லை. PNG, JPG அல்லது PDF ஐப் பதிவேற்றவும்.",
+    noEvidenceOption: "என்னிடம் தற்போது பதிவேற்ற ஆதாரம் இல்லை",
+    noEvidenceNotice: "எதையும் பதிவேற்றாமலும் நீங்கள் தொடரலாம். முடிவு உங்களுடையதே.",
+    additionalNotesLabel: "வேறேதேனும் தெரிவிக்க விரும்புகிறீர்களா? (விருப்பத்தேர்வு)",
+    additionalNotesPlaceholder: "பதிவேற்றிய ஆதாரங்களை விளக்கும் கூடுதல் தகவல்களைச் சேர்க்கவும்.",
+    continueToSubmitBtn: "தொடரவும் →",
 
     footerNotice: "இந்த இணையதளம் ஆராய்ச்சி மற்றும் மதிப்பீட்டு நோக்கங்களுக்கான UX மாதிரி மட்டுமே. அதிகாரப்பூர்வ தாக்கல் செய்ய அல்ல.",
     footerGovInfo: "தேசிய இணையக் குற்றப் புகாரளிப்பு தளம் | உள்துறை அமைச்சகம், இந்திய அரசு",
@@ -832,6 +923,24 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     backBtn: "← পেছনে যান",
     nextEvidenceBtn: "পরবর্তী ধাপ: প্রমাণ যোগ করুন →",
 
+    evidenceTitle: "সহায়ক প্রমাণ যোগ করুন",
+    evidenceSubtitle: "কী ঘটেছে তা ব্যাখ্যা করতে সাহায্য করে এমন যেকোনো ফোল্ডার আপলোড করুন। সব কিছু থাকা আবশ্যক নয়।",
+    whatCanUploadTitle: "আপনার অভিযোগের জন্য সহায়ক প্রমাণের পরামর্শ:",
+    evidenceCheck1: "লেনদেন বা পেমেন্টের স্ক্রিনশট",
+    evidenceCheck2: "প্রাপ্ত সন্দেহজনক এসএমএস বা ইমেল",
+    evidenceCheck3: "ব্যাঙ্ক স্টেটমেন্ট বা পেমেন্ট রসিদ",
+    evidenceCheck4: "সন্দেহভাজন ব্যক্তির প্রোফাইল, ফোন নম্বর বা লিঙ্ক",
+    uploadAreaTitle: "প্রমাণ ফাইল আপলোড করুন",
+    uploadAreaSub: "ফাইল বাছতে ক্লিক করুন বা এখানে ড্র্যাগ করুন (PNG, JPG, PDF সর্বোচ্চ 10MB)",
+    uploadBtn: "ফাইল বাছুন",
+    removeFileBtn: "মুছে ফেলুন",
+    invalidFileError: "এই ফাইল ফর্ম্যাট সমর্থিত নয়। অনুগ্রহ করে PNG, JPG, বা PDF আপলোড করুন।",
+    noEvidenceOption: "আমার কাছে এই মুহূর্তে আপলোড করার মতো প্রমাণ নেই",
+    noEvidenceNotice: "আপনি কিছু আপলোড না করেও এগিয়ে যেতে পারেন। সিদ্ধান্ত আপনারই।",
+    additionalNotesLabel: "আপনি কি আমাদের আর কিছু জানাতে চান? (ঐচ্ছিক)",
+    additionalNotesPlaceholder: "আপলোড করা প্রমাণ ব্যাখ্যা করতে সহায়তা করে এমন কোনো অতিরিক্ত তথ্য যোগ করুন।",
+    continueToSubmitBtn: "এগিয়ে যান →",
+
     footerNotice: "এই ওয়েবসাইটটি কেবল গবেষণা এবং মূল্যায়নের উদ্দেশ্যে একটি ইউএক্স প্রোটোটাইপ। এটি অফিসিয়াল দাখিলের জন্য নয়।",
     footerGovInfo: "জাতীয় সাইবার অপরাধ রিপোর্টিং পোর্টাল | স্বরাষ্ট্র মন্ত্রক, ভারত সরকার",
     accessibilityTitle: "অ্যাক্সেসিবিলিটি সেটিংস",
@@ -969,6 +1078,24 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     contactLabel: "అనుమానితుడి సంప్రదింపు సంఖ్య / లింక్",
     backBtn: "← వెనుకకు",
     nextEvidenceBtn: "తదుపరి దశ: ఆధారం జోడించండి →",
+
+    evidenceTitle: "ఆధారాలను జోడించండి",
+    evidenceSubtitle: "ఏమి జరిగిందో వివరించడానికి సహాయపడే ఏదైనా ఫైల్‌ను అప్‌లోడ్ చేయండి. అన్నీ ఉండాల్సిన అవసరం లేదు.",
+    whatCanUploadTitle: "మీ ఫిర్యాదుకు సహాయపడే ఆధారాల సూచనలు:",
+    evidenceCheck1: "లావాదేవీ లేదా పేమెంట్ స్క్రీన్‌షాట్‌లు",
+    evidenceCheck2: "వచ్చిన అనుమానాస్పద SMS లేదా ఇమెయిల్",
+    evidenceCheck3: "బ్యాంక్ స్టేట్‌మెంట్ లేదా రసీదు",
+    evidenceCheck4: "అనుమానితుడి ప్రొఫైల్ లేదా ఫోన్ నంబర్",
+    uploadAreaTitle: "ఆధారాల ఫైళ్లను అప్‌లోడ్ చేయండి",
+    uploadAreaSub: "ఎంచుకోవడానికి క్లిక్ చేయండి లేదా ఇక్కడ డ్రాగ్ చేయండి (PNG, JPG, PDF గరిష్టంగా 10MB)",
+    uploadBtn: "ఫైల్‌ను ఎంచుకోండి",
+    removeFileBtn: "తొలగించండి",
+    invalidFileError: "ఈ ఫైల్ ఫార్మాట్ సపోర్ట్ చేయదు. దయచేసి PNG, JPG లేదా PDFని అప్‌లోడ్ చేయండి.",
+    noEvidenceOption: "నా వద్ద ప్రస్తుతం అప్‌లోడ్ చేయడానికి ఆధారాలు లేవు",
+    noEvidenceNotice: "మీరు ఏమీ అప్‌లోడ్ చేయకుండా కూడా కొనసాగవచ్చు. నిర్ణయం మీదే.",
+    additionalNotesLabel: "మీరు మాకు ఇంకా ఏమైనా చెప్పాలనుకుంటున్నారా? (ఐచ్ఛికం)",
+    additionalNotesPlaceholder: "అప్‌లోడ్ చేసిన ఆధారాలను వివరించడానికి సహాయపడే అదనపు సమాచారాన్ని జోడించండి.",
+    continueToSubmitBtn: "కొనసాగించండి →",
 
     footerNotice: "ఈ వెబ్‌సైట్ పరిశోధన మరియు మూల్యాంకన అవసరాల కోసం రూపొందించబడిన UX ప్రోటోటైప్ మాత్రమే. అధికారిక నమోదు కోసం కాదు.",
     footerGovInfo: "జాతీయ సైబర్ నేరాల నివేదిక పోర్టల్ | హోం వ్యవహారాల మంత్రిత్వ శాఖ, భారత ప్రభుత్వం",
