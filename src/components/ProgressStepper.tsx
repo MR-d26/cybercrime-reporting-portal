@@ -15,28 +15,28 @@ export const ProgressStepper: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4 border-b border-gray-200/80 bg-white/40 backdrop-blur-xs">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4 border-b border-gray-200/90 bg-white/90 backdrop-blur-md relative z-30 shadow-xs">
       {/* Stepper items */}
-      <div className="flex items-center gap-2 sm:gap-4 md:gap-6 overflow-x-auto py-1 scrollbar-none">
+      <div className="flex items-center gap-3 sm:gap-5 md:gap-7 overflow-x-auto py-1 scrollbar-none">
         {steps.map((step) => (
           <div
             key={step.number}
             className={`flex items-center gap-2 shrink-0 ${
-              step.active ? 'border-b-2 border-gov-navy pb-1' : ''
+              step.active ? 'border-b-2 border-gov-navy pb-0.5' : ''
             }`}
           >
             <span
-              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-extrabold ${
                 step.active
                   ? 'bg-gov-navy text-white shadow-xs'
-                  : 'bg-gray-200 text-gray-600'
+                  : 'bg-gray-200 text-gray-700'
               }`}
             >
               {step.number}
             </span>
             <span
-              className={`text-xs md:text-sm font-medium ${
-                step.active ? 'text-gov-navy font-bold' : 'text-gray-500'
+              className={`text-xs md:text-sm ${
+                step.active ? 'text-gov-navy font-extrabold' : 'text-gray-700 font-bold'
               }`}
             >
               {step.label}
@@ -45,10 +45,12 @@ export const ProgressStepper: React.FC = () => {
         ))}
       </div>
 
-      {/* Auto-save Status Badge */}
-      <div className="flex items-center gap-1.5 bg-emerald-100/80 text-emerald-800 px-3 py-1 rounded-full text-xs font-semibold shrink-0">
-        <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
-        <span>{lastSavedTime ? `${t.savedJustNow} (${lastSavedTime})` : t.savedJustNow}</span>
+      {/* Auto-save Status Badge with High-Contrast Bold Time */}
+      <div className="flex items-center gap-1.5 bg-emerald-800 text-white px-3.5 py-1 rounded-full text-xs font-extrabold shadow-sm shrink-0">
+        <CheckCircle className="w-4 h-4 text-emerald-300 shrink-0" />
+        <span>
+          {t.savedJustNow} {lastSavedTime ? <strong className="text-amber-200 ml-1">({lastSavedTime})</strong> : ''}
+        </span>
       </div>
     </div>
   );
