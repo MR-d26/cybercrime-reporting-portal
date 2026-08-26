@@ -15,15 +15,15 @@ export const WelcomeHero: React.FC = () => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#FAF9F6] pt-6 pb-6 md:pt-8 md:pb-8 px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-between">
+    <section className="relative overflow-x-hidden min-h-screen bg-[#FAF9F6] pt-6 pb-6 md:pt-8 md:pb-8 px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-between">
       {/* 1. Official Approved Background Image Asset */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-85"
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat pointer-events-none z-0 opacity-85"
         style={{ backgroundImage: "url('/images/indian-cybercrime-background.png')" }}
         aria-hidden="true"
       />
       {/* Soft warm overlay to ensure 100% text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6]/90 via-[#FAF9F6]/75 to-transparent pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6]/90 via-[#FAF9F6]/75 to-transparent pointer-events-none z-0" aria-hidden="true" />
 
       {/* 2. Main Welcome Content Container */}
       <div className="max-w-7xl mx-auto w-full relative z-10 my-auto">

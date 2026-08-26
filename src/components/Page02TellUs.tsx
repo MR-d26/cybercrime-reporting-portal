@@ -100,16 +100,14 @@ export const Page02TellUs: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-x-hidden min-h-screen">
-      {/* 1. Page-Level Decorative Background Layer (Clearly Visible ~30% Opacity, Right Top) */}
+      {/* 1. Official Approved Background Image Asset for Page 02 */}
       <div
-        className="absolute inset-0 w-full h-full bg-no-repeat pointer-events-none z-0 opacity-30"
-        style={{
-          backgroundImage: "url('/images/indian-cybercrime-background.png')",
-          backgroundPosition: 'right top',
-          backgroundSize: 'cover'
-        }}
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat pointer-events-none z-0 opacity-85"
+        style={{ backgroundImage: "url('/images/indian-cybercrime-background.png')" }}
         aria-hidden="true"
       />
+      {/* Soft warm overlay to ensure 100% text readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6]/90 via-[#FAF9F6]/75 to-transparent pointer-events-none z-0" aria-hidden="true" />
 
       {/* 2. Content Layer (z-10) */}
       <div className="relative z-10 flex-1 flex flex-col justify-between">

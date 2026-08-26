@@ -143,18 +143,19 @@ Government of India | Ministry of Home Affairs | I4C
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-hidden">
+    <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-x-hidden min-h-screen">
       {/* 1. Official Approved Background Image Asset for Page 09 */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-85"
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat pointer-events-none z-0 opacity-85"
         style={{ backgroundImage: "url('/images/indian-cybercrime-background.png')" }}
         aria-hidden="true"
       />
       {/* Soft warm overlay to ensure 100% text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6]/90 via-[#FAF9F6]/75 to-transparent pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6]/90 via-[#FAF9F6]/75 to-transparent pointer-events-none z-0" aria-hidden="true" />
 
-      {/* 2. Main Content Container */}
-      <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex-1 flex flex-col justify-between relative z-10">
+      {/* 2. Content Layer (z-10) */}
+      <div className="relative z-10 flex-1 flex flex-col justify-between">
+        <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex-1 flex flex-col justify-between">
         
         <div className="space-y-6 text-center">
           
@@ -285,6 +286,7 @@ Government of India | Ministry of Home Affairs | I4C
           </button>
         </div>
       </main>
+      </div>
     </div>
   );
 };
