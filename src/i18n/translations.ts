@@ -158,6 +158,25 @@ export interface TranslationSchema {
   additionalNotesPlaceholder: string;
   continueToSubmitBtn: string;
 
+  // Page 07 Review & Submit
+  reviewSubmitTitle: string;
+  reviewSubmitSubtitle: string;
+  notSubmittedBadge: string;
+  sec1Title: string;
+  sec2Title: string;
+  sec2Sub: string;
+  sec2ChangeBtn: string;
+  sec3Title: string;
+  sec3EditBtn: string;
+  sec4Title: string;
+  sec4NoEvidence: string;
+  sec4NoEvidenceChoice: string;
+  sec4EditBtn: string;
+  readyTitle: string;
+  readySub: string;
+  confirmCheckboxLabel: string;
+  continueToOtpBtn: string;
+
   // Footer & Modals
   footerNotice: string;
   footerGovInfo: string;
@@ -317,6 +336,24 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     additionalNotesPlaceholder: "Add any additional information that may help explain the evidence you've uploaded.",
     continueToSubmitBtn: "Continue →",
 
+    reviewSubmitTitle: "Review your complaint",
+    reviewSubmitSubtitle: "Please check your information carefully before continuing.",
+    notSubmittedBadge: "Your complaint has not been submitted yet.",
+    sec1Title: "1. Your story",
+    sec2Title: "2. Reporting path",
+    sec2Sub: "This is the reporting path you selected.",
+    sec2ChangeBtn: "Change",
+    sec3Title: "3. Incident details",
+    sec3EditBtn: "Edit details",
+    sec4Title: "4. Evidence",
+    sec4NoEvidence: "No evidence attached",
+    sec4NoEvidenceChoice: "I don't have evidence right now.",
+    sec4EditBtn: "Edit evidence",
+    readyTitle: "Ready to continue?",
+    readySub: "Your complaint will move to OTP verification next. It has not been submitted yet.",
+    confirmCheckboxLabel: "I have reviewed the information above and confirm that it is correct to the best of my knowledge.",
+    continueToOtpBtn: "Continue to OTP verification →",
+
     footerNotice: "This website is a UX prototype for research and evaluation purposes only. Not for official filing.",
     footerGovInfo: "National Cyber Crime Reporting Portal | Ministry of Home Affairs, Government of India",
     accessibilityTitle: "Accessibility Controls",
@@ -473,12 +510,30 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     additionalNotesPlaceholder: "अपलोड किए गए साक्ष्यों को समझाने में मदद करने वाली कोई अतिरिक्त जानकारी जोड़ें।",
     continueToSubmitBtn: "आगे बढ़ें →",
 
+    reviewSubmitTitle: "अपनी शिकायत की समीक्षा करें",
+    reviewSubmitSubtitle: "कृपया आगे बढ़ने से पहले अपनी जानकारी की ध्यानपूर्वक जांच करें।",
+    notSubmittedBadge: "आपकी शिकायत अभी सबमिट नहीं की गई है।",
+    sec1Title: "1. आपकी कहानी / विवरण",
+    sec2Title: "2. रिपोर्टिंग मार्ग",
+    sec2Sub: "यह वह रिपोर्टिंग मार्ग है जिसे आपने चुना है।",
+    sec2ChangeBtn: "बदलें",
+    sec3Title: "3. घटना के विवरण",
+    sec3EditBtn: "विवरण संपादित करें",
+    sec4Title: "4. साक्ष्य",
+    sec4NoEvidence: "कोई साक्ष्य संलग्न नहीं है",
+    sec4NoEvidenceChoice: "मेरे पास अभी साक्ष्य नहीं हैं।",
+    sec4EditBtn: "साक्ष्य संपादित करें",
+    readyTitle: "आगे बढ़ने के लिए तैयार हैं?",
+    readySub: "आपकी शिकायत आगे ओटीपी सत्यापन पर जाएगी। यह अभी सबमिट नहीं हुई है।",
+    confirmCheckboxLabel: "मैंने ऊपर दी गई जानकारी की समीक्षा कर ली है और पुष्टि करता हूँ कि यह मेरी जानकारी के अनुसार सही है।",
+    continueToOtpBtn: "ओटीपी सत्यापन पर आगे बढ़ें →",
+
     footerNotice: "यह वेबसाइट केवल अनुसंधान और मूल्यांकन उद्देश्यों के लिए एक यूक्स प्रोटोटाइप है। यह आधिकारिक रिपोर्टिंग के लिए नहीं है।",
     footerGovInfo: "राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
     accessibilityTitle: "सुगम्यता नियंत्रण (Accessibility)",
     fontSizeLabel: "फ़ॉन्ट का आकार",
     fontScaleDefault: "मानक",
-    lineHeightLabel: "पंक्ति रिक्ति",
+    lineHeightLabel: "लाइन स्पेसिंग",
     letterSpacingLabel: "अक्षर रिक्ति",
     contrastModeLabel: "कंट्रास्ट मोड",
     contrastNormal: "मानक कंट्रास्ट",
@@ -628,6 +683,24 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     additionalNotesLabel: "तुम्हाला आम्हाला आणखी काही सांगायचे आहे का? (पर्यायी)",
     additionalNotesPlaceholder: "अपलोड केलेल्या पुराव्याचे स्पष्टीकरण देणारी कोणतीही अतिरिक्त माहिती जोडा.",
     continueToSubmitBtn: "पुढे जा →",
+
+    reviewSubmitTitle: "तुमच्या तक्रारीची पुनरावलोकन करा",
+    reviewSubmitSubtitle: "पुढे जाण्यापूर्वी तुमची माहिती काळजीपूर्वक तपासा.",
+    notSubmittedBadge: "तुमची तक्रार अजून सबमिट केलेली नाही.",
+    sec1Title: "1. तुमची तक्रार",
+    sec2Title: "2. रिपोर्टिंग मार्ग",
+    sec2Sub: "हा तुम्ही निवडलेला रिपोर्टिंग मार्ग आहे.",
+    sec2ChangeBtn: "बदला",
+    sec3Title: "3. घटनेचे तपशील",
+    sec3EditBtn: "तपशील संपादित करा",
+    sec4Title: "4. पुरावा",
+    sec4NoEvidence: "कोणताही पुरावा जोडलेला नाही",
+    sec4NoEvidenceChoice: "माझ्याकडे आत्ता पुरावा नाही.",
+    sec4EditBtn: "पुरावा संपादित करा",
+    readyTitle: "पुढे जाण्यास तयार आहात?",
+    readySub: "तुमची तक्रार पुढे OTP पडताळणीकडे जाईल. ती अजून सबमिट झालेली नाही.",
+    confirmCheckboxLabel: "मी वरील माहितीची पुनरावलोकन केली आहे आणि माझ्या माहितीनुसार ती बरोबर आहे याची खात्री करतो.",
+    continueToOtpBtn: "OTP पडताळणीकडे पुढे जा →",
 
     footerNotice: "ही वेबसाइट केवळ संशोधन आणि मूल्यमापनासाठी एक UX प्रोटोटाइप आहे. अधिकृत तक्रारीसाठी नाही.",
     footerGovInfo: "राष्ट्रीय सायबर गुन्हे रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
@@ -785,6 +858,24 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     additionalNotesPlaceholder: "பதிவேற்றிய ஆதாரங்களை விளக்கும் கூடுதல் தகவல்களைச் சேர்க்கவும்.",
     continueToSubmitBtn: "தொடரவும் →",
 
+    reviewSubmitTitle: "உங்கள் புகாரை மதிப்பாய்வு செய்யவும்",
+    reviewSubmitSubtitle: "தொடர்வதற்கு முன் உங்கள் தகவலை கவனமாக சரிபார்க்கவும்.",
+    notSubmittedBadge: "உங்கள் புகார் இன்னும் சமர்ப்பிக்கப்படவில்லை.",
+    sec1Title: "1. உங்கள் புகார் விவரம்",
+    sec2Title: "2. புகாரளிப்பு வழி",
+    sec2Sub: "இது நீங்கள் தேர்ந்தெடுத்த புகாரளிப்பு வழி.",
+    sec2ChangeBtn: "மாற்று",
+    sec3Title: "3. சம்பவ விவரங்கள்",
+    sec3EditBtn: "விவரங்களைத் திருத்து",
+    sec4Title: "4. ஆதாரங்கள்",
+    sec4NoEvidence: "ஆதாரங்கள் எதுவும் இணைக்கப்படவில்லை",
+    sec4NoEvidenceChoice: "என்னிடம் தற்போது ஆதாரம் இல்லை.",
+    sec4EditBtn: "ஆதாரங்களைத் திருத்து",
+    readyTitle: "தொடரத் தயாரா?",
+    readySub: "உங்கள் புகார் அடுத்து OTP சரிபார்ப்பிற்கு செல்லும். இது இன்னும் சமர்ப்பிக்கப்படவில்லை.",
+    confirmCheckboxLabel: "மேலே உள்ள தகவலை நான் மதிப்பாய்வு செய்து, எனது அறிவுக்கு எட்டிய வரை அது சரியானது என்பதை உறுதிப்படுத்துகிறேன்.",
+    continueToOtpBtn: "OTP சரிபார்ப்பிற்குத் தொடரவும் →",
+
     footerNotice: "இந்த இணையதளம் ஆராய்ச்சி மற்றும் மதிப்பீட்டு நோக்கங்களுக்கான UX மாதிரி மட்டுமே. அதிகாரப்பூர்வ தாக்கல் செய்ய அல்ல.",
     footerGovInfo: "தேசிய இணையக் குற்றப் புகாரளிப்பு தளம் | உள்துறை அமைச்சகம், இந்திய அரசு",
     accessibilityTitle: "அணுகல்தன்மை கட்டுப்பாடுகள்",
@@ -941,6 +1032,24 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     additionalNotesPlaceholder: "আপলোড করা প্রমাণ ব্যাখ্যা করতে সহায়তা করে এমন কোনো অতিরিক্ত তথ্য যোগ করুন।",
     continueToSubmitBtn: "এগিয়ে যান →",
 
+    reviewSubmitTitle: "আপনার অভিযোগ পর্যালোচনা করুন",
+    reviewSubmitSubtitle: "এগিয়ে যাওয়ার আগে আপনার তথ্য যত্ন সহকারে পরীক্ষা করুন।",
+    notSubmittedBadge: "আপনার অভিযোগ এখনও জমা দেওয়া হয়নি।",
+    sec1Title: "১. আপনার বিবরণ",
+    sec2Title: "২. রিপোর্টিং পথ",
+    sec2Sub: "এটি আপনার নির্বাচিত রিপোর্টিং পথ।",
+    sec2ChangeBtn: "পরিবর্তন",
+    sec3Title: "৩. ঘটনার বিবরণ",
+    sec3EditBtn: "বিবরণ সম্পাদনা করুন",
+    sec4Title: "৪. প্রমাণ",
+    sec4NoEvidence: "কোনো প্রমাণ সংযুক্ত করা হয়নি",
+    sec4NoEvidenceChoice: "আমার কাছে এই মুহূর্তে প্রমাণ নেই।",
+    sec4EditBtn: "প্রমাণ সম্পাদনা করুন",
+    readyTitle: "এগিয়ে যেতে প্রস্তুত?",
+    readySub: "আপনার অভিযোগটি পরবর্তী ওটিপি যাচাইকরণে যাবে। এটি এখনও জমা দেওয়া হয়নি।",
+    confirmCheckboxLabel: "আমি উপরের তথ্য পর্যালোচনা করেছি এবং নিশ্চিত করছি যে এটি আমার জানা মতে সঠিক।",
+    continueToOtpBtn: "ওটিপি যাচাইকরণে এগিয়ে যান →",
+
     footerNotice: "এই ওয়েবসাইটটি কেবল গবেষণা এবং মূল্যায়নের উদ্দেশ্যে একটি ইউএক্স প্রোটোটাইপ। এটি অফিসিয়াল দাখিলের জন্য নয়।",
     footerGovInfo: "জাতীয় সাইবার অপরাধ রিপোর্টিং পোর্টাল | স্বরাষ্ট্র মন্ত্রক, ভারত সরকার",
     accessibilityTitle: "অ্যাক্সেসিবিলিটি সেটিংস",
@@ -1096,6 +1205,24 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     additionalNotesLabel: "మీరు మాకు ఇంకా ఏమైనా చెప్పాలనుకుంటున్నారా? (ఐచ్ఛికం)",
     additionalNotesPlaceholder: "అప్‌లోడ్ చేసిన ఆధారాలను వివరించడానికి సహాయపడే అదనపు సమాచారాన్ని జోడించండి.",
     continueToSubmitBtn: "కొనసాగించండి →",
+
+    reviewSubmitTitle: "మీ ఫిర్యాదును సమీక్షించండి",
+    reviewSubmitSubtitle: "కొనసాగించే ముందు మీ సమాచారాన్ని జాగ్రత్తగా పరిశీలించండి.",
+    notSubmittedBadge: "మీ ఫిర్యాదు ఇంకా సమర్పించబడలేదు.",
+    sec1Title: "1. మీ ఫిర్యాదు వివరాలు",
+    sec2Title: "2. నివేదిక మార్గం",
+    sec2Sub: "ఇది మీరు ఎంచుకున్న నివేదిక మార్గం.",
+    sec2ChangeBtn: "మార్చండి",
+    sec3Title: "3. సంఘటన వివరాలు",
+    sec3EditBtn: "వివరాలను సవరించండి",
+    sec4Title: "4. ఆధారాలు",
+    sec4NoEvidence: "ఏ ఆధారాలు జత చేయబడలేదు",
+    sec4NoEvidenceChoice: "నా వద్ద ప్రస్తుతం ఆధారాలు లేవు.",
+    sec4EditBtn: "ఆధారాలను సవరించండి",
+    readyTitle: "కొనసాగడానికి సిద్ధంగా ఉన్నారా?",
+    readySub: "మీ ఫిర్యాదు తదుపరి OTP ప్రామాణీకరణకు వెళుతుంది. ఇది ఇంకా సమర్పించబడలేదు.",
+    confirmCheckboxLabel: "నేను పైన పేర్కొన్న సమాచారాన్ని సమీక్షించాను మరియు నా జ్ఞానం మేరకు అది సరైనదని ధృవీకరిస్తున్నాను.",
+    continueToOtpBtn: "OTP ప్రామాణీకరణకు కొనసాగించండి →",
 
     footerNotice: "ఈ వెబ్‌సైట్ పరిశోధన మరియు మూల్యాంకన అవసరాల కోసం రూపొందించబడిన UX ప్రోటోటైప్ మాత్రమే. అధికారిక నమోదు కోసం కాదు.",
     footerGovInfo: "జాతీయ సైబర్ నేరాల నివేదిక పోర్టల్ | హోం వ్యవహారాల మంత్రిత్వ శాఖ, భారత ప్రభుత్వం",

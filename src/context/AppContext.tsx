@@ -52,7 +52,7 @@ export interface AppContextType {
   extractedMethod: string;
   setExtractedMethod: (method: string) => void;
 
-  // Page 05 Specific Form Fields
+  // Page 05 Form Fields
   incidentDate: string;
   setIncidentDate: (date: string) => void;
   incidentTime: string;
@@ -84,7 +84,7 @@ export interface AppContextType {
   contactDetail: string;
   setContactDetail: (contact: string) => void;
 
-  // Page 06 Specific Evidence Fields
+  // Page 06 Evidence Fields
   uploadedFiles: UploadedFileItem[];
   setUploadedFiles: React.Dispatch<React.SetStateAction<UploadedFileItem[]>>;
   noEvidenceChecked: boolean;
@@ -92,13 +92,17 @@ export interface AppContextType {
   additionalEvidenceNotes: string;
   setAdditionalEvidenceNotes: (notes: string) => void;
 
+  // Page 07 Review & Confirmation Field
+  reviewConfirmed: boolean;
+  setReviewConfirmed: (val: boolean) => void;
+
   saveDraft: (additionalData?: any) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const STORAGE_KEY_SETTINGS = 'ncrp_prototype_settings';
-const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v6';
+const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v7';
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<LanguageCode>('en');
@@ -141,6 +145,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [noEvidenceChecked, setNoEvidenceChecked] = useState<boolean>(false);
   const [additionalEvidenceNotes, setAdditionalEvidenceNotes] = useState<string>('');
 
+  // Page 07 Confirmation Field
+  const [reviewConfirmed, setReviewConfirmed] = useState<boolean>(false);
+
   // Load saved settings & draft from localStorage
   useEffect(() => {
     try {
@@ -182,6 +189,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         if (parsedDraft.noEvidenceChecked !== undefined) setNoEvidenceChecked(parsedDraft.noEvidenceChecked);
         if (parsedDraft.additionalEvidenceNotes) setAdditionalEvidenceNotes(parsedDraft.additionalEvidenceNotes);
 
+        if (parsedDraft.reviewConfirmed !== undefined) setReviewConfirmed(parsedDraft.reviewConfirmed);
+
         if (parsedDraft.currentPage) setCurrentPage(parsedDraft.currentPage);
         if (parsedDraft.savedAt) setLastSavedTime(parsedDraft.savedAt);
       }
@@ -217,6 +226,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         uploadedFiles,
         noEvidenceChecked,
         additionalEvidenceNotes,
+        reviewConfirmed,
         currentPage,
         language,
         savedAt: timestamp,
@@ -229,14 +239,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   useEffect(() => {
-    if (complaintText || selectedCategory || extractedIncident || uploadedFiles.length > 0 || noEvidenceChecked) {
+    if (complaintText || selectedCategory || extractedIncident || uploadedFiles.length > 0 || reviewConfirmed) {
       saveDraft();
     }
   }, [
     complaintText, selectedCategory, extractedIncident, extractedAmount, extractedMethod,
     incidentDate, incidentTime, dontKnowDate, detailAmount, dontKnowAmount,
     transactionId, dontHaveTxnId, bankService, dontKnowBank, platformName, accountUsername, companyName, contactDetail,
-    uploadedFiles, noEvidenceChecked, additionalEvidenceNotes
+    uploadedFiles, noEvidenceChecked, additionalEvidenceNotes, reviewConfirmed
   ]);
 
   const setLanguage = (lang: LanguageCode) => {
@@ -344,6 +354,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setNoEvidenceChecked,
       additionalEvidenceNotes,
       setAdditionalEvidenceNotes,
+      reviewConfirmed,
+      setReviewConfirmed,
       saveDraft
     }}>
       {children}
