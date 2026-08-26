@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import { ProgressStepper } from './ProgressStepper';
 import {
@@ -7,8 +7,6 @@ import {
   Receipt,
   Building2,
   Globe,
-  User,
-  Phone,
   ArrowLeft,
   ArrowRight,
   Sparkles
@@ -50,12 +48,17 @@ export const Page05AddDetails: React.FC = () => {
     saveDraft
   } = useApp();
 
-  // Pre-fill amount from Page 04 extractedAmount if detailAmount is empty
+  const initializedAmountRef = useRef(false);
+
+  // Pre-fill amount ONCE on initial load if detailAmount is empty, without blocking deletion later
   useEffect(() => {
-    if (!detailAmount && extractedAmount) {
-      setDetailAmount(extractedAmount);
+    if (!initializedAmountRef.current) {
+      if (!detailAmount && extractedAmount && extractedAmount !== 'N/A') {
+        setDetailAmount(extractedAmount);
+      }
+      initializedAmountRef.current = true;
     }
-  }, [extractedAmount, detailAmount]);
+  }, [extractedAmount]);
 
   const handleBack = () => {
     setCurrentPage(4);
@@ -164,67 +167,76 @@ export const Page05AddDetails: React.FC = () => {
                 <input
                   type="checkbox"
                   checked={dontKnowDate}
-                  onChange={(e) => setDontKnowDate(e.target.checked)}
+                  onChange={(e) => {
+                    setDontKnowDate(e.target.checked);
+                    if (e.target.checked) {
+                      setIncidentDate('');
+                      setIncidentTime('');
+                    }
+                  }}
                   className="w-4 h-4 rounded text-gov-navy focus:ring-gov-navy"
                 />
                 <span className="text-xs font-bold text-gray-700">{t.dontKnowOption}</span>
               </label>
             </div>
 
-            {/* QUESTION 2: AMOUNT INVOLVED (For Financial, Job Fraud, or when extracted) */}
-            {(cat === 'financial' || cat === 'job_fraud' || cat === 'other' || !!detailAmount) && (
-              <div className="space-y-3 pb-6 border-b border-gray-100">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-start gap-2.5">
-                    <div className="p-2 rounded-xl bg-amber-100/80 text-gov-saffron shrink-0 mt-0.5">
-                      <IndianRupee className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gov-navy">
-                        {t.q2Title}
-                      </h3>
-                      <p className="text-xs text-gray-500 font-medium">
-                        {t.q2Sub}
-                      </p>
-                    </div>
+            {/* QUESTION 2: AMOUNT INVOLVED */}
+            <div className="space-y-3 pb-6 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <div className="flex items-start gap-2.5">
+                  <div className="p-2 rounded-xl bg-amber-100/80 text-gov-saffron shrink-0 mt-0.5">
+                    <IndianRupee className="w-5 h-5" />
                   </div>
-                  {detailAmount && geminiAnalysis?.amount && (
-                    <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                      <Sparkles className="w-3 h-3" />
-                      <span>Auto-extracted</span>
-                    </span>
-                  )}
+                  <div>
+                    <h3 className="text-lg font-bold text-gov-navy">
+                      {t.q2Title}
+                    </h3>
+                    <p className="text-xs text-gray-500 font-medium">
+                      {t.q2Sub}
+                    </p>
+                  </div>
                 </div>
-
-                <div className="max-w-md pt-2">
-                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
-                    {t.amountLabel}
-                  </label>
-                  <input
-                    type="text"
-                    value={detailAmount}
-                    onChange={(e) => setDetailAmount(e.target.value)}
-                    disabled={dontKnowAmount}
-                    placeholder="₹10,000"
-                    className={`w-full p-3 rounded-xl border outline-none text-sm font-bold transition-all ${
-                      dontKnowAmount
-                        ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
-                        : 'border-gray-300 focus:border-gov-navy focus:ring-2 focus:ring-gov-navy/20 text-gov-navy'
-                    }`}
-                  />
-                </div>
-
-                <label className="flex items-center gap-2 pt-1 cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    checked={dontKnowAmount}
-                    onChange={(e) => setDontKnowAmount(e.target.checked)}
-                    className="w-4 h-4 rounded text-gov-navy focus:ring-gov-navy"
-                  />
-                  <span className="text-xs font-bold text-gray-700">{t.dontKnowOption}</span>
-                </label>
+                {detailAmount && geminiAnalysis?.amount && (
+                  <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                    <Sparkles className="w-3 h-3" />
+                    <span>Auto-extracted</span>
+                  </span>
+                )}
               </div>
-            )}
+
+              <div className="max-w-md pt-2">
+                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
+                  {t.amountLabel}
+                </label>
+                <input
+                  type="text"
+                  value={detailAmount}
+                  onChange={(e) => setDetailAmount(e.target.value)}
+                  disabled={dontKnowAmount}
+                  placeholder="₹10,000"
+                  className={`w-full p-3 rounded-xl border outline-none text-sm font-bold transition-all ${
+                    dontKnowAmount
+                      ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
+                      : 'border-gray-300 focus:border-gov-navy focus:ring-2 focus:ring-gov-navy/20 text-gov-navy'
+                  }`}
+                />
+              </div>
+
+              <label className="flex items-center gap-2 pt-1 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={dontKnowAmount}
+                  onChange={(e) => {
+                    setDontKnowAmount(e.target.checked);
+                    if (e.target.checked) {
+                      setDetailAmount('');
+                    }
+                  }}
+                  className="w-4 h-4 rounded text-gov-navy focus:ring-gov-navy"
+                />
+                <span className="text-xs font-bold text-gray-700">{t.dontKnowOption}</span>
+              </label>
+            </div>
 
             {/* TRANSACTION ID & BANK / SERVICE PROVIDER */}
             {(cat === 'financial' || !!transactionId || !!bankService) && (
@@ -271,7 +283,12 @@ export const Page05AddDetails: React.FC = () => {
                     <input
                       type="checkbox"
                       checked={dontHaveTxnId}
-                      onChange={(e) => setDontHaveTxnId(e.target.checked)}
+                      onChange={(e) => {
+                        setDontHaveTxnId(e.target.checked);
+                        if (e.target.checked) {
+                          setTransactionId('');
+                        }
+                      }}
                       className="w-4 h-4 rounded text-gov-navy focus:ring-gov-navy"
                     />
                     <span className="text-xs font-bold text-gray-700">{t.dontHaveOption}</span>
@@ -313,7 +330,12 @@ export const Page05AddDetails: React.FC = () => {
                     <input
                       type="checkbox"
                       checked={dontKnowBank}
-                      onChange={(e) => setDontKnowBank(e.target.checked)}
+                      onChange={(e) => {
+                        setDontKnowBank(e.target.checked);
+                        if (e.target.checked) {
+                          setBankService('');
+                        }
+                      }}
                       className="w-4 h-4 rounded text-gov-navy focus:ring-gov-navy"
                     />
                     <span className="text-xs font-bold text-gray-700">{t.dontKnowOption}</span>
