@@ -1,6 +1,5 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
-import { NamasteCitizenSVG } from './Emblems';
 import { ReassuranceCards } from './ReassuranceCards';
 import { ArrowRight, Lock } from 'lucide-react';
 
@@ -73,10 +72,14 @@ export const WelcomeHero: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Secondary Namaste Citizen SVG (Secondary to Government Identity & Background) */}
+          {/* Right Column: Provided lady.png Asset (Supporting visual, preserved transparency & aspect ratio) */}
           <div className="lg:col-span-4 flex justify-center lg:justify-end relative">
             <div className="w-full max-w-[210px] sm:max-w-[240px] lg:max-w-[260px]">
-              <NamasteCitizenSVG className="w-full h-auto drop-shadow-xs" />
+              <img
+                src="/images/lady.png"
+                alt="Indian Welcome Assistance"
+                className="w-full h-auto object-contain drop-shadow-xs"
+              />
             </div>
           </div>
         </div>
