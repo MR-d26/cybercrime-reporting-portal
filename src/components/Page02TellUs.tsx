@@ -99,21 +99,23 @@ export const Page02TellUs: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-hidden">
-      {/* 1. Official Approved Background Image Asset for Page 02 */}
+    <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-x-hidden min-h-screen">
+      {/* 1. Page-Level Decorative Background Layer (Clearly Visible ~30% Opacity, Right Top) */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-85"
-        style={{ backgroundImage: "url('/images/indian-cybercrime-background.png')" }}
+        className="absolute inset-0 w-full h-full bg-no-repeat pointer-events-none z-0 opacity-30"
+        style={{
+          backgroundImage: "url('/images/indian-cybercrime-background.png')",
+          backgroundPosition: 'right top',
+          backgroundSize: 'cover'
+        }}
         aria-hidden="true"
       />
-      {/* Soft warm overlay to ensure 100% text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6]/90 via-[#FAF9F6]/75 to-transparent pointer-events-none" aria-hidden="true" />
 
-      {/* 2. Progress Stepper Bar (Step 1 Active) */}
-      <ProgressStepper activeStep={1} />
+      {/* 2. Content Layer (z-10) */}
+      <div className="relative z-10 flex-1 flex flex-col justify-between">
+        <ProgressStepper activeStep={1} />
 
-      {/* 3. Main Content Container */}
-      <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8 flex-1 flex flex-col justify-between relative z-10">
+        <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8 flex-1 flex flex-col justify-between">
         
         <div className="space-y-6">
           {/* Header Title & Subtitle */}
@@ -313,6 +315,7 @@ export const Page02TellUs: React.FC = () => {
           </button>
         </div>
       </main>
+      </div>
     </div>
   );
 };

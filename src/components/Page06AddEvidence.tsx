@@ -111,9 +111,9 @@ export const Page06AddEvidence: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-x-hidden min-h-screen">
-      {/* 1. Subtle, Right-Aligned Indian Cybercrime Background Layer */}
+      {/* 1. Page-Level Decorative Background Layer (Clearly Visible ~30% Opacity, Right Top) */}
       <div
-        className="absolute inset-0 bg-no-repeat pointer-events-none z-0 opacity-20"
+        className="absolute inset-0 w-full h-full bg-no-repeat pointer-events-none z-0 opacity-30"
         style={{
           backgroundImage: "url('/images/indian-cybercrime-background.png')",
           backgroundPosition: 'right top',
@@ -121,14 +121,12 @@ export const Page06AddEvidence: React.FC = () => {
         }}
         aria-hidden="true"
       />
-      {/* Soft warm gradient overlay to keep evidence cards 100% focused */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6] via-[#FAF9F6]/90 to-[#FAF9F6]/40 pointer-events-none z-0" aria-hidden="true" />
 
-      {/* 2. Progress Stepper Bar (Step 5 Active) */}
-      <ProgressStepper activeStep={5} />
+      {/* 2. Content Layer (z-10) */}
+      <div className="relative z-10 flex-1 flex flex-col justify-between">
+        <ProgressStepper activeStep={5} />
 
-      {/* 3. Main Content Container */}
-      <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8 flex-1 flex flex-col justify-between relative z-10">
+        <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8 flex-1 flex flex-col justify-between">
         
         <div className="space-y-6">
           {/* Header Title & Subtitle */}
@@ -305,6 +303,7 @@ export const Page06AddEvidence: React.FC = () => {
           </button>
         </div>
       </main>
+      </div>
     </div>
   );
 };
