@@ -9,6 +9,7 @@ export interface UseVoiceRecorderReturn {
   stopRecording: () => Promise<Blob | null>;
   cancelRecording: () => void;
   formattedTime: string;
+  recordedMimeType: string;
 }
 
 export const useVoiceRecorder = (): UseVoiceRecorderReturn => {
@@ -16,6 +17,7 @@ export const useVoiceRecorder = (): UseVoiceRecorderReturn => {
   const [recordingSeconds, setRecordingSeconds] = useState<number>(0);
   const [permissionDenied, setPermissionDenied] = useState<boolean>(false);
   const [recordingError, setRecordingError] = useState<string | null>(null);
+  const [recordedMimeType, setRecordedMimeType] = useState<string>('audio/webm');
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -36,17 +38,22 @@ export const useVoiceRecorder = (): UseVoiceRecorderReturn => {
 
     try {
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        console.error("[VoiceRecorder Debug] Stage 1 (Microphone): getUserMedia is not supported in this browser.");
         setRecordingError("Voice input is not supported in this browser. Please type your complaint instead.");
         return;
       }
 
+      console.log("[VoiceRecorder Debug] Stage 1 (Microphone): Requesting getUserMedia...");
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
+      console.log("[VoiceRecorder Debug] Stage 1 (Microphone): Permission granted. Active tracks:", stream.getAudioTracks().length);
 
-      // Select supported mimeType
-      let mimeType = 'audio/webm';
-      if (!MediaRecorder.isTypeSupported('audio/webm')) {
-        if (MediaRecorder.isTypeSupported('audio/mp4')) {
+      // Stage 2 & 3: Select supported mimeType
+      let mimeType = 'audio/webm;codecs=opus';
+      if (!MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+        if (MediaRecorder.isTypeSupported('audio/webm')) {
+          mimeType = 'audio/webm';
+        } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
           mimeType = 'audio/mp4';
         } else if (MediaRecorder.isTypeSupported('audio/ogg')) {
           mimeType = 'audio/ogg';
@@ -55,6 +62,9 @@ export const useVoiceRecorder = (): UseVoiceRecorderReturn => {
         }
       }
 
+      setRecordedMimeType(mimeType || 'audio/webm');
+      console.log(`[VoiceRecorder Debug] Stage 2 & 3 (Recording Format): Selected MIME type: "${mimeType || 'default'}"`);
+
       const options = mimeType ? { mimeType } : undefined;
       const mediaRecorder = new MediaRecorder(stream, options);
       mediaRecorderRef.current = mediaRecorder;
@@ -62,11 +72,13 @@ export const useVoiceRecorder = (): UseVoiceRecorderReturn => {
       mediaRecorder.ondataavailable = (event) => {
         if (event.data && event.data.size > 0) {
           audioChunksRef.current.push(event.data);
+          console.log(`[VoiceRecorder Debug] Stage 2 (Recording): Chunk received (${event.data.size} bytes). Total chunks: ${audioChunksRef.current.length}`);
         }
       };
 
       mediaRecorder.start(250); // Collect chunk every 250ms
       setIsRecording(true);
+      console.log("[VoiceRecorder Debug] Stage 2 (Recording): MediaRecorder started successfully.");
 
       // Start timer
       timerRef.current = setInterval(() => {
@@ -74,7 +86,7 @@ export const useVoiceRecorder = (): UseVoiceRecorderReturn => {
       }, 1000);
 
     } catch (err: any) {
-      console.error("Microphone access error:", err);
+      console.error("[VoiceRecorder Debug] Stage 1 (Microphone): getUserMedia error:", err);
       if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
         setPermissionDenied(true);
         setRecordingError("Microphone access is required to use voice input.");
@@ -94,15 +106,18 @@ export const useVoiceRecorder = (): UseVoiceRecorderReturn => {
 
       const mediaRecorder = mediaRecorderRef.current;
       if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+        console.warn("[VoiceRecorder Debug] Stage 2 (Recording): MediaRecorder is inactive or null.");
         setIsRecording(false);
         resolve(null);
         return;
       }
 
       mediaRecorder.onstop = () => {
-        const mimeType = mediaRecorder.mimeType || 'audio/webm';
+        const mimeType = mediaRecorder.mimeType || recordedMimeType || 'audio/webm';
         const blob = new Blob(audioChunksRef.current, { type: mimeType });
         
+        console.log(`[VoiceRecorder Debug] Stage 2 & 3 (Recording Complete): Stopped. Final Blob size: ${blob.size} bytes, MIME type: "${blob.type}"`);
+
         // Stop audio tracks
         if (streamRef.current) {
           streamRef.current.getTracks().forEach((track) => track.stop());
@@ -110,12 +125,20 @@ export const useVoiceRecorder = (): UseVoiceRecorderReturn => {
         }
 
         setIsRecording(false);
+
+        if (blob.size === 0) {
+          console.error("[VoiceRecorder Debug] Stage 2 Error: Recorded Blob size is 0 bytes.");
+          setRecordingError("We couldn't capture your recording. Please try again.");
+          resolve(null);
+          return;
+        }
+
         resolve(blob);
       };
 
       mediaRecorder.stop();
     });
-  }, []);
+  }, [recordedMimeType]);
 
   const cancelRecording = useCallback(() => {
     if (timerRef.current) {
@@ -135,6 +158,7 @@ export const useVoiceRecorder = (): UseVoiceRecorderReturn => {
     audioChunksRef.current = [];
     setIsRecording(false);
     setRecordingSeconds(0);
+    console.log("[VoiceRecorder Debug] Recording cancelled.");
   }, []);
 
   return {
@@ -145,6 +169,7 @@ export const useVoiceRecorder = (): UseVoiceRecorderReturn => {
     startRecording,
     stopRecording,
     cancelRecording,
-    formattedTime: formatTime(recordingSeconds)
+    formattedTime: formatTime(recordingSeconds),
+    recordedMimeType
   };
 };

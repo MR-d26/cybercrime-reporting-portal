@@ -54,7 +54,8 @@ export const Page02TellUs: React.FC = () => {
   const handleStopSpeaking = async () => {
     const audioBlob = await stopRecording();
     if (!audioBlob || audioBlob.size === 0) {
-      setTranscribeError("No audio was recorded. Please try speaking again.");
+      console.error("[Page02 Debug] Audio recording resulted in 0 bytes Blob.");
+      setTranscribeError("We couldn't capture your recording. Please try again.");
       return;
     }
 
@@ -67,7 +68,7 @@ export const Page02TellUs: React.FC = () => {
       setEditableTranscript(result.transcript);
       saveDraft({ voiceTranscript: result.transcript });
     } catch (err: any) {
-      console.error("Transcription error:", err);
+      console.error("[Page02 Debug] Sarvam transcription failed:", err);
       const errMsg = err?.message || '';
       if (errMsg.includes('SARVAM_API_KEY')) {
         setTranscribeError("Sarvam API key is not configured. Please add SARVAM_API_KEY in .env file or type your complaint below.");
@@ -223,7 +224,7 @@ export const Page02TellUs: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setIsEditingTranscript(!isEditingTranscript)}
-                      className="text-xs font-bold text-gov-saffron hover:underline flex items-center gap-1"
+                      className="text-xs font-bold text-gov-saffron hover:underline flex items-center gap-1 cursor-pointer"
                     >
                       <Edit3 className="w-3 h-3" />
                       <span>{t.editBtn}</span>
@@ -247,7 +248,7 @@ export const Page02TellUs: React.FC = () => {
                     <button
                       type="button"
                       onClick={handleStartSpeaking}
-                      className="flex items-center gap-1 text-xs font-bold text-gray-600 hover:text-gov-navy px-3 py-1.5 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+                      className="flex items-center gap-1 text-xs font-bold text-gray-600 hover:text-gov-navy px-3 py-1.5 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors cursor-pointer"
                     >
                       <RefreshCw className="w-3 h-3" />
                       <span>{t.recordAgainBtn}</span>
@@ -270,7 +271,7 @@ export const Page02TellUs: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowExamples(!showExamples)}
-                className="flex items-center gap-1.5 text-xs font-bold text-gov-navy hover:text-gov-saffron transition-colors"
+                className="flex items-center gap-1.5 text-xs font-bold text-gov-navy hover:text-gov-saffron transition-colors cursor-pointer"
               >
                 <span>{showExamples ? t.hideExamples : t.viewExamples}</span>
                 {showExamples ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -283,7 +284,7 @@ export const Page02TellUs: React.FC = () => {
                       key={index}
                       type="button"
                       onClick={() => handleSelectScenario(scenario)}
-                      className="p-3 bg-gray-50 hover:bg-amber-50/70 border border-gray-200 hover:border-amber-300 rounded-xl text-left font-medium text-gray-700 hover:text-gov-navy transition-all"
+                      className="p-3 bg-gray-50 hover:bg-amber-50/70 border border-gray-200 hover:border-amber-300 rounded-xl text-left font-medium text-gray-700 hover:text-gov-navy transition-all cursor-pointer"
                     >
                       "{scenario}"
                     </button>

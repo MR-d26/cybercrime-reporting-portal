@@ -22,42 +22,56 @@ export const transcribeAudio = async (
   language: LanguageCode
 ): Promise<TranscribeResult> => {
   const langCode = mapLanguageToSarvamCode(language);
-  const formData = new FormData();
 
-  const extension = audioBlob.type.includes('webm') ? 'webm' : audioBlob.type.includes('mp4') ? 'mp4' : 'wav';
-  const file = new File([audioBlob], `speech.${extension}`, { type: audioBlob.type || 'audio/wav' });
+  console.log(`[SarvamService Debug] Stage 4 (Browser -> Backend): Preparing POST /api/sarvam/transcribe...`);
+  console.log(`[SarvamService Debug] Stage 4 (Audio Meta): Blob size = ${audioBlob.size} bytes, type = "${audioBlob.type}", language = "${langCode}"`);
 
-  formData.append('file', file);
-  formData.append('model', 'saarika:v2');
-  formData.append('language_code', langCode);
+  if (!audioBlob || audioBlob.size === 0) {
+    console.error("[SarvamService Debug] Stage 4 Error: Audio blob is empty (0 bytes). Stopping request.");
+    throw new Error("We couldn't capture your recording. Please try again.");
+  }
 
   try {
     const response = await fetch('/api/sarvam/transcribe', {
       method: 'POST',
-      body: formData
+      headers: {
+        'Content-Type': audioBlob.type || 'audio/webm',
+        'x-language-code': langCode,
+        'x-audio-type': audioBlob.type || 'audio/webm'
+      },
+      body: audioBlob
     });
+
+    console.log(`[SarvamService Debug] Stage 4 & 5 (Backend Response): HTTP Status: ${response.status} ${response.statusText}`);
 
     if (!response.ok) {
       const errorJson = await response.json().catch(() => null);
+      console.error("[SarvamService Debug] Stage 6 (Sarvam Error Response):", errorJson);
+
       if (errorJson?.error?.includes('SARVAM_API_KEY')) {
         throw new Error(errorJson.error);
       }
-      throw new Error(errorJson?.message || errorJson?.error || `Transcription failed with status ${response.status}`);
+      throw new Error(errorJson?.message || errorJson?.error?.message || errorJson?.error || `Transcription failed with status ${response.status}`);
     }
 
     const data = await response.json();
-    const transcriptText = data.transcript || data.text || data.results?.[0]?.transcript || '';
+    console.log("[SarvamService Debug] Stage 8 (Transcript Parsing): Response payload:", data);
 
-    if (!transcriptText) {
-      throw new Error("Empty transcript returned from speech-to-text service.");
+    const transcriptText = data.transcript || data.text || data.rawResponse?.transcript || '';
+
+    if (!transcriptText || !transcriptText.trim()) {
+      console.warn("[SarvamService Debug] Stage 8 Warning: Empty transcript text received.");
+      throw new Error("No speech could be recognized from the recording. Please speak clearly or type your complaint instead.");
     }
+
+    console.log(`[SarvamService Debug] Stage 8 (Success): Final transcript ("${transcriptText}") successfully mapped to application state.`);
 
     return {
       transcript: transcriptText.trim(),
       languageCodeUsed: langCode
     };
   } catch (error: any) {
-    console.error("Sarvam transcription error:", error);
+    console.error("[SarvamService Debug] Transcription pipeline error:", error);
     throw error;
   }
 };

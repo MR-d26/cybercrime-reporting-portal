@@ -19,15 +19,11 @@ function serverApiPlugin(): Plugin {
           const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), '');
           const apiKey = env.SARVAM_API_KEY || process.env.SARVAM_API_KEY;
 
-          const chunks: Buffer[] = [];
-          for await (const chunk of req) {
-            chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
-          }
-          const bodyBuffer = Buffer.concat(chunks);
-          const contentType = req.headers['content-type'] || '';
+          const isApiKeyConfigured = !!apiKey && apiKey.trim().length > 0;
+          console.log(`[Sarvam Proxy Debug] Stage 5 (Backend): Request received. SARVAM_API_KEY configured: ${isApiKeyConfigured}`);
 
-          if (!apiKey) {
-            console.warn('[Sarvam Proxy] Warning: SARVAM_API_KEY is not set.');
+          if (!isApiKeyConfigured) {
+            console.warn('[Sarvam Proxy Debug] Error: SARVAM_API_KEY is not set in environment.');
             res.statusCode = 400;
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify({
@@ -37,20 +33,94 @@ function serverApiPlugin(): Plugin {
             return;
           }
 
-          const response = await fetch('https://api.sarvam.ai/speech-to-text', {
+          // Collect body buffer
+          const chunks: Buffer[] = [];
+          for await (const chunk of req) {
+            chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+          }
+          const bodyBuffer = Buffer.concat(chunks);
+          const incomingContentType = req.headers['content-type'] || '';
+          const langCode = (req.headers['x-language-code'] as string) || 'en-IN';
+          const mimeType = (req.headers['x-audio-type'] as string) || 'audio/webm';
+
+          console.log(`[Sarvam Proxy Debug] Stage 4 & 5 (Audio Payload): Received ${bodyBuffer.length} bytes. Language: "${langCode}", Audio MIME: "${mimeType}"`);
+
+          if (bodyBuffer.length === 0) {
+            console.error('[Sarvam Proxy Debug] Stage 4 Error: Received 0 bytes audio payload.');
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ error: 'Audio payload is empty (0 bytes).' }));
+            return;
+          }
+
+          // Construct fresh server-side FormData for Sarvam API
+          const extension = mimeType.includes('mp4') ? 'mp4' : mimeType.includes('wav') ? 'wav' : mimeType.includes('ogg') ? 'ogg' : 'webm';
+          const audioBlob = new Blob([bodyBuffer], { type: mimeType.split(';')[0] });
+          const audioFile = new File([audioBlob], `speech.${extension}`, { type: mimeType.split(';')[0] });
+
+          const createSarvamFormData = (modelName: string) => {
+            const formData = new FormData();
+            formData.append('file', audioFile);
+            formData.append('model', modelName);
+            formData.append('language_code', langCode);
+            return formData;
+          };
+
+          // Primary model: saarika:v2, Fallback model: saaras:v2
+          console.log(`[Sarvam Proxy Debug] Stage 6 (Sarvam Request): Sending POST https://api.sarvam.ai/speech-to-text with model "saarika:v2"...`);
+          
+          let response = await fetch('https://api.sarvam.ai/speech-to-text', {
             method: 'POST',
             headers: {
-              'api-subscription-key': apiKey,
-              'api-key': apiKey,
-              'content-type': contentType
+              'api-subscription-key': apiKey.trim()
             },
-            body: bodyBuffer
+            body: createSarvamFormData('saarika:v2')
           });
 
+          console.log(`[Sarvam Proxy Debug] Stage 6 (Sarvam Response): HTTP Status: ${response.status} ${response.statusText}`);
+
+          if (!response.ok) {
+            const errText = await response.text();
+            console.warn(`[Sarvam Proxy Debug] Model "saarika:v2" returned status ${response.status}: ${errText}. Retrying with model "saaras:v2"...`);
+            
+            response = await fetch('https://api.sarvam.ai/speech-to-text', {
+              method: 'POST',
+              headers: {
+                'api-subscription-key': apiKey.trim()
+              },
+              body: createSarvamFormData('saaras:v2')
+            });
+            console.log(`[Sarvam Proxy Debug] Stage 6 Fallback Response: HTTP Status: ${response.status}`);
+          }
+
           const responseText = await response.text();
-          res.statusCode = response.status;
+          console.log(`[Sarvam Proxy Debug] Stage 6 & 8 (Response Payload): Status ${response.status}, Length: ${responseText.length} bytes`);
+
+          if (!response.ok) {
+            res.statusCode = response.status;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(responseText);
+            return;
+          }
+
+          let jsonResponse = null;
+          try {
+            jsonResponse = JSON.parse(responseText);
+          } catch (e) {
+            console.error('[Sarvam Proxy Debug] Failed to parse JSON response:', responseText);
+          }
+
+          const transcript = jsonResponse?.transcript || jsonResponse?.text || jsonResponse?.results?.[0]?.transcript || '';
+          console.log(`[Sarvam Proxy Debug] Stage 8 (Transcript Extraction): Parsed transcript (${transcript.length} chars): "${transcript}"`);
+
+          res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
-          res.end(responseText);
+          res.end(JSON.stringify({
+            success: true,
+            transcript: transcript,
+            rawResponse: jsonResponse
+          }));
+
         } catch (error: any) {
           console.error('[Sarvam Proxy Error]:', error);
           res.statusCode = 500;
@@ -128,8 +198,8 @@ Return ONLY valid JSON matching this exact schema:
 }`;
 
           // Primary model: gemini-2.5-flash, Fallback model: gemini-1.5-flash
-          const primaryEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-          const fallbackEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+          const primaryEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey.trim()}`;
+          const fallbackEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey.trim()}`;
 
           const payload = {
             systemInstruction: {
