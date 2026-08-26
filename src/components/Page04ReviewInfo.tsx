@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { ProgressStepper } from './ProgressStepper';
 import { extractInformationFromStory } from '../utils/informationExtractor';
+import { CategoryId } from '../utils/complaintRouter';
 import {
   FileText,
   IndianRupee,
@@ -11,7 +12,8 @@ import {
   Check,
   X,
   ArrowLeft,
-  ArrowRight
+  ArrowRight,
+  Loader2
 } from 'lucide-react';
 
 export const Page04ReviewInfo: React.FC = () => {
@@ -26,13 +28,14 @@ export const Page04ReviewInfo: React.FC = () => {
     extractedMethod,
     setExtractedMethod,
     geminiAnalysis,
+    isAnalyzingGemini,
     setCurrentPage,
     saveDraft
   } = useApp();
 
   const defaultInfo = extractInformationFromStory(complaintText, selectedCategory);
 
-  // Compute default extraction if not already set by user editing
+  // Compute default extraction from Gemini or fallback extractor if not already set by user editing
   useEffect(() => {
     if (!extractedIncident && geminiAnalysis?.whatHappened) {
       setExtractedIncident(geminiAnalysis.whatHappened);
@@ -43,7 +46,7 @@ export const Page04ReviewInfo: React.FC = () => {
     if (!extractedAmount && geminiAnalysis?.amount) {
       setExtractedAmount(geminiAnalysis.amount);
     } else if (!extractedAmount) {
-      setExtractedAmount(defaultInfo.amount);
+      setExtractedAmount(defaultInfo.amount || "N/A");
     }
 
     if (!extractedMethod && geminiAnalysis?.method) {
@@ -88,7 +91,17 @@ export const Page04ReviewInfo: React.FC = () => {
     setCurrentPage(5);
   };
 
-  const displayPathTitle = geminiAnalysis?.suggestedCategory || defaultInfo.pathTitle;
+  // Preserve user-confirmed category path from Page 03
+  const getCategoryTitle = (catId: CategoryId | null) => {
+    if (catId === 'financial') return t.catFinancialTitle || "Financial Fraud";
+    if (catId === 'account_identity') return t.catAccountTitle || "Online / Account Fraud";
+    if (catId === 'harassment') return t.catHarassmentTitle || "Cyber Harassment";
+    if (catId === 'job_fraud') return t.catJobTitle || "Online Job / Employment Fraud";
+    if (catId === 'other') return t.catOtherTitle || "Other Cybercrime";
+    return geminiAnalysis?.suggestedCategory || defaultInfo.pathTitle;
+  };
+
+  const displayPathTitle = getCategoryTitle(selectedCategory || (geminiAnalysis ? geminiAnalysis.mappedCategoryId : null));
 
   return (
     <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-hidden">
@@ -117,6 +130,16 @@ export const Page04ReviewInfo: React.FC = () => {
               {t.reviewSubtitle}
             </p>
           </div>
+
+          {/* LOADING STATE WHILE GEMINI EXTRACTS */}
+          {isAnalyzingGemini && (
+            <div className="bg-white rounded-2xl border border-amber-300 shadow-gov p-6 text-center space-y-2">
+              <Loader2 className="w-6 h-6 text-gov-navy animate-spin mx-auto" />
+              <p className="text-sm font-extrabold text-gov-navy">
+                Understanding your complaint...
+              </p>
+            </div>
+          )}
 
           {/* MAIN STRUCTURED INFORMATION CARD */}
           <div className="bg-white rounded-2xl border border-gray-200 shadow-gov overflow-hidden">
@@ -183,7 +206,7 @@ export const Page04ReviewInfo: React.FC = () => {
                     </div>
                     {editingField !== 'amount' && (
                       <button
-                        onClick={() => handleStartEdit('amount', extractedAmount || defaultInfo.amount)}
+                        onClick={() => handleStartEdit('amount', extractedAmount || defaultInfo.amount || "N/A")}
                         className="text-xs font-bold text-gov-saffron hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         <Edit3 className="w-3.5 h-3.5" />
@@ -219,7 +242,7 @@ export const Page04ReviewInfo: React.FC = () => {
                     </div>
                   ) : (
                     <p className="text-xl font-black text-gov-saffron tracking-tight pt-1">
-                      {extractedAmount || defaultInfo.amount || "N/A"}
+                      {extractedAmount || "N/A"}
                     </p>
                   )}
                 </div>
