@@ -69,7 +69,7 @@ function serverApiPlugin(): Plugin {
             return formData;
           };
 
-          // Updated models per Sarvam API spec: Primary "saarika:v2.5", Fallbacks "saaras:v3", "saarika:flash"
+          // Primary model "saarika:v2.5", Fallback "saaras:v3"
           console.log(`[Sarvam Proxy Debug] Stage 6: Sending Sarvam STT POST with model "saarika:v2.5" and language_code "${langCode}"...`);
           
           let response = await fetch('https://api.sarvam.ai/speech-to-text', {
@@ -81,9 +81,8 @@ function serverApiPlugin(): Plugin {
           });
 
           let responseText = await response.text();
-          console.log(`[Sarvam Proxy Debug] Model "saarika:v2.5" HTTP Status: ${response.status}. Response:`, responseText);
+          console.log(`[Sarvam Proxy Debug] Model "saarika:v2.5" HTTP Status: ${response.status}. Response length: ${responseText.length}`);
 
-          // Retry with saaras:v3 if saarika:v2.5 failed
           if (!response.ok) {
             console.warn(`[Sarvam Proxy Debug] Model "saarika:v2.5" failed (${response.status}). Retrying model "saaras:v3"...`);
             response = await fetch('https://api.sarvam.ai/speech-to-text', {
@@ -145,6 +144,9 @@ function serverApiPlugin(): Plugin {
           const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), '');
           const apiKey = env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
 
+          const isApiKeyConfigured = !!apiKey && apiKey.trim().length > 0;
+          console.log(`[Gemini Proxy Debug] Request received. Gemini API Key configured: ${isApiKeyConfigured}`);
+
           // Parse incoming JSON body
           const chunks: Buffer[] = [];
           for await (const chunk of req) {
@@ -154,6 +156,8 @@ function serverApiPlugin(): Plugin {
           const requestBody = JSON.parse(bodyString || '{}');
           const complaintText = requestBody.text || '';
 
+          console.log(`[Gemini Proxy Debug] Received text length: ${complaintText.length} chars`);
+
           if (!complaintText.trim()) {
             res.statusCode = 400;
             res.setHeader('Content-Type', 'application/json');
@@ -161,8 +165,8 @@ function serverApiPlugin(): Plugin {
             return;
           }
 
-          if (!apiKey) {
-            console.warn('[Gemini Proxy] Warning: GEMINI_API_KEY is not set.');
+          if (!isApiKeyConfigured) {
+            console.warn('[Gemini Proxy Debug] Warning: GEMINI_API_KEY is not set.');
             res.statusCode = 400;
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify({
@@ -173,23 +177,31 @@ function serverApiPlugin(): Plugin {
           }
 
           const systemInstruction = `You are an assistant helping citizens navigate a cybercrime reporting service.
-Your job is to understand the citizen's own description, organize information, and suggest a possible reporting path.
+Your job is to understand the citizen's own description (which may be in Hindi, English, Marathi, Tamil, Bengali, Telugu or mixed languages), organize information, and suggest a possible reporting path.
 You are not a legal authority.
 Never determine severity, priority, legal validity, authenticity, acceptance, rejection, police action, or investigation outcome.
-Never invent facts.
-Only extract information explicitly present in the user's text.
+Never invent facts. Only extract information explicitly present in the user's text.
 If information is unavailable, return null.
 Suggestions must be presented as guidance and must be confirmed or edited by the user.
 
+CRITICAL CATEGORY SELECTION RULE:
+The suggestedCategory MUST be EXACTLY ONE of the following 5 strings:
+1. "Account Takeover / Identity Related Cybercrime" -> Use when an Instagram, Facebook, WhatsApp, email, or social media account was hacked, compromised, locked, password changed, or credentials stolen, even if the hacker later requests money from friends.
+2. "Financial Fraud" -> Use when money was lost or stolen via bank account, UPI, payment link, QR code, fake electricity bill payment, or credit/debit card.
+3. "Cyber Harassment / Online Abuse" -> Use for online threats, blackmail, stalking, abusive messages, or extortion.
+4. "Online Job / Employment Fraud" -> Use for fake job offers, recruitment scams, or work-from-home registration fee demands.
+5. "Other Cybercrime" -> Use if none of the above categories fit.
+
 Return ONLY valid JSON matching this exact schema:
 {
-  "suggestedCategory": "Financial Fraud" | "Online / Account Fraud" | "Cyber Harassment" | "Online Job / Employment Fraud" | "Other Cybercrime",
-  "explanation": "string explaining why this path fits",
+  "suggestedCategory": "Account Takeover / Identity Related Cybercrime" | "Financial Fraud" | "Cyber Harassment / Online Abuse" | "Online Job / Employment Fraud" | "Other Cybercrime",
+  "explanation": "string explaining in simple language why this path fits the complaint",
+  "confidence": "high" | "medium" | "low",
   "whatHappened": "summary string of incident",
-  "amount": "₹10,000" | null,
+  "amount": "string amount" | null,
   "date": string | null,
   "time": string | null,
-  "method": "string method e.g. SMS and payment link" | null,
+  "method": "string method e.g. Instagram link / phishing" | null,
   "transactionId": string | null,
   "platform": string | null,
   "phoneNumber": string | null,
@@ -198,8 +210,8 @@ Return ONLY valid JSON matching this exact schema:
   "helpfulEvidence": ["string suggestion of helpful evidence"]
 }`;
 
-          // Primary model: gemini-2.5-flash, Fallback model: gemini-1.5-flash
-          const primaryEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey.trim()}`;
+          // Correct Gemini REST API endpoints: gemini-2.0-flash (primary), gemini-1.5-flash (fallback)
+          const primaryEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey.trim()}`;
           const fallbackEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey.trim()}`;
 
           const payload = {
@@ -218,37 +230,44 @@ Return ONLY valid JSON matching this exact schema:
             }
           };
 
+          console.log(`[Gemini Proxy Debug] Sending POST to Gemini API (gemini-2.0-flash)...`);
           let response = await fetch(primaryEndpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json font-utf-8' },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
           });
 
+          console.log(`[Gemini Proxy Debug] gemini-2.0-flash HTTP Status: ${response.status}`);
+
           if (!response.ok) {
-            console.warn(`[Gemini Proxy] Primary model returned status ${response.status}. Retrying fallback model...`);
+            console.warn(`[Gemini Proxy Debug] Model gemini-2.0-flash returned status ${response.status}. Retrying gemini-1.5-flash...`);
             response = await fetch(fallbackEndpoint, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(payload)
             });
+            console.log(`[Gemini Proxy Debug] gemini-1.5-flash HTTP Status: ${response.status}`);
           }
 
+          const responseText = await response.text();
+
           if (!response.ok) {
-            const errText = await response.text();
+            console.error(`[Gemini Proxy Error Response]: ${responseText}`);
             res.statusCode = response.status;
             res.setHeader('Content-Type', 'application/json');
-            res.end(errText);
+            res.end(responseText);
             return;
           }
 
-          const geminiData = await response.json();
+          const geminiData = JSON.parse(responseText);
           const candidateText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
-          
+          console.log(`[Gemini Proxy Debug] Candidate text received:`, candidateText);
+
           let parsedStructuredOutput = null;
           try {
             parsedStructuredOutput = JSON.parse(candidateText);
           } catch (e) {
-            console.error('[Gemini Proxy] Failed to parse JSON from candidate text:', candidateText);
+            console.error('[Gemini Proxy Error] Failed to parse candidate JSON:', candidateText);
           }
 
           res.statusCode = 200;
@@ -258,6 +277,7 @@ Return ONLY valid JSON matching this exact schema:
             analysis: parsedStructuredOutput,
             rawText: candidateText
           }));
+
         } catch (error: any) {
           console.error('[Gemini Proxy Error]:', error);
           res.statusCode = 500;

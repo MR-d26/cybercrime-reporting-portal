@@ -23,8 +23,6 @@ export const extractInformationFromStory = (
   const amountMatch = text.match(/(₹\s?[\d,]+|\b\d+[\d,]*\s?(rupees|rs|INR)\b)/i);
   if (amountMatch) {
     extractedAmount = amountMatch[0].startsWith('₹') ? amountMatch[0] : `₹${amountMatch[0].replace(/[^\d]/g, '')}`;
-  } else if (text.toLowerCase().includes('10,000') || text.toLowerCase().includes('10000')) {
-    extractedAmount = "₹10,000";
   }
 
   // Extract Method
@@ -34,26 +32,26 @@ export const extractInformationFromStory = (
     extractedMethod = "SMS → Payment Link";
   } else if (lower.includes('upi') || lower.includes('qr')) {
     extractedMethod = "UPI / QR Code Scan";
-  } else if (lower.includes('instagram') || lower.includes('facebook') || lower.includes('social media')) {
-    extractedMethod = "Social Media Takeover";
+  } else if (lower.includes('instagram') || lower.includes('facebook') || lower.includes('social media') || lower.includes('account')) {
+    extractedMethod = "Social Media Credential Phishing / Hacking";
   } else if (lower.includes('job') || lower.includes('recruitment')) {
     extractedMethod = "Fake Job Offer Letter";
   }
 
   // Incident Summary
   let extractedIncident = text;
-  if (text.length > 80) {
-    extractedIncident = text.substring(0, 77) + "...";
+  if (text.length > 120) {
+    extractedIncident = text.substring(0, 117) + "...";
   } else if (!text) {
-    extractedIncident = "Fake electricity bill scam via phishing link";
+    extractedIncident = "Incident details not provided";
   }
 
   // Path Title
-  let pathTitle = "Financial Fraud";
-  if (categoryId === 'account_identity') pathTitle = "Online / Account Fraud";
-  else if (categoryId === 'harassment') pathTitle = "Cyber Harassment";
+  let pathTitle = "Other Cybercrime";
+  if (categoryId === 'financial') pathTitle = "Financial Fraud";
+  else if (categoryId === 'account_identity') pathTitle = "Account Takeover / Identity Related Cybercrime";
+  else if (categoryId === 'harassment') pathTitle = "Cyber Harassment / Online Abuse";
   else if (categoryId === 'job_fraud') pathTitle = "Online Job / Employment Fraud";
-  else if (categoryId === 'other') pathTitle = "Other Cybercrime";
 
   return {
     incident: extractedIncident,

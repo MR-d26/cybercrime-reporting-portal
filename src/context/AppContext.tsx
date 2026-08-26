@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { LanguageCode, TRANSLATIONS, TranslationSchema } from '../i18n/translations';
-import { CategoryId, analyzeComplaint, AnalysisResult } from '../utils/complaintRouter';
+import { CategoryId } from '../utils/complaintRouter';
 import { analyzeComplaintWithGemini, GeminiAnalysisResult } from '../services/geminiService';
 
 export type FontScale = 'sm' | 'normal' | 'lg' | 'xl';
@@ -120,7 +120,7 @@ export interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const STORAGE_KEY_SETTINGS = 'ncrp_prototype_settings';
-const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v10';
+const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v11';
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<LanguageCode>('en');
@@ -296,40 +296,31 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setGeminiError(null);
 
     try {
+      console.log(`[AppContext Debug] Running Gemini analysis on text: "${targetText.substring(0, 60)}..."`);
       const result = await analyzeComplaintWithGemini(targetText);
+      
       setGeminiAnalysis(result);
-
-      if (!selectedCategory) {
-        setSelectedCategoryState(result.mappedCategoryId);
-      }
-
+      setSelectedCategoryState(result.mappedCategoryId);
       setExtractedIncidentState(result.whatHappened || targetText);
       setExtractedAmountState(result.amount || '');
       setExtractedMethodState(result.method || '');
 
-      if (result.amount && !detailAmount) setDetailAmount(result.amount);
-      if (result.transactionId && !transactionId) setTransactionId(result.transactionId);
-      if (result.platform && !platformName) setPlatformName(result.platform);
+      if (result.amount) setDetailAmount(result.amount);
+      if (result.transactionId) setTransactionId(result.transactionId);
+      if (result.platform) setPlatformName(result.platform);
 
       saveDraft({
         geminiAnalysis: result,
-        selectedCategory: selectedCategory || result.mappedCategoryId,
+        selectedCategory: result.mappedCategoryId,
         extractedIncident: result.whatHappened || targetText,
         extractedAmount: result.amount || '',
         extractedMethod: result.method || ''
       });
     } catch (error: any) {
-      console.warn("Gemini API call failed or key missing. Falling back seamlessly to client-side router:", error);
-      setGeminiError("We couldn't provide guidance right now.");
-      
-      // Fallback: Client-side rule-based router
-      const fallbackResult: AnalysisResult = analyzeComplaint(targetText);
-      if (!selectedCategory) {
-        setSelectedCategoryState(fallbackResult.suggestedCategory);
-      }
-      setExtractedIncidentState(fallbackResult.extractedIncident);
-      setExtractedAmountState(fallbackResult.extractedAmount || '');
-      setExtractedMethodState(fallbackResult.extractedMethod);
+      console.warn("[AppContext Debug] Gemini API call failed or unavailable:", error);
+      setGeminiError("Guidance is temporarily unavailable.");
+      setGeminiAnalysis(null);
+      // DO NOT set selectedCategory or extracted values from hardcoded data on Gemini failure!
     } finally {
       setIsAnalyzingGemini(false);
     }
@@ -378,10 +369,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const setComplaintText = (text: string) => {
     setComplaintTextState(text);
+    // Clear old/stale Gemini result when user edits complaint text
+    setGeminiAnalysis(null);
+    setGeminiError(null);
+    setSelectedCategoryState(null);
   };
 
   const setVoiceTranscript = (transcript: string) => {
     setVoiceTranscriptState(transcript);
+    // Clear old/stale Gemini result when new voice transcript arrives
+    setGeminiAnalysis(null);
+    setGeminiError(null);
+    setSelectedCategoryState(null);
   };
 
   const setSelectedCategory = (cat: CategoryId | null) => {
