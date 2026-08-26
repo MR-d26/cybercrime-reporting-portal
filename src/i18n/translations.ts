@@ -192,6 +192,23 @@ export interface TranslationSchema {
   backToReviewBtn: string;
   continueToSubmissionBtn: string;
 
+  // Page 09 Submission Success
+  successTitle: string;
+  successSubtitle: string;
+  complaintNumberLabel: string;
+  copyBtn: string;
+  copiedToast: string;
+  submittedAtLabel: string;
+  downloadSummaryBtn: string;
+  whatNextTitle: string;
+  timelineStep1: string;
+  timelineStep2: string;
+  timelineStep3: string;
+  timelineStep4: string;
+  nextStepsNotice: string;
+  trackComplaintBtn: string;
+  returnHomeBtn: string;
+
   // Footer & Modals
   footerNotice: string;
   footerGovInfo: string;
@@ -383,6 +400,22 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     backToReviewBtn: "← Back to review",
     continueToSubmissionBtn: "Continue to submission →",
 
+    successTitle: "Your complaint has been submitted",
+    successSubtitle: "Your complaint has been successfully received.",
+    complaintNumberLabel: "Complaint Number",
+    copyBtn: "Copy",
+    copiedToast: "Complaint number copied.",
+    submittedAtLabel: "Submitted",
+    downloadSummaryBtn: "Download summary",
+    whatNextTitle: "What happens next?",
+    timelineStep1: "Complaint submitted",
+    timelineStep2: "Under review",
+    timelineStep3: "Further action / information if required",
+    timelineStep4: "Status updates",
+    nextStepsNotice: "This is a prototype demonstration. No real police officer or government department has been assigned yet.",
+    trackComplaintBtn: "Track your complaint →",
+    returnHomeBtn: "Return to home",
+
     footerNotice: "This website is a UX prototype for research and evaluation purposes only. Not for official filing.",
     footerGovInfo: "National Cyber Crime Reporting Portal | Ministry of Home Affairs, Government of India",
     accessibilityTitle: "Accessibility Controls",
@@ -570,6 +603,22 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     securityNoticeSub: "इस प्रोटोटाइप अनुभव के दौरान आपकी शिकायत के विवरण सुरक्षित रूप से सहेजे गए हैं।",
     backToReviewBtn: "← समीक्षा पर वापस जाएं",
     continueToSubmissionBtn: "सबमिशन पर आगे बढ़ें →",
+
+    successTitle: "आपकी शिकायत दर्ज कर ली गई है",
+    successSubtitle: "आपकी शिकायत सफलतापूर्वक प्राप्त हो गई है।",
+    complaintNumberLabel: "शिकायत संख्या",
+    copyBtn: "कॉपी करें",
+    copiedToast: "शिकायत संख्या कॉपी हो गई।",
+    submittedAtLabel: "दर्ज की तारीख",
+    downloadSummaryBtn: "सारांश डाउनलोड करें",
+    whatNextTitle: "आगे क्या होगा?",
+    timelineStep1: "शिकायत दर्ज की गई",
+    timelineStep2: "समीक्षाधीन",
+    timelineStep3: "आवश्यकता पड़ने पर आगे की कार्रवाई",
+    timelineStep4: "स्थिति अपडेट",
+    nextStepsNotice: "यह एक प्रोटोटाइप प्रदर्शन है। अभी कोई वास्तविक पुलिस अधिकारी या सरकारी विभाग नहीं सौंपा गया है।",
+    trackComplaintBtn: "अपनी शिकायत ट्रैक करें →",
+    returnHomeBtn: "मुख्य पृष्ठ पर लौटें",
 
     footerNotice: "यह वेबसाइट केवल अनुसंधान और मूल्यांकन उद्देश्यों के लिए एक यूक्स प्रोटोटाइप है। यह आधिकारिक रिपोर्टिंग के लिए नहीं है।",
     footerGovInfo: "राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
@@ -759,6 +808,22 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     backToReviewBtn: "← पुनरावलोकनाकडे परत जा",
     continueToSubmissionBtn: "सबमिशनकडे पुढे जा →",
 
+    successTitle: "तुमची तक्रार सबमिट झाली आहे",
+    successSubtitle: "तुमची तक्रार यशस्वीरित्या प्राप्त झाली आहे.",
+    complaintNumberLabel: "तक्रार क्रमांक",
+    copyBtn: "कॉपी करा",
+    copiedToast: "तक्रार क्रमांक कॉपी झाला.",
+    submittedAtLabel: "सबमिट केल्याची तारीख",
+    downloadSummaryBtn: "सारांश डाउनलोड करा",
+    whatNextTitle: "पुढे काय होईल?",
+    timelineStep1: "तक्रार सबमिट झाली",
+    timelineStep2: "पुनरावलोकनाधीन",
+    timelineStep3: "आवश्यकतेनुसार पुढील कारवाई",
+    timelineStep4: "स्थिती अपडेट्स",
+    nextStepsNotice: "हे एक प्रोटोटाइप प्रात्यक्षिक आहे. अद्याप कोणताही वास्तविक पोलिस अधिकारी किंवा सरकारी विभाग नियुक्त केलेला नाही.",
+    trackComplaintBtn: "तुमची तक्रार ट्रॅक करा →",
+    returnHomeBtn: "मुख्य पृष्ठावर परत जा",
+
     footerNotice: "ही वेबसाइट केवळ संशोधन आणि मूल्यमापनासाठी एक UX प्रोटोटाइप आहे. अधिकृत तक्रारीसाठी नाही.",
     footerGovInfo: "राष्ट्रीय सायबर गुन्हे रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
     accessibilityTitle: "सुलभता नियंत्रणे (Accessibility)",
@@ -946,6 +1011,22 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     securityNoticeSub: "இந்த மாதிரி அனுபவத்தின் போது உங்கள் புகார்களின் விவரங்கள் பாதுகாப்பாக சேமிக்கப்படும்.",
     backToReviewBtn: "← மதிப்பாய்விற்குத் திரும்பு",
     continueToSubmissionBtn: "சமர்ப்பிப்பிற்குத் தொடரவும் →",
+
+    successTitle: "உங்கள் புகார் சமர்ப்பிக்கப்பட்டது",
+    successSubtitle: "உங்கள் புகார் வெற்றிகரமாக பெறப்பட்டது.",
+    complaintNumberLabel: "புகார் எண்",
+    copyBtn: "நகலெடு",
+    copiedToast: "புகார் எண் நகலெடுக்கப்பட்டது.",
+    submittedAtLabel: "சமர்ப்பிக்கப்பட்ட தேதி",
+    downloadSummaryBtn: "சுருக்கத்தைப் பதிவிறக்கவும்",
+    whatNextTitle: "அடுத்து என்ன நடக்கும்?",
+    timelineStep1: "புகார் சமர்ப்பிக்கப்பட்டது",
+    timelineStep2: "மதிப்பாய்வில் உள்ளது",
+    timelineStep3: "தேவைப்பட்டால் கூடுதல் நடவடிக்கை",
+    timelineStep4: "நிலை மாற்றங்கள்",
+    nextStepsNotice: "இது ஒரு மாதிரி செயல்முறை விளக்கம். இன்னும் எந்த காவல்துறை அதிகாரியோ அல்லது அரசுத் துறையோ நியமிக்கப்படவில்லை.",
+    trackComplaintBtn: "உங்கள் புகாரைக் கண்காணிக்கவும் →",
+    returnHomeBtn: "முதன்மைப் பக்கத்திற்குத் திரும்பு",
 
     footerNotice: "இந்த இணையதளம் ஆராய்ச்சி மற்றும் மதிப்பீட்டு நோக்கங்களுக்கான UX மாதிரி மட்டுமே. அதிகாரப்பூர்வ தாக்கல் செய்ய அல்ல.",
     footerGovInfo: "தேசிய இணையக் குற்றப் புகாரளிப்பு தளம் | உள்துறை அமைச்சகம், இந்திய அரசு",
@@ -1135,6 +1216,22 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     backToReviewBtn: "← পর্যালোচনায় ফিরে যান",
     continueToSubmissionBtn: "জমা দেওয়ার জন্য এগিয়ে যান →",
 
+    successTitle: "আপনার অভিযোগ জমা দেওয়া হয়েছে",
+    successSubtitle: "আপনার অভিযোগ সফলভাবে গৃহীত হয়েছে।",
+    complaintNumberLabel: "অভিযোগ নম্বর",
+    copyBtn: "কপি করুন",
+    copiedToast: "অভিযোগ নম্বর কপি করা হয়েছে।",
+    submittedAtLabel: "জমা দেওয়ার তারিখ",
+    downloadSummaryBtn: "সারসংক্ষেপ ডাউনলোড করুন",
+    whatNextTitle: "পরবর্তী পদক্ষেপ কী?",
+    timelineStep1: "অভিযোগ জমা দেওয়া হয়েছে",
+    timelineStep2: "পর্যালোচনার অধীনে",
+    timelineStep3: "প্রয়োজন হলে আরও পদক্ষেপ",
+    timelineStep4: "স্ট্যাটাস আপডেট",
+    nextStepsNotice: "এটি একটি প্রোটোটাইপ প্রদর্শনী। এখনও কোনো প্রকৃত পুলিশ কর্মকর্তা বা সরকারি বিভাগ বরাদ্দ করা হয়নি।",
+    trackComplaintBtn: "আপনার অভিযোগ ট্র্যাক করুন →",
+    returnHomeBtn: "হোম পেজে ফিরে যান",
+
     footerNotice: "এই ওয়েবসাইটটি কেবল গবেষণা এবং মূল্যায়নের উদ্দেশ্যে একটি ইউএক্স প্রোটোটাইপ। এটি অফিসিয়াল দাখিলের জন্য নয়।",
     footerGovInfo: "জাতীয় সাইবার অপরাধ রিপোর্টিং পোর্টাল | স্বরাষ্ট্র মন্ত্রক, ভারত সরকার",
     accessibilityTitle: "অ্যাক্সেসিবিলিটি সেটিংস",
@@ -1322,6 +1419,22 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     securityNoticeSub: "ఈ ప్రోటోటైప్ అనుభవంలో మీ ఫిర్యాదు వివరాలు సురక్షితంగా సేవ్ చేయబడతాయి.",
     backToReviewBtn: "← సమీక్షకు తిరిగి వెళ్లండి",
     continueToSubmissionBtn: "సమర్పణకు కొనసాగించండి →",
+
+    successTitle: "మీ ఫిర్యాదు సమర్పించబడింది",
+    successSubtitle: "మీ ఫిర్యాదు విజయవంతంగా స్వీకరించబడింది.",
+    complaintNumberLabel: "ఫిర్యాదు సంఖ్య",
+    copyBtn: "కాపీ చేయండి",
+    copiedToast: "ఫిర్యాదు సంఖ్య కాపీ చేయబడింది.",
+    submittedAtLabel: "సమర్పించిన తేదీ",
+    downloadSummaryBtn: "సారాంశాన్ని డౌన్‌లోడ్ చేయండి",
+    whatNextTitle: "తదుపరి ఏమి జరుగుతుంది?",
+    timelineStep1: "ఫిర్యాదు సమర్పించబడింది",
+    timelineStep2: "సమీక్షలో ఉంది",
+    timelineStep3: "అవసరమైతే తదుపరి చర్య",
+    timelineStep4: "స్టేటస్ అప్‌డేట్‌లు",
+    nextStepsNotice: "ఇది ప్రోటోటైప్ ప్రదర్శన మాత్రమే. ఇంకా ఏ ఇతర పోలీస్ అధికారి లేదా ప్రభుత్వ విభాగం కేటాయించబడలేదు.",
+    trackComplaintBtn: "మీ ఫిర్యాదును ట్రాక్ చేయండి →",
+    returnHomeBtn: "ముఖ్య పేజీకి తిరిగి వెళ్లండి",
 
     footerNotice: "ఈ వెబ్‌సైట్ పరిశోధన మరియు మూల్యాంకన అవసరాల కోసం రూపొందించబడిన UX ప్రోటోటైప్ మాత్రమే. అధికారిక నమోదు కోసం కాదు.",
     footerGovInfo: "జాతీయ సైబర్ నేరాల నివేదిక పోర్టల్ | హోం వ్యవహారాల మంత్రిత్వ శాఖ, భారత ప్రభుత్వం",
