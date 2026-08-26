@@ -27,9 +27,9 @@ export const WelcomeHero: React.FC = () => {
 
       {/* 2. Main Welcome Content Container */}
       <div className="max-w-7xl mx-auto w-full relative z-10 my-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[360px] md:min-h-[390px]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-end min-h-[380px] md:min-h-[420px]">
           {/* Left Column: Main Typography & Primary CTA */}
-          <div className="lg:col-span-8 space-y-4 text-left">
+          <div className="lg:col-span-7 space-y-4 text-left pb-4">
             {/* Main Welcome Heading: 42-50px desktop */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-extrabold text-gov-navy leading-[1.12] tracking-tight">
               {t.welcomeTitle.includes('Welcome to the') ? (
@@ -72,20 +72,20 @@ export const WelcomeHero: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Provided lady.png Asset (Supporting visual, preserved transparency & aspect ratio) */}
-          <div className="lg:col-span-4 flex justify-center lg:justify-end relative">
-            <div className="w-full max-w-[210px] sm:max-w-[240px] lg:max-w-[260px]">
+          {/* Right Column: Provided lady.png Asset (Larger & touching down on the bottom reassurance box) */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end items-end relative h-full">
+            <div className="w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[390px] -mb-6 z-10">
               <img
                 src="/images/lady.png"
                 alt="Indian Welcome Assistance"
-                className="w-full h-auto object-contain drop-shadow-xs"
+                className="w-full h-auto max-h-[380px] lg:max-h-[440px] object-contain drop-shadow-md"
               />
             </div>
           </div>
         </div>
 
-        {/* 3. Reassurance Cards Row Container */}
-        <div className="mt-6 md:mt-7">
+        {/* 3. Reassurance Cards Row Container (Lady touches down right on top of this container) */}
+        <div className="mt-4 md:mt-6 relative z-20">
           <ReassuranceCards />
         </div>
       </div>
