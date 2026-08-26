@@ -296,31 +296,45 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setGeminiError(null);
 
     try {
-      console.log(`[AppContext Debug] Running Gemini analysis on text: "${targetText.substring(0, 60)}..."`);
+      console.log(`[AppContext Debug] Running Gemini extraction on text: "${targetText.substring(0, 60)}..."`);
       const result = await analyzeComplaintWithGemini(targetText);
       
       setGeminiAnalysis(result);
       setSelectedCategoryState(result.mappedCategoryId);
+
+      // Pre-fill Page 04 Review Info
       setExtractedIncidentState(result.whatHappened || targetText);
       setExtractedAmountState(result.amount || '');
       setExtractedMethodState(result.method || '');
 
+      // Pre-fill Page 05 Form Details (ONLY if extracted by Gemini and not empty)
       if (result.amount) setDetailAmount(result.amount);
       if (result.transactionId) setTransactionId(result.transactionId);
-      if (result.platform) setPlatformName(result.platform);
+      if (result.bank || result.upiId) setBankService(result.bank || result.upiId || '');
+      if (result.platform || result.website) setPlatformName(result.platform || result.website || '');
+      if (result.suspectUsername || result.suspectProfileUrl) {
+        setAccountUsername(result.suspectUsername || result.suspectProfileUrl || '');
+      }
+      if (result.phoneNumber || result.email) setContactDetail(result.phoneNumber || result.email || '');
+      if (result.companyName) setCompanyName(result.companyName);
+      if (result.date) setIncidentDate(result.date);
+      if (result.time) setIncidentTime(result.time);
 
       saveDraft({
         geminiAnalysis: result,
         selectedCategory: result.mappedCategoryId,
         extractedIncident: result.whatHappened || targetText,
         extractedAmount: result.amount || '',
-        extractedMethod: result.method || ''
+        extractedMethod: result.method || '',
+        platformName: result.platform || result.website || platformName,
+        accountUsername: result.suspectUsername || result.suspectProfileUrl || accountUsername,
+        detailAmount: result.amount || detailAmount,
+        transactionId: result.transactionId || transactionId
       });
     } catch (error: any) {
       console.warn("[AppContext Debug] Gemini API call failed or unavailable:", error);
       setGeminiError("Guidance is temporarily unavailable.");
       setGeminiAnalysis(null);
-      // DO NOT set selectedCategory or extracted values from hardcoded data on Gemini failure!
     } finally {
       setIsAnalyzingGemini(false);
     }
@@ -369,18 +383,42 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const setComplaintText = (text: string) => {
     setComplaintTextState(text);
-    // Clear old/stale Gemini result when user edits complaint text
+    // Clear old/stale Gemini result & form pre-fills when user edits story on Page 02
     setGeminiAnalysis(null);
     setGeminiError(null);
     setSelectedCategoryState(null);
+    setExtractedIncidentState('');
+    setExtractedAmountState('');
+    setExtractedMethodState('');
+    setDetailAmount('');
+    setTransactionId('');
+    setBankService('');
+    setPlatformName('');
+    setAccountUsername('');
+    setContactDetail('');
+    setCompanyName('');
+    setIncidentDate('');
+    setIncidentTime('');
   };
 
   const setVoiceTranscript = (transcript: string) => {
     setVoiceTranscriptState(transcript);
-    // Clear old/stale Gemini result when new voice transcript arrives
+    // Clear old/stale Gemini result & form pre-fills when new voice transcript arrives
     setGeminiAnalysis(null);
     setGeminiError(null);
     setSelectedCategoryState(null);
+    setExtractedIncidentState('');
+    setExtractedAmountState('');
+    setExtractedMethodState('');
+    setDetailAmount('');
+    setTransactionId('');
+    setBankService('');
+    setPlatformName('');
+    setAccountUsername('');
+    setContactDetail('');
+    setCompanyName('');
+    setIncidentDate('');
+    setIncidentTime('');
   };
 
   const setSelectedCategory = (cat: CategoryId | null) => {

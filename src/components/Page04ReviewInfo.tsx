@@ -11,8 +11,7 @@ import {
   Check,
   X,
   ArrowLeft,
-  ArrowRight,
-  HelpCircle
+  ArrowRight
 } from 'lucide-react';
 
 export const Page04ReviewInfo: React.FC = () => {
@@ -26,17 +25,33 @@ export const Page04ReviewInfo: React.FC = () => {
     setExtractedAmount,
     extractedMethod,
     setExtractedMethod,
+    geminiAnalysis,
     setCurrentPage,
     saveDraft
   } = useApp();
 
+  const defaultInfo = extractInformationFromStory(complaintText, selectedCategory);
+
   // Compute default extraction if not already set by user editing
   useEffect(() => {
-    const defaultInfo = extractInformationFromStory(complaintText, selectedCategory);
-    if (!extractedIncident) setExtractedIncident(defaultInfo.incident);
-    if (!extractedAmount) setExtractedAmount(defaultInfo.amount);
-    if (!extractedMethod) setExtractedMethod(defaultInfo.method);
-  }, [complaintText, selectedCategory]);
+    if (!extractedIncident && geminiAnalysis?.whatHappened) {
+      setExtractedIncident(geminiAnalysis.whatHappened);
+    } else if (!extractedIncident) {
+      setExtractedIncident(defaultInfo.incident);
+    }
+
+    if (!extractedAmount && geminiAnalysis?.amount) {
+      setExtractedAmount(geminiAnalysis.amount);
+    } else if (!extractedAmount) {
+      setExtractedAmount(defaultInfo.amount);
+    }
+
+    if (!extractedMethod && geminiAnalysis?.method) {
+      setExtractedMethod(geminiAnalysis.method);
+    } else if (!extractedMethod) {
+      setExtractedMethod(defaultInfo.method);
+    }
+  }, [complaintText, selectedCategory, geminiAnalysis]);
 
   // Inline editing state for each field
   const [editingField, setEditingField] = useState<'incident' | 'amount' | 'method' | 'path' | null>(null);
@@ -73,7 +88,7 @@ export const Page04ReviewInfo: React.FC = () => {
     setCurrentPage(5);
   };
 
-  const defaultInfo = extractInformationFromStory(complaintText, selectedCategory);
+  const displayPathTitle = geminiAnalysis?.suggestedCategory || defaultInfo.pathTitle;
 
   return (
     <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-hidden">
@@ -119,7 +134,7 @@ export const Page04ReviewInfo: React.FC = () => {
                     {editingField !== 'incident' && (
                       <button
                         onClick={() => handleStartEdit('incident', extractedIncident || defaultInfo.incident)}
-                        className="text-xs font-bold text-gov-saffron hover:underline flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity"
+                        className="text-xs font-bold text-gov-saffron hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         <Edit3 className="w-3.5 h-3.5" />
                         <span>{t.editBtn}</span>
@@ -138,14 +153,14 @@ export const Page04ReviewInfo: React.FC = () => {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleSaveEdit('incident')}
-                          className="flex items-center gap-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1 rounded text-xs"
+                          className="flex items-center gap-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1 rounded text-xs cursor-pointer"
                         >
                           <Check className="w-3.5 h-3.5" />
                           <span>{t.saveFieldBtn}</span>
                         </button>
                         <button
                           onClick={handleCancelEdit}
-                          className="flex items-center gap-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-3 py-1 rounded text-xs"
+                          className="flex items-center gap-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-3 py-1 rounded text-xs cursor-pointer"
                         >
                           <X className="w-3.5 h-3.5" />
                           <span>{t.cancelFieldBtn}</span>
@@ -169,7 +184,7 @@ export const Page04ReviewInfo: React.FC = () => {
                     {editingField !== 'amount' && (
                       <button
                         onClick={() => handleStartEdit('amount', extractedAmount || defaultInfo.amount)}
-                        className="text-xs font-bold text-gov-saffron hover:underline flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity"
+                        className="text-xs font-bold text-gov-saffron hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         <Edit3 className="w-3.5 h-3.5" />
                         <span>{t.editBtn}</span>
@@ -188,14 +203,14 @@ export const Page04ReviewInfo: React.FC = () => {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleSaveEdit('amount')}
-                          className="flex items-center gap-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1 rounded text-xs"
+                          className="flex items-center gap-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1 rounded text-xs cursor-pointer"
                         >
                           <Check className="w-3.5 h-3.5" />
                           <span>{t.saveFieldBtn}</span>
                         </button>
                         <button
                           onClick={handleCancelEdit}
-                          className="flex items-center gap-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-3 py-1 rounded text-xs"
+                          className="flex items-center gap-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-3 py-1 rounded text-xs cursor-pointer"
                         >
                           <X className="w-3.5 h-3.5" />
                           <span>{t.cancelFieldBtn}</span>
@@ -204,7 +219,7 @@ export const Page04ReviewInfo: React.FC = () => {
                     </div>
                   ) : (
                     <p className="text-xl font-black text-gov-saffron tracking-tight pt-1">
-                      {extractedAmount || defaultInfo.amount}
+                      {extractedAmount || defaultInfo.amount || "N/A"}
                     </p>
                   )}
                 </div>
@@ -219,7 +234,7 @@ export const Page04ReviewInfo: React.FC = () => {
                     {editingField !== 'method' && (
                       <button
                         onClick={() => handleStartEdit('method', extractedMethod || defaultInfo.method)}
-                        className="text-xs font-bold text-gov-saffron hover:underline flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity"
+                        className="text-xs font-bold text-gov-saffron hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         <Edit3 className="w-3.5 h-3.5" />
                         <span>{t.editBtn}</span>
@@ -238,14 +253,14 @@ export const Page04ReviewInfo: React.FC = () => {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleSaveEdit('method')}
-                          className="flex items-center gap-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1 rounded text-xs"
+                          className="flex items-center gap-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1 rounded text-xs cursor-pointer"
                         >
                           <Check className="w-3.5 h-3.5" />
                           <span>{t.saveFieldBtn}</span>
                         </button>
                         <button
                           onClick={handleCancelEdit}
-                          className="flex items-center gap-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-3 py-1 rounded text-xs"
+                          className="flex items-center gap-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-3 py-1 rounded text-xs cursor-pointer"
                         >
                           <X className="w-3.5 h-3.5" />
                           <span>{t.cancelFieldBtn}</span>
@@ -268,14 +283,14 @@ export const Page04ReviewInfo: React.FC = () => {
                     </div>
                     <button
                       onClick={() => setCurrentPage(3)}
-                      className="text-xs font-bold text-gov-saffron hover:underline flex items-center gap-1"
+                      className="text-xs font-bold text-gov-saffron hover:underline flex items-center gap-1 cursor-pointer"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
                       <span>Change Path</span>
                     </button>
                   </div>
                   <p className="text-base font-bold text-gov-navy leading-relaxed pt-1">
-                    {defaultInfo.pathTitle}
+                    {displayPathTitle}
                   </p>
                 </div>
 
@@ -308,7 +323,7 @@ export const Page04ReviewInfo: React.FC = () => {
         <div className="mt-8 flex items-center justify-between pt-4 border-t border-gray-200/80">
           <button
             onClick={handleBackToPath}
-            className="flex items-center gap-1.5 text-gray-700 hover:text-gov-navy font-bold text-sm hover:underline outline-none"
+            className="flex items-center gap-1.5 text-gray-700 hover:text-gov-navy font-bold text-sm hover:underline outline-none cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{t.backToPathBtn}</span>

@@ -3,18 +3,15 @@ import { useApp } from '../context/AppContext';
 import { ProgressStepper } from './ProgressStepper';
 import {
   Calendar,
-  Clock,
   IndianRupee,
   Receipt,
   Building2,
   Globe,
   User,
-  Briefcase,
   Phone,
   ArrowLeft,
   ArrowRight,
-  HelpCircle,
-  ShieldCheck
+  Sparkles
 } from 'lucide-react';
 
 export const Page05AddDetails: React.FC = () => {
@@ -48,6 +45,7 @@ export const Page05AddDetails: React.FC = () => {
     setCompanyName,
     contactDetail,
     setContactDetail,
+    geminiAnalysis,
     setCurrentPage,
     saveDraft
   } = useApp();
@@ -68,7 +66,7 @@ export const Page05AddDetails: React.FC = () => {
     setCurrentPage(6);
   };
 
-  const cat = selectedCategory || 'financial';
+  const cat = selectedCategory || (geminiAnalysis ? geminiAnalysis.mappedCategoryId : 'other');
 
   return (
     <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-hidden">
@@ -103,18 +101,26 @@ export const Page05AddDetails: React.FC = () => {
             
             {/* QUESTION 1: INCIDENT DATE & TIME */}
             <div className="space-y-3 pb-6 border-b border-gray-100">
-              <div className="flex items-start gap-2.5">
-                <div className="p-2 rounded-xl bg-amber-100/80 text-gov-saffron shrink-0 mt-0.5">
-                  <Calendar className="w-5 h-5" />
+              <div className="flex items-center justify-between">
+                <div className="flex items-start gap-2.5">
+                  <div className="p-2 rounded-xl bg-amber-100/80 text-gov-saffron shrink-0 mt-0.5">
+                    <Calendar className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gov-navy">
+                      {t.q1Title}
+                    </h3>
+                    <p className="text-xs text-gray-500 font-medium">
+                      {t.q1Sub}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold text-gov-navy">
-                    {t.q1Title}
-                  </h3>
-                  <p className="text-xs text-gray-500 font-medium">
-                    {t.q1Sub}
-                  </p>
-                </div>
+                {incidentDate && geminiAnalysis?.date && (
+                  <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                    <Sparkles className="w-3 h-3" />
+                    <span>Auto-extracted</span>
+                  </span>
+                )}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
@@ -165,21 +171,29 @@ export const Page05AddDetails: React.FC = () => {
               </label>
             </div>
 
-            {/* QUESTION 2: AMOUNT INVOLVED (For Financial cases) */}
-            {(cat === 'financial' || cat === 'other') && (
+            {/* QUESTION 2: AMOUNT INVOLVED (For Financial, Job Fraud, or when extracted) */}
+            {(cat === 'financial' || cat === 'job_fraud' || cat === 'other' || !!detailAmount) && (
               <div className="space-y-3 pb-6 border-b border-gray-100">
-                <div className="flex items-start gap-2.5">
-                  <div className="p-2 rounded-xl bg-amber-100/80 text-gov-saffron shrink-0 mt-0.5">
-                    <IndianRupee className="w-5 h-5" />
+                <div className="flex items-center justify-between">
+                  <div className="flex items-start gap-2.5">
+                    <div className="p-2 rounded-xl bg-amber-100/80 text-gov-saffron shrink-0 mt-0.5">
+                      <IndianRupee className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-gov-navy">
+                        {t.q2Title}
+                      </h3>
+                      <p className="text-xs text-gray-500 font-medium">
+                        {t.q2Sub}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-gov-navy">
-                      {t.q2Title}
-                    </h3>
-                    <p className="text-xs text-gray-500 font-medium">
-                      {t.q2Sub}
-                    </p>
-                  </div>
+                  {detailAmount && geminiAnalysis?.amount && (
+                    <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                      <Sparkles className="w-3 h-3" />
+                      <span>Auto-extracted</span>
+                    </span>
+                  )}
                 </div>
 
                 <div className="max-w-md pt-2">
@@ -212,22 +226,30 @@ export const Page05AddDetails: React.FC = () => {
               </div>
             )}
 
-            {/* QUESTION 3: TRANSACTION ID (For Financial Fraud) */}
-            {cat === 'financial' && (
+            {/* TRANSACTION ID & BANK / SERVICE PROVIDER */}
+            {(cat === 'financial' || !!transactionId || !!bankService) && (
               <>
                 <div className="space-y-3 pb-6 border-b border-gray-100">
-                  <div className="flex items-start gap-2.5">
-                    <div className="p-2 rounded-xl bg-amber-100/80 text-gov-saffron shrink-0 mt-0.5">
-                      <Receipt className="w-5 h-5" />
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-start gap-2.5">
+                      <div className="p-2 rounded-xl bg-amber-100/80 text-gov-saffron shrink-0 mt-0.5">
+                        <Receipt className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-bold text-gov-navy">
+                          {t.q3Title}
+                        </h3>
+                        <p className="text-xs text-gray-500 font-medium">
+                          {t.q3Sub}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gov-navy">
-                        {t.q3Title}
-                      </h3>
-                      <p className="text-xs text-gray-500 font-medium">
-                        {t.q3Sub}
-                      </p>
-                    </div>
+                    {transactionId && geminiAnalysis?.transactionId && (
+                      <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                        <Sparkles className="w-3 h-3" />
+                        <span>Auto-extracted</span>
+                      </span>
+                    )}
                   </div>
 
                   <div className="max-w-md pt-2">
@@ -257,7 +279,7 @@ export const Page05AddDetails: React.FC = () => {
                 </div>
 
                 {/* BANK / SERVICE PROVIDER */}
-                <div className="space-y-3 pb-2">
+                <div className="space-y-3 pb-6 border-b border-gray-100">
                   <div className="flex items-start gap-2.5">
                     <div className="p-2 rounded-xl bg-amber-100/80 text-gov-saffron shrink-0 mt-0.5">
                       <Building2 className="w-5 h-5" />
@@ -300,9 +322,22 @@ export const Page05AddDetails: React.FC = () => {
               </>
             )}
 
-            {/* CONTEXTUAL FIELDS FOR ACCOUNT / HARASSMENT / JOB FRAUD */}
-            {cat === 'account_identity' && (
-              <div className="space-y-4 pt-2">
+            {/* CONTEXTUAL / EXTRACTED FIELDS FOR PLATFORM & SUSPECT HANDLES */}
+            <div className="space-y-6 pt-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-gov-navy font-bold text-sm uppercase tracking-wider">
+                  <Globe className="w-4 h-4 text-gov-saffron" />
+                  <span>Platform & Suspect Details</span>
+                </div>
+                {(platformName || accountUsername) && (geminiAnalysis?.platform || geminiAnalysis?.suspectUsername) && (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                    <Sparkles className="w-3 h-3" />
+                    <span>Auto-extracted from story</span>
+                  </span>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
                     {t.platformLabel}
@@ -312,81 +347,54 @@ export const Page05AddDetails: React.FC = () => {
                     value={platformName}
                     onChange={(e) => setPlatformName(e.target.value)}
                     placeholder="e.g. Instagram, Facebook, WhatsApp"
-                    className="w-full p-3 rounded-xl border border-gray-300 outline-none text-sm focus:border-gov-navy"
+                    className="w-full p-3 rounded-xl border border-gray-300 outline-none text-sm focus:border-gov-navy font-medium"
                   />
                 </div>
+
                 <div>
                   <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
-                    {t.usernameLabel}
+                    Suspect Profile / Username / Link
                   </label>
                   <input
                     type="text"
                     value={accountUsername}
                     onChange={(e) => setAccountUsername(e.target.value)}
                     placeholder="e.g. @suspect_handle or profile link"
-                    className="w-full p-3 rounded-xl border border-gray-300 outline-none text-sm focus:border-gov-navy"
+                    className="w-full p-3 rounded-xl border border-gray-300 outline-none text-sm focus:border-gov-navy font-medium"
                   />
                 </div>
-              </div>
-            )}
 
-            {cat === 'harassment' && (
-              <div className="space-y-4 pt-2">
-                <div>
-                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
-                    {t.platformLabel}
-                  </label>
-                  <input
-                    type="text"
-                    value={platformName}
-                    onChange={(e) => setPlatformName(e.target.value)}
-                    placeholder="e.g. WhatsApp, Email, Telegram"
-                    className="w-full p-3 rounded-xl border border-gray-300 outline-none text-sm focus:border-gov-navy"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
-                    {t.contactLabel}
-                  </label>
-                  <input
-                    type="text"
-                    value={contactDetail}
-                    onChange={(e) => setContactDetail(e.target.value)}
-                    placeholder="e.g. Phone number, email, or profile handle"
-                    className="w-full p-3 rounded-xl border border-gray-300 outline-none text-sm focus:border-gov-navy"
-                  />
-                </div>
-              </div>
-            )}
+                {cat === 'job_fraud' && (
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
+                      {t.companyLabel}
+                    </label>
+                    <input
+                      type="text"
+                      value={companyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
+                      placeholder="e.g. ABC Pvt Ltd / Recruitment Agent"
+                      className="w-full p-3 rounded-xl border border-gray-300 outline-none text-sm focus:border-gov-navy font-medium"
+                    />
+                  </div>
+                )}
 
-            {cat === 'job_fraud' && (
-              <div className="space-y-4 pt-2">
-                <div>
-                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
-                    {t.companyLabel}
-                  </label>
-                  <input
-                    type="text"
-                    value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                    placeholder="e.g. ABC Pvt Ltd / Recruitment Agent"
-                    className="w-full p-3 rounded-xl border border-gray-300 outline-none text-sm focus:border-gov-navy"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
-                    {t.contactLabel}
-                  </label>
-                  <input
-                    type="text"
-                    value={contactDetail}
-                    onChange={(e) => setContactDetail(e.target.value)}
-                    placeholder="e.g. HR Phone number or website link"
-                    className="w-full p-3 rounded-xl border border-gray-300 outline-none text-sm focus:border-gov-navy"
-                  />
-                </div>
+                {(cat === 'harassment' || cat === 'job_fraud' || !!contactDetail) && (
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
+                      {t.contactLabel}
+                    </label>
+                    <input
+                      type="text"
+                      value={contactDetail}
+                      onChange={(e) => setContactDetail(e.target.value)}
+                      placeholder="e.g. Phone number or email address"
+                      className="w-full p-3 rounded-xl border border-gray-300 outline-none text-sm focus:border-gov-navy font-medium"
+                    />
+                  </div>
+                )}
               </div>
-            )}
+            </div>
 
           </div>
         </div>
@@ -395,7 +403,7 @@ export const Page05AddDetails: React.FC = () => {
         <div className="mt-8 flex items-center justify-between pt-4 border-t border-gray-200/80">
           <button
             onClick={handleBack}
-            className="flex items-center gap-1.5 text-gray-700 hover:text-gov-navy font-bold text-sm hover:underline outline-none"
+            className="flex items-center gap-1.5 text-gray-700 hover:text-gov-navy font-bold text-sm hover:underline outline-none cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{t.backBtn}</span>

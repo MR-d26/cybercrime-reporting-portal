@@ -11,8 +11,14 @@ export interface GeminiAnalysisResult {
   method: string | null;
   transactionId: string | null;
   platform: string | null;
+  suspectUsername: string | null;
+  suspectProfileUrl: string | null;
   phoneNumber: string | null;
+  email: string | null;
+  bank: string | null;
+  upiId: string | null;
   website: string | null;
+  companyName: string | null;
   missingInformation: string[];
   helpfulEvidence: string[];
   mappedCategoryId: CategoryId;
@@ -113,7 +119,7 @@ export const analyzeComplaintWithGemini = async (
   const categoryName = analysis.suggestedCategory || 'Other Cybercrime';
   const mappedId = mapCategoryNameToId(categoryName);
 
-  console.log(`[GeminiService Client] Success! Suggested category: "${categoryName}" (Mapped ID: "${mappedId}")`);
+  console.log(`[GeminiService Client] Success! Category: "${categoryName}" (Mapped ID: "${mappedId}")`, analysis);
 
   return {
     suggestedCategory: categoryName,
@@ -126,8 +132,14 @@ export const analyzeComplaintWithGemini = async (
     method: analysis.method || null,
     transactionId: analysis.transactionId || null,
     platform: analysis.platform || null,
+    suspectUsername: analysis.suspectUsername || null,
+    suspectProfileUrl: analysis.suspectProfileUrl || null,
     phoneNumber: analysis.phoneNumber || null,
+    email: analysis.email || null,
+    bank: analysis.bank || null,
+    upiId: analysis.upiId || null,
     website: analysis.website || null,
+    companyName: analysis.companyName || null,
     missingInformation: Array.isArray(analysis.missingInformation) ? analysis.missingInformation : [],
     helpfulEvidence: Array.isArray(analysis.helpfulEvidence) ? analysis.helpfulEvidence : [],
     mappedCategoryId: mappedId
