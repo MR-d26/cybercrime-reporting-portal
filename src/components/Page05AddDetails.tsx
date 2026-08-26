@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { ProgressStepper } from './ProgressStepper';
 import {
@@ -48,17 +48,12 @@ export const Page05AddDetails: React.FC = () => {
     saveDraft
   } = useApp();
 
-  const initializedAmountRef = useRef(false);
-
-  // Pre-fill amount ONCE on initial load if detailAmount is empty, without blocking deletion later
+  // Pre-fill amount ONCE on mount if detailAmount is empty and extractedAmount exists
   useEffect(() => {
-    if (!initializedAmountRef.current) {
-      if (!detailAmount && extractedAmount && extractedAmount !== 'N/A') {
-        setDetailAmount(extractedAmount);
-      }
-      initializedAmountRef.current = true;
+    if (!detailAmount && extractedAmount && extractedAmount !== 'N/A') {
+      setDetailAmount(extractedAmount);
     }
-  }, [extractedAmount]);
+  }, []);
 
   const handleBack = () => {
     setCurrentPage(4);
@@ -213,7 +208,7 @@ export const Page05AddDetails: React.FC = () => {
                   value={detailAmount}
                   onChange={(e) => setDetailAmount(e.target.value)}
                   disabled={dontKnowAmount}
-                  placeholder="₹10,000"
+                  placeholder="e.g. ₹10,000 or leave empty if none"
                   className={`w-full p-3 rounded-xl border outline-none text-sm font-bold transition-all ${
                     dontKnowAmount
                       ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
@@ -285,9 +280,7 @@ export const Page05AddDetails: React.FC = () => {
                       checked={dontHaveTxnId}
                       onChange={(e) => {
                         setDontHaveTxnId(e.target.checked);
-                        if (e.target.checked) {
-                          setTransactionId('');
-                        }
+                        if (e.target.checked) setTransactionId('');
                       }}
                       className="w-4 h-4 rounded text-gov-navy focus:ring-gov-navy"
                     />
@@ -332,9 +325,7 @@ export const Page05AddDetails: React.FC = () => {
                       checked={dontKnowBank}
                       onChange={(e) => {
                         setDontKnowBank(e.target.checked);
-                        if (e.target.checked) {
-                          setBankService('');
-                        }
+                        if (e.target.checked) setBankService('');
                       }}
                       className="w-4 h-4 rounded text-gov-navy focus:ring-gov-navy"
                     />
