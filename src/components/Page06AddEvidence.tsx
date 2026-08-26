@@ -12,7 +12,8 @@ import {
   Image as ImageIcon,
   ArrowLeft,
   ArrowRight,
-  ShieldCheck
+  ShieldCheck,
+  Sparkles
 } from 'lucide-react';
 
 export const Page06AddEvidence: React.FC = () => {
@@ -25,6 +26,7 @@ export const Page06AddEvidence: React.FC = () => {
     setNoEvidenceChecked,
     additionalEvidenceNotes,
     setAdditionalEvidenceNotes,
+    geminiAnalysis,
     setCurrentPage,
     saveDraft
   } = useApp();
@@ -108,7 +110,9 @@ export const Page06AddEvidence: React.FC = () => {
     setCurrentPage(7);
   };
 
-  const cat = selectedCategory || 'financial';
+  const evidenceSuggestions = (geminiAnalysis?.helpfulEvidence && geminiAnalysis.helpfulEvidence.length > 0)
+    ? geminiAnalysis.helpfulEvidence
+    : [t.evidenceCheck1, t.evidenceCheck2, t.evidenceCheck3, t.evidenceCheck4];
 
   return (
     <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-hidden">
@@ -148,22 +152,12 @@ export const Page06AddEvidence: React.FC = () => {
                 <span>{t.whatCanUploadTitle}</span>
               </div>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-gray-700 pl-2">
-                <li className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
-                  <span>{t.evidenceCheck1}</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
-                  <span>{t.evidenceCheck2}</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
-                  <span>{t.evidenceCheck3}</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
-                  <span>{t.evidenceCheck4}</span>
-                </li>
+                {evidenceSuggestions.map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
 

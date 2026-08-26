@@ -14,6 +14,13 @@ export interface PathSuggestion {
   iconName: 'CreditCard' | 'UserCheck' | 'ShieldAlert' | 'Briefcase' | 'HelpCircle';
 }
 
+export interface AnalysisResult {
+  suggestedCategory: CategoryId;
+  extractedIncident: string;
+  extractedAmount?: string;
+  extractedMethod: string;
+}
+
 /**
  * Isolated complaint routing logic.
  * Currently uses prototype keyword matching rules to demonstrate UX.
@@ -61,4 +68,28 @@ export const suggestPathFromStory = (storyText: string): CategoryId => {
   }
 
   return 'other';
+};
+
+export const analyzeComplaint = (storyText: string): AnalysisResult => {
+  const cat = suggestPathFromStory(storyText);
+
+  // Extract simple amount if present e.g. ₹10,000 or 10000
+  let extractedAmount: string | undefined = undefined;
+  const match = storyText.match(/(?:₹|rs\.?|inr)?\s*([0-[#]\d{1,3}(?:,\d{3})*|\d+)/i);
+  if (match && (storyText.includes('₹') || storyText.toLowerCase().includes('rs') || storyText.toLowerCase().includes('rupee'))) {
+    extractedAmount = `₹${match[1]}`;
+  }
+
+  let extractedMethod = "Digital payment / Online channel";
+  if (storyText.toLowerCase().includes('sms')) extractedMethod = "SMS and payment link";
+  else if (storyText.toLowerCase().includes('upi') || storyText.toLowerCase().includes('qr')) extractedMethod = "UPI / QR Code request";
+  else if (storyText.toLowerCase().includes('whatsapp')) extractedMethod = "WhatsApp messaging";
+  else if (storyText.toLowerCase().includes('instagram')) extractedMethod = "Instagram profile";
+
+  return {
+    suggestedCategory: cat,
+    extractedIncident: storyText,
+    extractedAmount,
+    extractedMethod
+  };
 };

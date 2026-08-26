@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { LanguageCode, TRANSLATIONS, TranslationSchema } from '../i18n/translations';
-import { CategoryId } from '../utils/complaintRouter';
+import { CategoryId, analyzeComplaint, AnalysisResult } from '../utils/complaintRouter';
+import { analyzeComplaintWithGemini, GeminiAnalysisResult } from '../services/geminiService';
 
 export type FontScale = 'sm' | 'normal' | 'lg' | 'xl';
 export type ContrastMode = 'normal' | 'high-light' | 'high-dark';
@@ -51,6 +52,12 @@ export interface AppContextType {
   setExtractedAmount: (amount: string) => void;
   extractedMethod: string;
   setExtractedMethod: (method: string) => void;
+
+  // Gemini State & Analysis Method
+  geminiAnalysis: GeminiAnalysisResult | null;
+  isAnalyzingGemini: boolean;
+  geminiError: string | null;
+  runGeminiAnalysis: (textToAnalyze?: string) => Promise<void>;
 
   // Page 05 Form Fields
   incidentDate: string;
@@ -136,6 +143,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [extractedAmount, setExtractedAmountState] = useState<string>('');
   const [extractedMethod, setExtractedMethodState] = useState<string>('');
 
+  // Gemini State
+  const [geminiAnalysis, setGeminiAnalysis] = useState<GeminiAnalysisResult | null>(null);
+  const [isAnalyzingGemini, setIsAnalyzingGemini] = useState<boolean>(false);
+  const [geminiError, setGeminiError] = useState<string | null>(null);
+
   // Page 05 Form Fields
   const [incidentDate, setIncidentDate] = useState<string>('');
   const [incidentTime, setIncidentTime] = useState<string>('');
@@ -189,6 +201,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         if (parsedDraft.extractedAmount) setExtractedAmountState(parsedDraft.extractedAmount);
         if (parsedDraft.extractedMethod) setExtractedMethodState(parsedDraft.extractedMethod);
 
+        if (parsedDraft.geminiAnalysis) setGeminiAnalysis(parsedDraft.geminiAnalysis);
+
         if (parsedDraft.incidentDate) setIncidentDate(parsedDraft.incidentDate);
         if (parsedDraft.incidentTime) setIncidentTime(parsedDraft.incidentTime);
         if (parsedDraft.dontKnowDate !== undefined) setDontKnowDate(parsedDraft.dontKnowDate);
@@ -221,7 +235,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   }, []);
 
-  // Save draft to localStorage
   const saveDraft = (additionalData: any = {}) => {
     const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     try {
@@ -232,6 +245,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         extractedIncident,
         extractedAmount,
         extractedMethod,
+        geminiAnalysis,
         incidentDate,
         incidentTime,
         dontKnowDate,
@@ -268,11 +282,58 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       saveDraft();
     }
   }, [
-    complaintText, selectedCategory, extractedIncident, extractedAmount, extractedMethod,
+    complaintText, selectedCategory, extractedIncident, extractedAmount, extractedMethod, geminiAnalysis,
     incidentDate, incidentTime, dontKnowDate, detailAmount, dontKnowAmount,
     transactionId, dontHaveTxnId, bankService, dontKnowBank, platformName, accountUsername, companyName, contactDetail,
     uploadedFiles, noEvidenceChecked, additionalEvidenceNotes, reviewConfirmed, otpVerified, complaintNumber, submissionTimestamp
   ]);
+
+  const runGeminiAnalysis = async (textToAnalyze?: string) => {
+    const targetText = textToAnalyze || complaintText;
+    if (!targetText || !targetText.trim()) return;
+
+    setIsAnalyzingGemini(true);
+    setGeminiError(null);
+
+    try {
+      const result = await analyzeComplaintWithGemini(targetText);
+      setGeminiAnalysis(result);
+
+      if (!selectedCategory) {
+        setSelectedCategoryState(result.mappedCategoryId);
+      }
+
+      setExtractedIncidentState(result.whatHappened || targetText);
+      setExtractedAmountState(result.amount || '');
+      setExtractedMethodState(result.method || '');
+
+      if (result.amount && !detailAmount) setDetailAmount(result.amount);
+      if (result.transactionId && !transactionId) setTransactionId(result.transactionId);
+      if (result.platform && !platformName) setPlatformName(result.platform);
+
+      saveDraft({
+        geminiAnalysis: result,
+        selectedCategory: selectedCategory || result.mappedCategoryId,
+        extractedIncident: result.whatHappened || targetText,
+        extractedAmount: result.amount || '',
+        extractedMethod: result.method || ''
+      });
+    } catch (error: any) {
+      console.warn("Gemini API call failed or key missing. Falling back seamlessly to client-side router:", error);
+      setGeminiError("We couldn't provide guidance right now.");
+      
+      // Fallback: Client-side rule-based router
+      const fallbackResult: AnalysisResult = analyzeComplaint(targetText);
+      if (!selectedCategory) {
+        setSelectedCategoryState(fallbackResult.suggestedCategory);
+      }
+      setExtractedIncidentState(fallbackResult.extractedIncident);
+      setExtractedAmountState(fallbackResult.extractedAmount || '');
+      setExtractedMethodState(fallbackResult.extractedMethod);
+    } finally {
+      setIsAnalyzingGemini(false);
+    }
+  };
 
   const resetComplaintFlow = () => {
     setComplaintTextState('');
@@ -281,6 +342,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setExtractedIncidentState('');
     setExtractedAmountState('');
     setExtractedMethodState('');
+    setGeminiAnalysis(null);
+    setGeminiError(null);
     setIncidentDate('');
     setIncidentTime('');
     setDontKnowDate(false);
@@ -390,6 +453,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setExtractedAmount,
       extractedMethod,
       setExtractedMethod,
+      geminiAnalysis,
+      isAnalyzingGemini,
+      geminiError,
+      runGeminiAnalysis,
       incidentDate,
       setIncidentDate,
       incidentTime,
