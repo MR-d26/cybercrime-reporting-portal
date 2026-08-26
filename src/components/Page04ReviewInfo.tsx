@@ -119,7 +119,7 @@ export const Page04ReviewInfo: React.FC = () => {
         {/* Progress Stepper Bar (Step 3 Active) */}
         <ProgressStepper activeStep={3} />
 
-        {/* Main Content Body - Standardized max-w-4xl matching Pages 2, 3, 5, 6 */}
+        {/* Main Content Body - Standardized max-w-4xl matching Pages 2, 3, 5, 6, 7 */}
         <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8 flex-1 flex flex-col justify-between">
           
           <div className="space-y-6">
@@ -322,7 +322,7 @@ export const Page04ReviewInfo: React.FC = () => {
                 </div>
 
                 {/* BOTTOM CONFIRMATION SECTION */}
-                <div className="pt-4 border-t border-gray-100 bg-emerald-50/60 -mx-6 -mb-6 md:-mx-8 md:-mb-8 p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="bg-emerald-50/60 rounded-xl border border-emerald-200 p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="space-y-0.5 text-left">
                     <h4 className="text-base sm:text-lg font-bold text-gov-navy">
                       {t.confirmQuestion}
