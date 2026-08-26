@@ -119,8 +119,8 @@ export const Page04ReviewInfo: React.FC = () => {
         {/* Progress Stepper Bar (Step 3 Active) */}
         <ProgressStepper activeStep={3} />
 
-        {/* Main Content Body */}
-        <main className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8 flex-1 flex flex-col justify-between">
+        {/* Main Content Body - Standardized max-w-4xl matching Pages 2, 3, 5, 6 */}
+        <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-8 flex-1 flex flex-col justify-between">
           
           <div className="space-y-6">
             {/* Header Title & Subtitle */}
