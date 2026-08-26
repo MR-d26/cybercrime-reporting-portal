@@ -5,7 +5,8 @@ import { WelcomeHero } from './components/WelcomeHero';
 import { Page02TellUs } from './components/Page02TellUs';
 import { Page03FindPath } from './components/Page03FindPath';
 import { Page04ReviewInfo } from './components/Page04ReviewInfo';
-import { Page05Placeholder } from './components/Page05Placeholder';
+import { Page05AddDetails } from './components/Page05AddDetails';
+import { Page06Placeholder } from './components/Page06Placeholder';
 import { Footer } from './components/Footer';
 import { AccessibilityModal } from './components/AccessibilityModal';
 import { MenuModal } from './components/MenuModal';
@@ -50,7 +51,8 @@ const MainLayout: React.FC = () => {
         {currentPage === 2 && <Page02TellUs />}
         {currentPage === 3 && <Page03FindPath />}
         {currentPage === 4 && <Page04ReviewInfo />}
-        {currentPage >= 5 && <Page05Placeholder />}
+        {currentPage === 5 && <Page05AddDetails />}
+        {currentPage >= 6 && <Page06Placeholder />}
       </main>
 
       {/* Government Portal Footer */}

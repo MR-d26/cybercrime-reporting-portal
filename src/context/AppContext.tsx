@@ -43,13 +43,46 @@ export interface AppContextType {
   setExtractedAmount: (amount: string) => void;
   extractedMethod: string;
   setExtractedMethod: (method: string) => void;
+
+  // Page 05 Specific Form Fields
+  incidentDate: string;
+  setIncidentDate: (date: string) => void;
+  incidentTime: string;
+  setIncidentTime: (time: string) => void;
+  dontKnowDate: boolean;
+  setDontKnowDate: (val: boolean) => void;
+
+  detailAmount: string;
+  setDetailAmount: (amount: string) => void;
+  dontKnowAmount: boolean;
+  setDontKnowAmount: (val: boolean) => void;
+
+  transactionId: string;
+  setTransactionId: (id: string) => void;
+  dontHaveTxnId: boolean;
+  setDontHaveTxnId: (val: boolean) => void;
+
+  bankService: string;
+  setBankService: (bank: string) => void;
+  dontKnowBank: boolean;
+  setDontKnowBank: (val: boolean) => void;
+
+  platformName: string;
+  setPlatformName: (platform: string) => void;
+  accountUsername: string;
+  setAccountUsername: (user: string) => void;
+  companyName: string;
+  setCompanyName: (comp: string) => void;
+  contactDetail: string;
+  setContactDetail: (contact: string) => void;
+
   saveDraft: (additionalData?: any) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const STORAGE_KEY_SETTINGS = 'ncrp_prototype_settings';
-const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v4';
+const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v5';
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<LanguageCode>('en');
@@ -71,6 +104,25 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [extractedIncident, setExtractedIncidentState] = useState<string>('');
   const [extractedAmount, setExtractedAmountState] = useState<string>('');
   const [extractedMethod, setExtractedMethodState] = useState<string>('');
+
+  // Page 05 Form Fields
+  const [incidentDate, setIncidentDate] = useState<string>('');
+  const [incidentTime, setIncidentTime] = useState<string>('');
+  const [dontKnowDate, setDontKnowDate] = useState<boolean>(false);
+
+  const [detailAmount, setDetailAmount] = useState<string>('');
+  const [dontKnowAmount, setDontKnowAmount] = useState<boolean>(false);
+
+  const [transactionId, setTransactionId] = useState<string>('');
+  const [dontHaveTxnId, setDontHaveTxnId] = useState<boolean>(false);
+
+  const [bankService, setBankService] = useState<string>('');
+  const [dontKnowBank, setDontKnowBank] = useState<boolean>(false);
+
+  const [platformName, setPlatformName] = useState<string>('');
+  const [accountUsername, setAccountUsername] = useState<string>('');
+  const [companyName, setCompanyName] = useState<string>('');
+  const [contactDetail, setContactDetail] = useState<string>('');
 
   // Load saved settings & draft from localStorage
   useEffect(() => {
@@ -94,6 +146,25 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         if (parsedDraft.extractedIncident) setExtractedIncidentState(parsedDraft.extractedIncident);
         if (parsedDraft.extractedAmount) setExtractedAmountState(parsedDraft.extractedAmount);
         if (parsedDraft.extractedMethod) setExtractedMethodState(parsedDraft.extractedMethod);
+
+        if (parsedDraft.incidentDate) setIncidentDate(parsedDraft.incidentDate);
+        if (parsedDraft.incidentTime) setIncidentTime(parsedDraft.incidentTime);
+        if (parsedDraft.dontKnowDate !== undefined) setDontKnowDate(parsedDraft.dontKnowDate);
+
+        if (parsedDraft.detailAmount) setDetailAmount(parsedDraft.detailAmount);
+        if (parsedDraft.dontKnowAmount !== undefined) setDontKnowAmount(parsedDraft.dontKnowAmount);
+
+        if (parsedDraft.transactionId) setTransactionId(parsedDraft.transactionId);
+        if (parsedDraft.dontHaveTxnId !== undefined) setDontHaveTxnId(parsedDraft.dontHaveTxnId);
+
+        if (parsedDraft.bankService) setBankService(parsedDraft.bankService);
+        if (parsedDraft.dontKnowBank !== undefined) setDontKnowBank(parsedDraft.dontKnowBank);
+
+        if (parsedDraft.platformName) setPlatformName(parsedDraft.platformName);
+        if (parsedDraft.accountUsername) setAccountUsername(parsedDraft.accountUsername);
+        if (parsedDraft.companyName) setCompanyName(parsedDraft.companyName);
+        if (parsedDraft.contactDetail) setContactDetail(parsedDraft.contactDetail);
+
         if (parsedDraft.currentPage) setCurrentPage(parsedDraft.currentPage);
         if (parsedDraft.savedAt) setLastSavedTime(parsedDraft.savedAt);
       }
@@ -113,6 +184,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         extractedIncident,
         extractedAmount,
         extractedMethod,
+        incidentDate,
+        incidentTime,
+        dontKnowDate,
+        detailAmount,
+        dontKnowAmount,
+        transactionId,
+        dontHaveTxnId,
+        bankService,
+        dontKnowBank,
+        platformName,
+        accountUsername,
+        companyName,
+        contactDetail,
         currentPage,
         language,
         savedAt: timestamp,
@@ -125,10 +209,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   useEffect(() => {
-    if (complaintText || selectedCategory || extractedIncident) {
+    if (complaintText || selectedCategory || extractedIncident || incidentDate || detailAmount || transactionId) {
       saveDraft();
     }
-  }, [complaintText, selectedCategory, extractedIncident, extractedAmount, extractedMethod]);
+  }, [
+    complaintText, selectedCategory, extractedIncident, extractedAmount, extractedMethod,
+    incidentDate, incidentTime, dontKnowDate, detailAmount, dontKnowAmount,
+    transactionId, dontHaveTxnId, bankService, dontKnowBank, platformName, accountUsername, companyName, contactDetail
+  ]);
 
   const setLanguage = (lang: LanguageCode) => {
     setLanguageState(lang);
@@ -203,6 +291,32 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setExtractedAmount,
       extractedMethod,
       setExtractedMethod,
+      incidentDate,
+      setIncidentDate,
+      incidentTime,
+      setIncidentTime,
+      dontKnowDate,
+      setDontKnowDate,
+      detailAmount,
+      setDetailAmount,
+      dontKnowAmount,
+      setDontKnowAmount,
+      transactionId,
+      setTransactionId,
+      dontHaveTxnId,
+      setDontHaveTxnId,
+      bankService,
+      setBankService,
+      dontKnowBank,
+      setDontKnowBank,
+      platformName,
+      setPlatformName,
+      accountUsername,
+      setAccountUsername,
+      companyName,
+      setCompanyName,
+      contactDetail,
+      setContactDetail,
       saveDraft
     }}>
       {children}

@@ -115,6 +115,30 @@ export interface TranslationSchema {
   backToPathBtn: string;
   yesContinueBtn: string;
 
+  // Page 05 Add More Details
+  detailsTitle: string;
+  detailsSubtitle: string;
+  q1Title: string;
+  q1Sub: string;
+  dateLabel: string;
+  timeLabel: string;
+  dontKnowOption: string;
+  q2Title: string;
+  q2Sub: string;
+  amountLabel: string;
+  q3Title: string;
+  q3Sub: string;
+  txnLabel: string;
+  dontHaveOption: string;
+  bankLabel: string;
+  bankSub: string;
+  platformLabel: string;
+  usernameLabel: string;
+  companyLabel: string;
+  contactLabel: string;
+  backBtn: string;
+  nextEvidenceBtn: string;
+
   // Footer & Modals
   footerNotice: string;
   footerGovInfo: string;
@@ -233,6 +257,29 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     backToPathBtn: "← Back to reporting path",
     yesContinueBtn: "Yes, continue →",
 
+    detailsTitle: "Just a few more details.",
+    detailsSubtitle: "Add any information you have. If you don't know something, you can tell us.",
+    q1Title: "When did this incident happen?",
+    q1Sub: "An approximate date or time is okay if you're not sure.",
+    dateLabel: "Incident Date",
+    timeLabel: "Approximate Time (Optional)",
+    dontKnowOption: "I don't know",
+    q2Title: "How much money was involved?",
+    q2Sub: "Enter the amount you lost or were asked to pay.",
+    amountLabel: "Amount Involved (₹)",
+    q3Title: "Do you have a transaction ID or reference number?",
+    q3Sub: "You may find this on your bank statement, SMS, or payment receipt.",
+    txnLabel: "Transaction / UTR / Reference ID",
+    dontHaveOption: "I don't have it",
+    bankLabel: "Bank or Payment Service",
+    bankSub: "e.g. SBI, HDFC, PhonePe, Paytm, Google Pay",
+    platformLabel: "Platform or Website Involved",
+    usernameLabel: "Suspect Profile / Username / Link",
+    companyLabel: "Company or Person Name Involved",
+    contactLabel: "Suspect Contact Number / Link",
+    backBtn: "← Back",
+    nextEvidenceBtn: "Next step: Add evidence →",
+
     footerNotice: "This website is a UX prototype for research and evaluation purposes only. Not for official filing.",
     footerGovInfo: "National Cyber Crime Reporting Portal | Ministry of Home Affairs, Government of India",
     accessibilityTitle: "Accessibility Controls",
@@ -348,7 +395,30 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     backToPathBtn: "← रिपोर्टिंग मार्ग पर वापस जाएं",
     yesContinueBtn: "हाँ, आगे बढ़ें →",
 
-    footerNotice: "यह वेबसाइट केवल अनुसंधान और मूल्यांकन उद्देश्यों के लिए एक यूएक्स प्रोटोटाइप है। यह आधिकारिक रिपोर्टिंग के लिए नहीं है।",
+    detailsTitle: "बस कुछ और विवरण।",
+    detailsSubtitle: "आपके पास जो भी जानकारी है उसे जोड़ें। यदि आप कुछ नहीं जानते हैं, तो हमें बता सकते हैं।",
+    q1Title: "यह घटना कब हुई थी?",
+    q1Sub: "यदि आप निश्चित नहीं हैं तो एक अनुमानित तारीख या समय चलेगा।",
+    dateLabel: "घटना की तारीख",
+    timeLabel: "अनुमानित समय (वैकल्पिक)",
+    dontKnowOption: "मुझे नहीं पता",
+    q2Title: "कितने पैसे शामिल थे?",
+    q2Sub: "आपके द्वारा खोई गई या मांगी गई राशि दर्ज करें।",
+    amountLabel: "शामिल राशि (₹)",
+    q3Title: "क्या आपके पास लेन-देन आईडी (Transaction ID) या संदर्भ संख्या है?",
+    q3Sub: "आप इसे अपने बैंक विवरण, एसएमएस या भुगतान रसीद पर पा सकते हैं।",
+    txnLabel: "लेन-देन / UTR / संदर्भ आईडी",
+    dontHaveOption: "मेरे पास यह नहीं है",
+    bankLabel: "बैंक या भुगतान सेवा",
+    bankSub: "जैसे SBI, HDFC, PhonePe, Paytm, Google Pay",
+    platformLabel: "संबंधित प्लेटफॉर्म या वेबसाइट",
+    usernameLabel: "संदिग्ध प्रोफाइल / यूजरनेम / लिंक",
+    companyLabel: "संबंधित कंपनी या व्यक्ति का नाम",
+    contactLabel: "संदिग्ध का संपर्क नंबर / लिंक",
+    backBtn: "← पीछे जाएं",
+    nextEvidenceBtn: "अगला चरण: साक्ष्य जोड़ें →",
+
+    footerNotice: "यह वेबसाइट केवल अनुसंधान और मूल्यांकन उद्देश्यों के लिए एक यूक्स प्रोटोटाइप है। यह आधिकारिक रिपोर्टिंग के लिए नहीं है।",
     footerGovInfo: "राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
     accessibilityTitle: "सुगम्यता नियंत्रण (Accessibility)",
     fontSizeLabel: "फ़ॉन्ट का आकार",
@@ -462,6 +532,29 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     confirmSubtitle: "तुम्ही आता कोणताही तपशील संपादित करू शकता किंवा पुढील पायरीवर जाऊ शकता.",
     backToPathBtn: "← रिपोर्टिंग मार्गावर परत जा",
     yesContinueBtn: "होय, पुढे जा →",
+
+    detailsTitle: "फक्त आणखी काही तपशील.",
+    detailsSubtitle: "तुमच्याकडे असलेली कोणतीही माहिती जोडा. तुम्हाला काही माहीत नसल्यास सांगू शकता.",
+    q1Title: "ही घटना कधी घडली?",
+    q1Sub: "खात्री नसल्यास अंदाजे तारीख किंवा वेळ चालेल.",
+    dateLabel: "घटनेची तारीख",
+    timeLabel: "अंदाजे वेळ (पर्यायी)",
+    dontKnowOption: "मला माहीत नाही",
+    q2Title: "किती रक्कम गुंतली होती?",
+    q2Sub: "गमावलेली किंवा मागितलेली रक्कम प्रविष्ट करा.",
+    amountLabel: "रक्कम (₹)",
+    q3Title: "तुमच्याकडे ट्रान्सझॅक्शन आयडी किंवा संदर्भ क्रमांक आहे का?",
+    q3Sub: "हे तुमच्या बँक स्टेटमेंट, SMS किंवा पावतीवर मिळू शकते.",
+    txnLabel: "ट्रान्सझॅक्शन / UTR / संदर्भ आयडी",
+    dontHaveOption: "माझ्याकडे हे नाही",
+    bankLabel: "बँक किंवा पेमेंट सेवा",
+    bankSub: "उदा. SBI, HDFC, PhonePe, Paytm, Google Pay",
+    platformLabel: "संबंधित प्लॅटफॉर्म किंवा वेबसाइट",
+    usernameLabel: "संशयित प्रोफाइल / युझरनेम / लिंक",
+    companyLabel: "संबंधित कंपनी किंवा व्यक्तीचे नाव",
+    contactLabel: "संशयिताचा संपर्क क्रमांक / लिंक",
+    backBtn: "← मागे जा",
+    nextEvidenceBtn: "पुढील पायरी: पुरावा जोडा →",
 
     footerNotice: "ही वेबसाइट केवळ संशोधन आणि मूल्यमापनासाठी एक UX प्रोटोटाइप आहे. अधिकृत तक्रारीसाठी नाही.",
     footerGovInfo: "राष्ट्रीय सायबर गुन्हे रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
@@ -578,6 +671,29 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     backToPathBtn: "← புகாரளிப்பு வழிக்குத் திரும்பு",
     yesContinueBtn: "ஆம், தொடரவும் →",
 
+    detailsTitle: "இன்னும் சில விவரங்கள் மட்டும்.",
+    detailsSubtitle: "உங்களிடம் உள்ள தகவல்களைச் சேர்க்கவும். ஏதேனும் தெரியவில்லை என்றால் தெரிவிக்கலாம்.",
+    q1Title: "இந்த சம்பவம் எப்போது நடந்தது?",
+    q1Sub: "உறுதியாக தெரியவில்லை என்றால் தோராயமான தேதி அல்லது நேரம் போதுமானது.",
+    dateLabel: "சம்பவ தேதி",
+    timeLabel: "தோராயமான நேரம் (விருப்பத்தேர்வு)",
+    dontKnowOption: "எனக்குத் தெரியாது",
+    q2Title: "எவ்வளவு பணம் பாதிக்கப்பட்டது?",
+    q2Sub: "இழந்த அல்லது கேட்கப்பட்ட தொகையை உள்ளிடவும்.",
+    amountLabel: "பாதிக்கப்பட்ட தொகை (₹)",
+    q3Title: "பரிவர்த்தனை ஐடி அல்லது குறிப்பு எண் உள்ளதா?",
+    q3Sub: "வங்கி அறிக்கை, SMS அல்லது ரசீதில் இதைக் காணலாம்.",
+    txnLabel: "பரிவர்த்தனை / UTR / குறிப்பு ஐடி",
+    dontHaveOption: "என்னிடம் இல்லை",
+    bankLabel: "வங்கி அல்லது கட்டண சேவை",
+    bankSub: "எ.கா. SBI, HDFC, PhonePe, Paytm, Google Pay",
+    platformLabel: "தொடர்புடைய தளம் அல்லது இணையதளம்",
+    usernameLabel: "சந்தேகத்திற்குரிய கணக்கு / பெயர் / இணைப்பு",
+    companyLabel: "தொடர்புடைய நிறுவனம் அல்லது நபர் பெயர்",
+    contactLabel: "சந்தேகத்திற்குரிய நபரின் தொடர்பு எண் / இணைப்பு",
+    backBtn: "← பின்செல்",
+    nextEvidenceBtn: "அடுத்த கட்டம்: ஆதாரம் சேர் →",
+
     footerNotice: "இந்த இணையதளம் ஆராய்ச்சி மற்றும் மதிப்பீட்டு நோக்கங்களுக்கான UX மாதிரி மட்டுமே. அதிகாரப்பூர்வ தாக்கல் செய்ய அல்ல.",
     footerGovInfo: "தேசிய இணையக் குற்றப் புகாரளிப்பு தளம் | உள்துறை அமைச்சகம், இந்திய அரசு",
     accessibilityTitle: "அணுகல்தன்மை கட்டுப்பாடுகள்",
@@ -693,6 +809,29 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     backToPathBtn: "← রিপোর্টিং পথে ফিরে যান",
     yesContinueBtn: "হ্যাঁ, এগিয়ে যান →",
 
+    detailsTitle: "আর কয়েকটি বিবরণ।",
+    detailsSubtitle: "আপনার কাছে যে তথ্য আছে তা যোগ করুন। কিছু জানা না থাকলে আমাদের জানাতে পারেন।",
+    q1Title: "এই ঘটনাটি কখন ঘটেছিল?",
+    q1Sub: "আপনি নিশ্চিত না হলে একটি আনুমানিক তারিখ বা সময় গ্রহণযোগ্য।",
+    dateLabel: "ঘটনার তারিখ",
+    timeLabel: "আনুমানিক সময় (ঐচ্ছিক)",
+    dontKnowOption: "আমি জানি না",
+    q2Title: "কত টাকা জড়িত ছিল?",
+    q2Sub: "আপনার হারানো বা চাওয়া টাকার পরিমাণ লিখুন।",
+    amountLabel: "জড়িত অর্থ (₹)",
+    q3Title: "আপনার কাছে কি ট্রানজ্যাকশন আইডি বা রেফারেন্স নম্বর আছে?",
+    q3Sub: "আপনি এটি আপনার ব্যাঙ্ক স্টেটমেন্ট, এসএমএস বা রসিদে পেতে পারেন।",
+    txnLabel: "ট্রানজ্যাকশন / UTR / রেফারেন্স আইডি",
+    dontHaveOption: "আমার কাছে এটি নেই",
+    bankLabel: "ব্যাঙ্ক বা পেমেন্ট পরিষেবা",
+    bankSub: "যেমন SBI, HDFC, PhonePe, Paytm, Google Pay",
+    platformLabel: "সংশ্লিষ্ট প্ল্যাটফর্ম বা ওয়েবসাইট",
+    usernameLabel: "সন্দেহভাজন প্রোফাইল / ইউজারনেম / লিঙ্ক",
+    companyLabel: "সংশ্লিষ্ট কোম্পানি বা ব্যক্তির নাম",
+    contactLabel: "সন্দেহভাজন ব্যক্তির যোগাযোগ নম্বর / লিঙ্ক",
+    backBtn: "← পেছনে যান",
+    nextEvidenceBtn: "পরবর্তী ধাপ: প্রমাণ যোগ করুন →",
+
     footerNotice: "এই ওয়েবসাইটটি কেবল গবেষণা এবং মূল্যায়নের উদ্দেশ্যে একটি ইউএক্স প্রোটোটাইপ। এটি অফিসিয়াল দাখিলের জন্য নয়।",
     footerGovInfo: "জাতীয় সাইবার অপরাধ রিপোর্টিং পোর্টাল | স্বরাষ্ট্র মন্ত্রক, ভারত সরকার",
     accessibilityTitle: "অ্যাক্সেসিবিলিটি সেটিংস",
@@ -763,7 +902,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     recordAgainBtn: "మళ్లీ రికార్డ్ చేయండి",
     useThisBtn: "ఈ టెక్స్ట్‌ని ఉపయోగించండి",
     notSureTitle: "ఏమి రాయాలో అర్థం కావడం లేదా?",
-    notSureDesc: "క్రింది ఉదాహరణల నుండి ఎంచుకోండి లేదా మీ ಸ್ವంత మాటలలో రాయండి.",
+    notSureDesc: "క్రింది ఉదాహరణల నుండి ఎంచుకోండి లేదా మీ స్వంత మాటలలో రాయండి.",
     viewExamples: "ఉదాహరణలను చూడండి",
     hideExamples: "ఉదాహరణలను దాచండి",
     scenario1: "లింక్ క్లిక్ చేసిన తర్వాత నా బ్యాంక్ ఖాతా నుండి డబ్బు కట్ అయింది.",
@@ -807,6 +946,29 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     confirmSubtitle: "మీరు ఇప్పుడు ఏ వివరాలనైనా సవరించవచ్చు లేదా తదుపరి దశకు వెళ్ళవచ్చు.",
     backToPathBtn: "← నివేదిక మార్గానికి తిరిగి వెళ్ళండి",
     yesContinueBtn: "అవును, కొనసాగించండి →",
+
+    detailsTitle: "మరికొన్ని వివరాలు మాత్రమే.",
+    detailsSubtitle: "మీ వద్ద ఉన్న సమాచారాన్ని జోడించండి. మీకు తెలియని విషయం ఉంటే మాకు చెప్పవచ్చు.",
+    q1Title: "ఈ సంఘటన ఎప్పుడు జరిగింది?",
+    q1Sub: "మీకు కచ్చితంగా తెలియకపోతే అంచనా తేదీ లేదా సమయం సరిపోతుంది.",
+    dateLabel: "సంఘటన తేదీ",
+    timeLabel: "అంచనా సమయం (ఐచ్ఛికం)",
+    dontKnowOption: "నాకు తెలియదు",
+    q2Title: "ఎంత మొత్తం డబ్బు ప్రమేయం ఉంది?",
+    q2Sub: "మీరు కోల్పోయిన లేదా అడిగిన మొత్తాన్ని నమోదు చేయండి.",
+    amountLabel: "మొత్తం (₹)",
+    q3Title: "మీ వద్ద లావాదేవీ ID లేదా రిఫరెన్స్ నంబర్ ఉందా?",
+    q3Sub: "ఇది మీ బ్యాంక్ స్టేట్‌మెంట్, SMS లేదా రసీదులో ఉండవచ్చు.",
+    txnLabel: "లావాదేవీ / UTR / రిఫరెన్స్ ID",
+    dontHaveOption: "నా వద్ద లేదు",
+    bankLabel: "బ్యాంక్ లేదా పేమెంట్ సేవ",
+    bankSub: "ఉదా. SBI, HDFC, PhonePe, Paytm, Google Pay",
+    platformLabel: "సంబంధిత ప్లాట్‌ఫారమ్ లేదా వెబ్‌సైట్",
+    usernameLabel: "అనుమానితుడి ప్రొఫైల్ / యూజర్‌నేమ్ / లింక్",
+    companyLabel: "సంబంధిత సంస్థ లేదా వ్యక్తి పేరు",
+    contactLabel: "అనుమానితుడి సంప్రదింపు సంఖ్య / లింక్",
+    backBtn: "← వెనుకకు",
+    nextEvidenceBtn: "తదుపరి దశ: ఆధారం జోడించండి →",
 
     footerNotice: "ఈ వెబ్‌సైట్ పరిశోధన మరియు మూల్యాంకన అవసరాల కోసం రూపొందించబడిన UX ప్రోటోటైప్ మాత్రమే. అధికారిక నమోదు కోసం కాదు.",
     footerGovInfo: "జాతీయ సైబర్ నేరాల నివేదిక పోర్టల్ | హోం వ్యవహారాల మంత్రిత్వ శాఖ, భారత ప్రభుత్వం",
