@@ -209,6 +209,29 @@ export interface TranslationSchema {
   trackComplaintBtn: string;
   returnHomeBtn: string;
 
+  // Page 10 Track Complaint
+  trackTitle: string;
+  trackSubtitle: string;
+  lookupLabel: string;
+  lookupBtn: string;
+  lookupHelpText: string;
+  notFoundError: string;
+  currentStatusLabel: string;
+  statusUnderReview: string;
+  statusExplanation: string;
+  timelineHeader: string;
+  stage1Title: string;
+  stage1Sub: string;
+  stage2Title: string;
+  stage2Sub: string;
+  stage3Title: string;
+  stage3Sub: string;
+  stage4Title: string;
+  stage4Sub: string;
+  compactSummaryTitle: string;
+  backToConfirmBtn: string;
+  startNewBtn: string;
+
   // Footer & Modals
   footerNotice: string;
   footerGovInfo: string;
@@ -416,6 +439,28 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     trackComplaintBtn: "Track your complaint →",
     returnHomeBtn: "Return to home",
 
+    trackTitle: "Track your complaint",
+    trackSubtitle: "Check the current status of your cybercrime complaint and see what happens next.",
+    lookupLabel: "Complaint number",
+    lookupBtn: "Check status",
+    lookupHelpText: "You can find your complaint number on your confirmation receipt.",
+    notFoundError: "We couldn't find a complaint with that number.",
+    currentStatusLabel: "CURRENT STATUS",
+    statusUnderReview: "Under review",
+    statusExplanation: "Your complaint has been received and is currently shown as under review in this prototype.",
+    timelineHeader: "Complaint Progress Timeline",
+    stage1Title: "Complaint submitted",
+    stage1Sub: "Your complaint was successfully recorded.",
+    stage2Title: "Complaint received",
+    stage2Sub: "Your complaint has been received.",
+    stage3Title: "Under review",
+    stage3Sub: "Current stage (Prototype demo state)",
+    stage4Title: "Further action / update",
+    stage4Sub: "You may receive an update if additional information is needed.",
+    compactSummaryTitle: "Complaint Summary",
+    backToConfirmBtn: "← Back to confirmation",
+    startNewBtn: "Start a new complaint",
+
     footerNotice: "This website is a UX prototype for research and evaluation purposes only. Not for official filing.",
     footerGovInfo: "National Cyber Crime Reporting Portal | Ministry of Home Affairs, Government of India",
     accessibilityTitle: "Accessibility Controls",
@@ -619,6 +664,28 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     nextStepsNotice: "यह एक प्रोटोटाइप प्रदर्शन है। अभी कोई वास्तविक पुलिस अधिकारी या सरकारी विभाग नहीं सौंपा गया है।",
     trackComplaintBtn: "अपनी शिकायत ट्रैक करें →",
     returnHomeBtn: "मुख्य पृष्ठ पर लौटें",
+
+    trackTitle: "अपनी शिकायत ट्रैक करें",
+    trackSubtitle: "अपनी साइबर अपराध शिकायत की वर्तमान स्थिति जांचें और देखें कि आगे क्या होता है।",
+    lookupLabel: "शिकायत संख्या",
+    lookupBtn: "स्थिति जांचें",
+    lookupHelpText: "आप अपनी पुष्टि रसीद पर अपनी शिकायत संख्या पा सकते हैं।",
+    notFoundError: "हमें उस संख्या वाली कोई शिकायत नहीं मिली।",
+    currentStatusLabel: "वर्तमान स्थिति",
+    statusUnderReview: "समीक्षाधीन",
+    statusExplanation: "आपकी शिकायत प्राप्त हो गई है और वर्तमान में इस प्रोटोटाइप में समीक्षाधीन दिखाई गई है।",
+    timelineHeader: "शिकायत प्रगति समयरेखा",
+    stage1Title: "शिकायत दर्ज की गई",
+    stage1Sub: "आपकी शिकायत सफलतापूर्वक दर्ज की गई थी।",
+    stage2Title: "शिकायत प्राप्त हुई",
+    stage2Sub: "आपकी शिकायत प्राप्त हो गई है।",
+    stage3Title: "समीक्षाधीन",
+    stage3Sub: "वर्तमान चरण (प्रोटोटाइप डेमो स्थिति)",
+    stage4Title: "आगे की कार्रवाई / अपडेट",
+    stage4Sub: "अतिरिक्त जानकारी की आवश्यकता होने पर आपको एक अपडेट मिल सकता है।",
+    compactSummaryTitle: "शिकायत सारांश",
+    backToConfirmBtn: "← पुष्टि पर वापस जाएं",
+    startNewBtn: "एक नई शिकायत शुरू करें",
 
     footerNotice: "यह वेबसाइट केवल अनुसंधान और मूल्यांकन उद्देश्यों के लिए एक यूक्स प्रोटोटाइप है। यह आधिकारिक रिपोर्टिंग के लिए नहीं है।",
     footerGovInfo: "राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
@@ -824,6 +891,28 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     trackComplaintBtn: "तुमची तक्रार ट्रॅक करा →",
     returnHomeBtn: "मुख्य पृष्ठावर परत जा",
 
+    trackTitle: "तुमची तक्रार ट्रॅक करा",
+    trackSubtitle: "तुमच्या सायबर गुन्ह्याच्या तक्रारीची सद्यस्थिती तपासा आणि पुढे काय होईल ते पहा.",
+    lookupLabel: "तक्रार क्रमांक",
+    lookupBtn: "स्थिती तपासा",
+    lookupHelpText: "तुम्ही तुमच्या पोचपावतीवर तुमचा तक्रार क्रमांक शोधू शकता.",
+    notFoundError: "आम्हाला त्या क्रमांकाची कोणतीही तक्रार आढळली नाही.",
+    currentStatusLabel: "सद्यस्थिती",
+    statusUnderReview: "पुनरावलोकनाधीन",
+    statusExplanation: "तुमची तक्रार प्राप्त झाली आहे आणि सध्या या प्रोटोटाइपमध्ये पुनरावलोकनाधीन दाखवली आहे.",
+    timelineHeader: "तक्रार प्रगती वेळेची रेषा",
+    stage1Title: "तक्रार सबमिट झाली",
+    stage1Sub: "तुमची तक्रार यशस्वीरित्या नोंदवली गेली.",
+    stage2Title: "तक्रार प्राप्त झाली",
+    stage2Sub: "तुमची तक्रार प्राप्त झाली आहे.",
+    stage3Title: "पुनरावलोकनाधीन",
+    stage3Sub: "सध्याचा टप्पा (प्रोटोटाइप डेमो स्थिती)",
+    stage4Title: "पुढील कारवाई / अपडेट",
+    stage4Sub: "अतिरिक्त माहिती आवश्यक असल्यास तुम्हाला अपडेट मिळू शकतो.",
+    compactSummaryTitle: "तक्रार सारांश",
+    backToConfirmBtn: "← पुष्टीकरणाकडे परत जा",
+    startNewBtn: "नवीन तक्रार सुरू करा",
+
     footerNotice: "ही वेबसाइट केवळ संशोधन आणि मूल्यमापनासाठी एक UX प्रोटोटाइप आहे. अधिकृत तक्रारीसाठी नाही.",
     footerGovInfo: "राष्ट्रीय सायबर गुन्हे रिपोर्टिंग पोर्टल | गृह मंत्रालय, भारत सरकार",
     accessibilityTitle: "सुलभता नियंत्रणे (Accessibility)",
@@ -1027,6 +1116,28 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     nextStepsNotice: "இது ஒரு மாதிரி செயல்முறை விளக்கம். இன்னும் எந்த காவல்துறை அதிகாரியோ அல்லது அரசுத் துறையோ நியமிக்கப்படவில்லை.",
     trackComplaintBtn: "உங்கள் புகாரைக் கண்காணிக்கவும் →",
     returnHomeBtn: "முதன்மைப் பக்கத்திற்குத் திரும்பு",
+
+    trackTitle: "உங்கள் புகாரைக் கண்காணிக்கவும்",
+    trackSubtitle: "உங்கள் இணையக் குற்றப் புகாரின் தற்போதைய நிலையையும், அடுத்து என்ன நடக்கும் என்பதையும் சரிபார்க்கவும்.",
+    lookupLabel: "புகார் எண்",
+    lookupBtn: "நிலையைச் சரிபார்",
+    lookupHelpText: "உங்கள் உறுதிப்படுத்தல் ரசீதில் உங்கள் புகார் எண்ணைக் காணலாம்.",
+    notFoundError: "அந்த எண்ணில் எங்களால் புகாரைக் கண்டுபிடிக்க முடியவில்லை.",
+    currentStatusLabel: "தற்போதைய நிலை",
+    statusUnderReview: "மதிப்பாய்வில் உள்ளது",
+    statusExplanation: "உங்கள் புகார் பெறப்பட்டு, இந்த மாதிரி அமைப்பில் தற்போது மதிப்பாய்வில் உள்ளதாகக் காட்டப்படுகிறது.",
+    timelineHeader: "புகார் முன்னேற்றக் காலக்கோடு",
+    stage1Title: "புகார் சமர்ப்பிக்கப்பட்டது",
+    stage1Sub: "உங்கள் புகார் வெற்றிகரமாகப் பதிவு செய்யப்பட்டது.",
+    stage2Title: "புகார் பெறப்பட்டது",
+    stage2Sub: "உங்கள் புகார் பெறப்பட்டது.",
+    stage3Title: "மதிப்பாய்வில் உள்ளது",
+    stage3Sub: "தற்போதைய நிலை (மாதிரி விளக்கம் மட்டுமே)",
+    stage4Title: "கூடுதல் நடவடிக்கை / புதுப்பிப்பு",
+    stage4Sub: "கூடுதல் தகவல் தேவைப்பட்டால் உங்களுக்குப் புதுப்பிப்பு கிடைக்கலாம்.",
+    compactSummaryTitle: "புகார் சுருக்கம்",
+    backToConfirmBtn: "← உறுதிப்படுத்தலுக்குத் திரும்பு",
+    startNewBtn: "புதிய புகாரைத் தொடங்கு",
 
     footerNotice: "இந்த இணையதளம் ஆராய்ச்சி மற்றும் மதிப்பீட்டு நோக்கங்களுக்கான UX மாதிரி மட்டுமே. அதிகாரப்பூர்வ தாக்கல் செய்ய அல்ல.",
     footerGovInfo: "தேசிய இணையக் குற்றப் புகாரளிப்பு தளம் | உள்துறை அமைச்சகம், இந்திய அரசு",
@@ -1232,6 +1343,28 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     trackComplaintBtn: "আপনার অভিযোগ ট্র্যাক করুন →",
     returnHomeBtn: "হোম পেজে ফিরে যান",
 
+    trackTitle: "আপনার অভিযোগ ট্র্যাক করুন",
+    trackSubtitle: "আপনার সাইবার অপরাধ অভিযোগের বর্তমান স্ট্যাটাস পরীক্ষা করুন এবং পরবর্তীতে কী হবে তা দেখুন।",
+    lookupLabel: "অভিযোগ নম্বর",
+    lookupBtn: "স্ট্যাটাস পরীক্ষা করুন",
+    lookupHelpText: "আপনি আপনার নিশ্চিতকরণ রসিদে আপনার অভিযোগ নম্বর পেতে পারেন।",
+    notFoundError: "আমরা সেই নম্বর সহ কোনো অভিযোগ খুঁজে পাইনি।",
+    currentStatusLabel: "বর্তমান স্ট্যাটাস",
+    statusUnderReview: "পর্যালোচনার অধীনে",
+    statusExplanation: "আপনার অভিযোগটি পাওয়া গেছে এবং বর্তমানে এই প্রোটোটাইপে পর্যালোচনার অধীনে দেখানো হচ্ছে।",
+    timelineHeader: "অভিযোগ অগ্রগতির টাইমলাইন",
+    stage1Title: "অভিযোগ জমা দেওয়া হয়েছে",
+    stage1Sub: "আপনার অভিযোগ সফলভাবে রেকর্ড করা হয়েছে।",
+    stage2Title: "অভিযোগ পাওয়া গেছে",
+    stage2Sub: "আপনার অভিযোগ পাওয়া গেছে।",
+    stage3Title: "পর্যালোচনার অধীনে",
+    stage3Sub: "বর্তমান পর্যায় (প্রোটোটাইপ ডেমো অবস্থা)",
+    stage4Title: "আরও পদক্ষেপ / আপডেট",
+    stage4Sub: "অতিরিক্ত তথ্যের প্রয়োজন হলে আপনি একটি আপডেট পেতে পারেন।",
+    compactSummaryTitle: "অভিযোগ সারসংক্ষেপ",
+    backToConfirmBtn: "← নিশ্চিতকরণে ফিরে যান",
+    startNewBtn: "একটি নতুন অভিযোগ শুরু করুন",
+
     footerNotice: "এই ওয়েবসাইটটি কেবল গবেষণা এবং মূল্যায়নের উদ্দেশ্যে একটি ইউএক্স প্রোটোটাইপ। এটি অফিসিয়াল দাখিলের জন্য নয়।",
     footerGovInfo: "জাতীয় সাইবার অপরাধ রিপোর্টিং পোর্টাল | স্বরাষ্ট্র মন্ত্রক, ভারত সরকার",
     accessibilityTitle: "অ্যাক্সেসিবিলিটি সেটিংস",
@@ -1435,6 +1568,28 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     nextStepsNotice: "ఇది ప్రోటోటైప్ ప్రదర్శన మాత్రమే. ఇంకా ఏ ఇతర పోలీస్ అధికారి లేదా ప్రభుత్వ విభాగం కేటాయించబడలేదు.",
     trackComplaintBtn: "మీ ఫిర్యాదును ట్రాక్ చేయండి →",
     returnHomeBtn: "ముఖ్య పేజీకి తిరిగి వెళ్లండి",
+
+    trackTitle: "మీ ఫిర్యాదును ట్రాక్ చేయండి",
+    trackSubtitle: "మీ సైబర్ నేర ఫిర్యాదు యొక్క ప్రస్తుత స్థితిని తనిఖీ చేయండి మరియు తదుపరి ఏమి జరుగుతుందో చూడండి.",
+    lookupLabel: "ఫిర్యాదు సంఖ్య",
+    lookupBtn: "స్థితిని తనిఖీ చేయండి",
+    lookupHelpText: "మీరు మీ ధృవీకరణ రసీదుపై మీ ఫిర్యాదు సంఖ్యను కనుగొనవచ్చు.",
+    notFoundError: "ఆ సంఖ్యతో కూడిన ఫిర్యాదును మేము కనుగొనలేకపోయాము.",
+    currentStatusLabel: "ప్రస్తుత స్థితి",
+    statusUnderReview: "సమీక్షలో ఉంది",
+    statusExplanation: "మీ ఫిర్యాదు స్వీకరించబడింది మరియు ప్రస్తుతం ఈ ప్రోటోటైప్‌లో సమీక్షలో ఉన్నట్లు చూపబడింది.",
+    timelineHeader: "ఫిర్యాదు పురోగతి కాలక్రమం",
+    stage1Title: "ఫిర్యాదు సమర్పించబడింది",
+    stage1Sub: "మీ ఫిర్యాదు విజయవంతంగా నమోదు చేయబడింది.",
+    stage2Title: "ఫిర్యాదు స్వీకరించబడింది",
+    stage2Sub: "మీ ఫిర్యాదు స్వీకరించబడింది.",
+    stage3Title: "సమీక్షలో ఉంది",
+    stage3Sub: "ప్రస్తుత దశ (ప్రోటోటైప్ డెమో స్థితి)",
+    stage4Title: "తదుపరి చర్య / అప్‌డేట్",
+    stage4Sub: "అదనపు సమాచారం అవసరమైతే మీకు అప్‌డేట్ రావచ్చు.",
+    compactSummaryTitle: "ఫిర్యాదు సారాంశం",
+    backToConfirmBtn: "← ధృవీకరణకు తిరిగి వెళ్లండి",
+    startNewBtn: "కొత్త ఫిర్యాదును ప్రారంభించండి",
 
     footerNotice: "ఈ వెబ్‌సైట్ పరిశోధన మరియు మూల్యాంకన అవసరాల కోసం రూపొందించబడిన UX ప్రోటోటైప్ మాత్రమే. అధికారిక నమోదు కోసం కాదు.",
     footerGovInfo: "జాతీయ సైబర్ నేరాల నివేదిక పోర్టల్ | హోం వ్యవహారాల మంత్రిత్వ శాఖ, భారత ప్రభుత్వం",

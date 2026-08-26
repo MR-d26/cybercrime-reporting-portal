@@ -106,13 +106,14 @@ export interface AppContextType {
   submissionTimestamp: string;
   setSubmissionTimestamp: (ts: string) => void;
 
+  resetComplaintFlow: () => void;
   saveDraft: (additionalData?: any) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const STORAGE_KEY_SETTINGS = 'ncrp_prototype_settings';
-const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v9';
+const STORAGE_KEY_DRAFT = 'ncrp_prototype_draft_v10';
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<LanguageCode>('en');
@@ -273,6 +274,41 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     uploadedFiles, noEvidenceChecked, additionalEvidenceNotes, reviewConfirmed, otpVerified, complaintNumber, submissionTimestamp
   ]);
 
+  const resetComplaintFlow = () => {
+    setComplaintTextState('');
+    setVoiceTranscriptState('');
+    setSelectedCategoryState(null);
+    setExtractedIncidentState('');
+    setExtractedAmountState('');
+    setExtractedMethodState('');
+    setIncidentDate('');
+    setIncidentTime('');
+    setDontKnowDate(false);
+    setDetailAmount('');
+    setDontKnowAmount(false);
+    setTransactionId('');
+    setDontHaveTxnId(false);
+    setBankService('');
+    setDontKnowBank(false);
+    setPlatformName('');
+    setAccountUsername('');
+    setCompanyName('');
+    setContactDetail('');
+    setUploadedFiles([]);
+    setNoEvidenceChecked(false);
+    setAdditionalEvidenceNotes('');
+    setReviewConfirmed(false);
+    setOtpVerified(false);
+    setComplaintNumberState('');
+    setSubmissionTimestampState('');
+    setCurrentPage(1);
+    try {
+      localStorage.removeItem(STORAGE_KEY_DRAFT);
+    } catch (e) {
+      console.warn("Failed to clear draft from localStorage:", e);
+    }
+  };
+
   const setLanguage = (lang: LanguageCode) => {
     setLanguageState(lang);
   };
@@ -394,6 +430,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setComplaintNumber,
       submissionTimestamp,
       setSubmissionTimestamp,
+      resetComplaintFlow,
       saveDraft
     }}>
       {children}
