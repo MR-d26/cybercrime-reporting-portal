@@ -39,11 +39,10 @@ function serverApiPlugin(): Plugin {
             chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
           }
           const bodyBuffer = Buffer.concat(chunks);
-          const incomingContentType = req.headers['content-type'] || '';
           const langCode = (req.headers['x-language-code'] as string) || 'en-IN';
-          const mimeType = (req.headers['x-audio-type'] as string) || 'audio/webm';
+          const incomingMimeType = (req.headers['x-audio-type'] as string) || 'audio/webm';
 
-          console.log(`[Sarvam Proxy Debug] Stage 4 & 5 (Audio Payload): Received ${bodyBuffer.length} bytes. Language: "${langCode}", Audio MIME: "${mimeType}"`);
+          console.log(`[Sarvam Proxy Debug] Stage 4 & 5 (Audio Payload): Received ${bodyBuffer.length} bytes. Language: "${langCode}", Audio MIME: "${incomingMimeType}"`);
 
           if (bodyBuffer.length === 0) {
             console.error('[Sarvam Proxy Debug] Stage 4 Error: Received 0 bytes audio payload.');
@@ -53,48 +52,64 @@ function serverApiPlugin(): Plugin {
             return;
           }
 
-          // Construct fresh server-side FormData for Sarvam API
-          const extension = mimeType.includes('mp4') ? 'mp4' : mimeType.includes('wav') ? 'wav' : mimeType.includes('ogg') ? 'ogg' : 'webm';
-          const audioBlob = new Blob([bodyBuffer], { type: mimeType.split(';')[0] });
-          const audioFile = new File([audioBlob], `speech.${extension}`, { type: mimeType.split(';')[0] });
+          // Format clean MIME type & filename for Sarvam
+          const cleanMime = incomingMimeType.split(';')[0].trim() || 'audio/webm';
+          const extension = cleanMime.includes('mp4') ? 'mp4' : cleanMime.includes('wav') ? 'wav' : cleanMime.includes('ogg') ? 'ogg' : 'webm';
+          
+          const audioBlob = new Blob([bodyBuffer], { type: cleanMime });
+          const audioFile = new File([audioBlob], `recording.${extension}`, { type: cleanMime });
 
-          const createSarvamFormData = (modelName: string) => {
+          const createSarvamFormData = (modelName: string, includeLang: boolean = true) => {
             const formData = new FormData();
             formData.append('file', audioFile);
             formData.append('model', modelName);
-            formData.append('language_code', langCode);
+            if (includeLang && langCode) {
+              formData.append('language_code', langCode);
+            }
             return formData;
           };
 
-          // Primary model: saarika:v2, Fallback model: saaras:v2
-          console.log(`[Sarvam Proxy Debug] Stage 6 (Sarvam Request): Sending POST https://api.sarvam.ai/speech-to-text with model "saarika:v2"...`);
+          // Try primary model: saarika:v2
+          console.log(`[Sarvam Proxy Debug] Stage 6: Attempting Sarvam STT POST with model "saarika:v2" and language_code "${langCode}"...`);
           
           let response = await fetch('https://api.sarvam.ai/speech-to-text', {
             method: 'POST',
             headers: {
               'api-subscription-key': apiKey.trim()
             },
-            body: createSarvamFormData('saarika:v2')
+            body: createSarvamFormData('saarika:v2', true)
           });
 
-          console.log(`[Sarvam Proxy Debug] Stage 6 (Sarvam Response): HTTP Status: ${response.status} ${response.statusText}`);
+          let responseText = await response.text();
+          console.log(`[Sarvam Proxy Debug] Model "saarika:v2" HTTP Status: ${response.status}. Response:`, responseText);
 
+          // Retry with saaras:v2 if saarika:v2 failed
           if (!response.ok) {
-            const errText = await response.text();
-            console.warn(`[Sarvam Proxy Debug] Model "saarika:v2" returned status ${response.status}: ${errText}. Retrying with model "saaras:v2"...`);
-            
+            console.warn(`[Sarvam Proxy Debug] Model "saarika:v2" failed (${response.status}). Retrying model "saaras:v2"...`);
             response = await fetch('https://api.sarvam.ai/speech-to-text', {
               method: 'POST',
               headers: {
                 'api-subscription-key': apiKey.trim()
               },
-              body: createSarvamFormData('saaras:v2')
+              body: createSarvamFormData('saaras:v2', true)
             });
-            console.log(`[Sarvam Proxy Debug] Stage 6 Fallback Response: HTTP Status: ${response.status}`);
+            responseText = await response.text();
+            console.log(`[Sarvam Proxy Debug] Model "saaras:v2" HTTP Status: ${response.status}. Response:`, responseText);
           }
 
-          const responseText = await response.text();
-          console.log(`[Sarvam Proxy Debug] Stage 6 & 8 (Response Payload): Status ${response.status}, Length: ${responseText.length} bytes`);
+          // Retry without language_code (auto-detect) if still failed
+          if (!response.ok) {
+            console.warn(`[Sarvam Proxy Debug] Retrying model "saarika:v2" without explicit language_code...`);
+            response = await fetch('https://api.sarvam.ai/speech-to-text', {
+              method: 'POST',
+              headers: {
+                'api-subscription-key': apiKey.trim()
+              },
+              body: createSarvamFormData('saarika:v2', false)
+            });
+            responseText = await response.text();
+            console.log(`[Sarvam Proxy Debug] Model "saarika:v2" (no lang) HTTP Status: ${response.status}. Response:`, responseText);
+          }
 
           if (!response.ok) {
             res.statusCode = response.status;
@@ -111,7 +126,7 @@ function serverApiPlugin(): Plugin {
           }
 
           const transcript = jsonResponse?.transcript || jsonResponse?.text || jsonResponse?.results?.[0]?.transcript || '';
-          console.log(`[Sarvam Proxy Debug] Stage 8 (Transcript Extraction): Parsed transcript (${transcript.length} chars): "${transcript}"`);
+          console.log(`[Sarvam Proxy Debug] Stage 8 Success: Parsed transcript: "${transcript}"`);
 
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');

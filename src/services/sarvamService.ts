@@ -46,12 +46,16 @@ export const transcribeAudio = async (
 
     if (!response.ok) {
       const errorJson = await response.json().catch(() => null);
-      console.error("[SarvamService Debug] Stage 6 (Sarvam Error Response):", errorJson);
+      console.error("[SarvamService Debug] Stage 6 (Sarvam Error Response Raw):", errorJson);
 
-      if (errorJson?.error?.includes('SARVAM_API_KEY')) {
-        throw new Error(errorJson.error);
+      const errorMessageStr = typeof errorJson?.error === 'string'
+        ? errorJson.error
+        : (errorJson?.error?.message || errorJson?.message || errorJson?.details || JSON.stringify(errorJson || {}));
+
+      if (errorMessageStr.includes('SARVAM_API_KEY')) {
+        throw new Error(errorMessageStr);
       }
-      throw new Error(errorJson?.message || errorJson?.error?.message || errorJson?.error || `Transcription failed with status ${response.status}`);
+      throw new Error(errorMessageStr || `Transcription failed with status ${response.status}`);
     }
 
     const data = await response.json();
