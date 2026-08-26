@@ -419,7 +419,7 @@ export const Page05AddDetails: React.FC = () => {
             className="flex items-center gap-1.5 text-gray-700 hover:text-gov-navy font-bold text-sm hover:underline outline-none cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>{t.backBtn}</span>
+            <span>{t.backBtn.replace('←', '').trim()}</span>
           </button>
 
           <button

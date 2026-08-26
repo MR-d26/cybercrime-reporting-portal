@@ -347,7 +347,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     cancelFieldBtn: "Cancel",
     confirmQuestion: "Is this information correct?",
     confirmSubtitle: "You can edit any detail now or continue to the next step.",
-    backToPathBtn: "← Back to reporting path",
+    backToPathBtn: "Back to reporting path",
     yesContinueBtn: "Yes, continue →",
 
     detailsTitle: "Just a few more details.",
@@ -370,7 +370,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     usernameLabel: "Suspect Profile / Username / Link",
     companyLabel: "Company or Person Name Involved",
     contactLabel: "Suspect Contact Number / Link",
-    backBtn: "← Back",
+    backBtn: "Back",
     nextEvidenceBtn: "Next step: Add evidence →",
 
     evidenceTitle: "Add supporting evidence",
@@ -420,7 +420,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     otpVerifiedSuccess: "Mobile number verified",
     securityNoticeTitle: "Your information is protected",
     securityNoticeSub: "Your complaint details are saved securely during this prototype experience.",
-    backToReviewBtn: "← Back to review",
+    backToReviewBtn: "Back to review",
     continueToSubmissionBtn: "Continue to submission →",
 
     successTitle: "Your complaint has been submitted",
@@ -458,7 +458,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     stage4Title: "Further action / update",
     stage4Sub: "You may receive an update if additional information is needed.",
     compactSummaryTitle: "Complaint Summary",
-    backToConfirmBtn: "← Back to confirmation",
+    backToConfirmBtn: "Back to confirmation",
     startNewBtn: "Start a new complaint",
 
     footerNotice: "This website is a UX prototype for research and evaluation purposes only. Not for official filing.",
@@ -573,7 +573,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     cancelFieldBtn: "रद्द करें",
     confirmQuestion: "क्या यह जानकारी सही है?",
     confirmSubtitle: "आप अभी किसी भी विवरण को संपादित कर सकते हैं या अगले चरण पर जा सकते हैं।",
-    backToPathBtn: "← रिपोर्टिंग मार्ग पर वापस जाएं",
+    backToPathBtn: "रिपोर्टिंग मार्ग पर वापस जाएं",
     yesContinueBtn: "हाँ, आगे बढ़ें →",
 
     detailsTitle: "बस कुछ और विवरण।",
@@ -596,7 +596,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     usernameLabel: "संदिग्ध प्रोफाइल / यूजरनेम / लिंक",
     companyLabel: "संबंधित कंपनी या व्यक्ति का नाम",
     contactLabel: "संदिग्ध का संपर्क नंबर / लिंक",
-    backBtn: "← पीछे जाएं",
+    backBtn: "पीछे जाएं",
     nextEvidenceBtn: "अगला चरण: साक्ष्य जोड़ें →",
 
     evidenceTitle: "सहायक साक्ष्य जोड़ें",
@@ -646,7 +646,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     otpVerifiedSuccess: "मोबाइल नंबर सत्यापित हो गया",
     securityNoticeTitle: "आपकी जानकारी सुरक्षित है",
     securityNoticeSub: "इस प्रोटोटाइप अनुभव के दौरान आपकी शिकायत के विवरण सुरक्षित रूप से सहेजे गए हैं।",
-    backToReviewBtn: "← समीक्षा पर वापस जाएं",
+    backToReviewBtn: "समीक्षा पर वापस जाएं",
     continueToSubmissionBtn: "सबमिशन पर आगे बढ़ें →",
 
     successTitle: "आपकी शिकायत दर्ज कर ली गई है",
@@ -684,7 +684,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     stage4Title: "आगे की कार्रवाई / अपडेट",
     stage4Sub: "अतिरिक्त जानकारी की आवश्यकता होने पर आपको एक अपडेट मिल सकता है।",
     compactSummaryTitle: "शिकायत सारांश",
-    backToConfirmBtn: "← पुष्टि पर वापस जाएं",
+    backToConfirmBtn: "पुष्टि पर वापस जाएं",
     startNewBtn: "एक नई शिकायत शुरू करें",
 
     footerNotice: "यह वेबसाइट केवल अनुसंधान और मूल्यांकन उद्देश्यों के लिए एक यूक्स प्रोटोटाइप है। यह आधिकारिक रिपोर्टिंग के लिए नहीं है।",
@@ -799,7 +799,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     cancelFieldBtn: "रद्द करा",
     confirmQuestion: "ही माहिती बरोबर आहे का?",
     confirmSubtitle: "तुम्ही आता कोणताही तपशील संपादित करू शकता किंवा पुढील पायरीवर जाऊ शकता.",
-    backToPathBtn: "← रिपोर्टिंग मार्गावर परत जा",
+    backToPathBtn: "रिपोर्टिंग मार्गावर परत जा",
     yesContinueBtn: "होय, पुढे जा →",
 
     detailsTitle: "फक्त आणखी काही तपशील.",
@@ -822,7 +822,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     usernameLabel: "संशयित प्रोफाइल / युझरनेम / लिंक",
     companyLabel: "संबंधित कंपनी किंवा व्यक्तीचे नाव",
     contactLabel: "संशयिताचा संपर्क क्रमांक / लिंक",
-    backBtn: "← मागे जा",
+    backBtn: "मागे जा",
     nextEvidenceBtn: "पुढील पायरी: पुरावा जोडा →",
 
     evidenceTitle: "पोषक पुरावा जोडा",
@@ -872,7 +872,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     otpVerifiedSuccess: "मोबाईल नंबर पडताळला गेला",
     securityNoticeTitle: "तुमची माहिती सुरक्षित आहे",
     securityNoticeSub: "या प्रोटोटाइप अनुभवादरम्यान तुमच्या तक्रारीचे तपशील सुरक्षितपणे सेव्ह केले जातात.",
-    backToReviewBtn: "← पुनरावलोकनाकडे परत जा",
+    backToReviewBtn: "पुनरावलोकनाकडे परत जा",
     continueToSubmissionBtn: "सबमिशनकडे पुढे जा →",
 
     successTitle: "तुमची तक्रार सबमिट झाली आहे",
@@ -910,7 +910,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     stage4Title: "पुढील कारवाई / अपडेट",
     stage4Sub: "अतिरिक्त माहिती आवश्यक असल्यास तुम्हाला अपडेट मिळू शकतो.",
     compactSummaryTitle: "तक्रार सारांश",
-    backToConfirmBtn: "← पुष्टीकरणाकडे परत जा",
+    backToConfirmBtn: "पुष्टीकरणाकडे परत जा",
     startNewBtn: "नवीन तक्रार सुरू करा",
 
     footerNotice: "ही वेबसाइट केवळ संशोधन आणि मूल्यमापनासाठी एक UX प्रोटोटाइप आहे. अधिकृत तक्रारीसाठी नाही.",
@@ -1025,7 +1025,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     cancelFieldBtn: "ரத்து செய்",
     confirmQuestion: "இந்தத் தகவல் சரியானதா?",
     confirmSubtitle: "நீங்கள் இப்போது எந்த விவரத்தையும் திருத்தலாம் அல்லது அடுத்த கட்டத்திற்குத் தொடரலாம்.",
-    backToPathBtn: "← புகாரளிப்பு வழிக்குத் திரும்பு",
+    backToPathBtn: "புகாரளிப்பு வழிக்குத் திரும்பு",
     yesContinueBtn: "ஆம், தொடரவும் →",
 
     detailsTitle: "இன்னும் சில விவரங்கள் மட்டும்.",
@@ -1048,7 +1048,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     usernameLabel: "சந்தேகத்திற்குரிய கணக்கு / பெயர் / இணைப்பு",
     companyLabel: "தொடர்புடைய நிறுவனம் அல்லது நபர் பெயர்",
     contactLabel: "சந்தேகத்திற்குரிய நபரின் தொடர்பு எண் / இணைப்பு",
-    backBtn: "← பின்செல்",
+    backBtn: "பின்செல்",
     nextEvidenceBtn: "அடுத்த கட்டம்: ஆதாரம் சேர் →",
 
     evidenceTitle: "ஆதாரங்களைச் சேர்க்கவும்",
@@ -1098,7 +1098,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     otpVerifiedSuccess: "மொபைல் எண் சரிபார்க்கப்பட்டது",
     securityNoticeTitle: "உங்கள் தகவல் பாதுகாக்கப்படுகிறது",
     securityNoticeSub: "இந்த மாதிரி அனுபவத்தின் போது உங்கள் புகார்களின் விவரங்கள் பாதுகாப்பாக சேமிக்கப்படும்.",
-    backToReviewBtn: "← மதிப்பாய்விற்குத் திரும்பு",
+    backToReviewBtn: "மதிப்பாய்விற்குத் திரும்பு",
     continueToSubmissionBtn: "சமர்ப்பிப்பிற்குத் தொடரவும் →",
 
     successTitle: "உங்கள் புகார் சமர்ப்பிக்கப்பட்டது",
@@ -1136,7 +1136,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     stage4Title: "கூடுதல் நடவடிக்கை / புதுப்பிப்பு",
     stage4Sub: "கூடுதல் தகவல் தேவைப்பட்டால் உங்களுக்குப் புதுப்பிப்பு கிடைக்கலாம்.",
     compactSummaryTitle: "புகார் சுருக்கம்",
-    backToConfirmBtn: "← உறுதிப்படுத்தலுக்குத் திரும்பு",
+    backToConfirmBtn: "உறுதிப்படுத்தலுக்குத் திரும்பு",
     startNewBtn: "புதிய புகாரைத் தொடங்கு",
 
     footerNotice: "இந்த இணையதளம் ஆராய்ச்சி மற்றும் மதிப்பீட்டு நோக்கங்களுக்கான UX மாதிரி மட்டுமே. அதிகாரப்பூர்வ தாக்கல் செய்ய அல்ல.",
@@ -1251,7 +1251,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     cancelFieldBtn: "বাতিল করুন",
     confirmQuestion: "এই তথ্য কি সঠিক?",
     confirmSubtitle: "আপনি এখন যেকোনো তথ্য সম্পাদনা করতে পারেন বা পরবর্তী ধাপে যেতে পারেন।",
-    backToPathBtn: "← রিপোর্টিং পথে ফিরে যান",
+    backToPathBtn: "রিপোর্টিং পথে ফিরে যান",
     yesContinueBtn: "হ্যাঁ, এগিয়ে যান →",
 
     detailsTitle: "আর কয়েকটি বিবরণ।",
@@ -1274,7 +1274,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     usernameLabel: "সন্দেহভাজন প্রোফাইল / ইউজারনেম / লিঙ্ক",
     companyLabel: "সংশ্লিষ্ট কোম্পানি বা ব্যক্তির নাম",
     contactLabel: "সন্দেহভাজন ব্যক্তির যোগাযোগ নম্বর / লিঙ্ক",
-    backBtn: "← পেছনে যান",
+    backBtn: "পেছনে যান",
     nextEvidenceBtn: "পরবর্তী ধাপ: প্রমাণ যোগ করুন →",
 
     evidenceTitle: "সহায়ক প্রমাণ যোগ করুন",
@@ -1324,7 +1324,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     otpVerifiedSuccess: "মোবাইল নম্বর যাচাই করা হয়েছে",
     securityNoticeTitle: "আপনার তথ্য সুরক্ষিত",
     securityNoticeSub: "এই প্রোটোটাইপ অভিজ্ঞতার সময় আপনার অভিযোগের বিবরণ নিরাপদে সংরক্ষিত থাকে।",
-    backToReviewBtn: "← পর্যালোচনায় ফিরে যান",
+    backToReviewBtn: "পর্যালোচনায় ফিরে যান",
     continueToSubmissionBtn: "জমা দেওয়ার জন্য এগিয়ে যান →",
 
     successTitle: "আপনার অভিযোগ জমা দেওয়া হয়েছে",
@@ -1362,7 +1362,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     stage4Title: "আরও পদক্ষেপ / আপডেট",
     stage4Sub: "অতিরিক্ত তথ্যের প্রয়োজন হলে আপনি একটি আপডেট পেতে পারেন।",
     compactSummaryTitle: "অভিযোগ সারসংক্ষেপ",
-    backToConfirmBtn: "← নিশ্চিতকরণে ফিরে যান",
+    backToConfirmBtn: "নিশ্চিতকরণে ফিরে যান",
     startNewBtn: "একটি নতুন অভিযোগ শুরু করুন",
 
     footerNotice: "এই ওয়েবসাইটটি কেবল গবেষণা এবং মূল্যায়নের উদ্দেশ্যে একটি ইউএক্স প্রোটোটাইপ। এটি অফিসিয়াল দাখিলের জন্য নয়।",
@@ -1477,7 +1477,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     cancelFieldBtn: "రద్దు చేయండి",
     confirmQuestion: "ఈ సమాచారం సరైనదేనా?",
     confirmSubtitle: "మీరు ఇప్పుడు ఏ వివరాలనైనా సవరించవచ్చు లేదా తదుపరి దశకు వెళ్ళవచ్చు.",
-    backToPathBtn: "← నివేదిక మార్గానికి తిరిగి వెళ్ళండి",
+    backToPathBtn: "నివేదిక మార్గానికి తిరిగి వెళ్ళండి",
     yesContinueBtn: "అవును, కొనసాగించండి →",
 
     detailsTitle: "మరికొన్ని వివరాలు మాత్రమే.",
@@ -1500,7 +1500,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     usernameLabel: "అనుమానితుడి ప్రొఫైల్ / యూజర్‌నేమ్ / లింక్",
     companyLabel: "సంబంధిత సంస్థ లేదా వ్యక్తి పేరు",
     contactLabel: "అనుమానితుడి సంప్రదింపు సంఖ్య / లింక్",
-    backBtn: "← వెనుకకు",
+    backBtn: "వెనుకకు",
     nextEvidenceBtn: "తదుపరి దశ: ఆధారం జోడించండి →",
 
     evidenceTitle: "ఆధారాలను జోడించండి",
@@ -1550,7 +1550,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     otpVerifiedSuccess: "మొబైల్ నంబర్ ధృవీకరించబడింది",
     securityNoticeTitle: "మీ సమాచారం రక్షించబడుతుంది",
     securityNoticeSub: "ఈ ప్రోటోటైప్ అనుభవంలో మీ ఫిర్యాదు వివరాలు సురక్షితంగా సేవ్ చేయబడతాయి.",
-    backToReviewBtn: "← సమీక్షకు తిరిగి వెళ్లండి",
+    backToReviewBtn: "సమీక్షకు తిరిగి వెళ్లండి",
     continueToSubmissionBtn: "సమర్పణకు కొనసాగించండి →",
 
     successTitle: "మీ ఫిర్యాదు సమర్పించబడింది",
@@ -1588,7 +1588,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationSchema> = {
     stage4Title: "తదుపరి చర్య / అప్‌డేట్",
     stage4Sub: "అదనపు సమాచారం అవసరమైతే మీకు అప్‌డేట్ రావచ్చు.",
     compactSummaryTitle: "ఫిర్యాదు సారాంశం",
-    backToConfirmBtn: "← ధృవీకరణకు తిరిగి వెళ్లండి",
+    backToConfirmBtn: "ధృవీకరణకు తిరిగి వెళ్లండి",
     startNewBtn: "కొత్త ఫిర్యాదును ప్రారంభించండి",
 
     footerNotice: "ఈ వెబ్‌సైట్ పరిశోధన మరియు మూల్యాంకన అవసరాల కోసం రూపొందించబడిన UX ప్రోటోటైప్ మాత్రమే. అధికారిక నమోదు కోసం కాదు.",

@@ -257,7 +257,7 @@ export const Page08OtpVerification: React.FC = () => {
             className="flex items-center gap-1.5 text-gray-700 hover:text-gov-navy font-bold text-sm hover:underline outline-none"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>{t.backToReviewBtn}</span>
+            <span>{t.backToReviewBtn.replace('←', '').trim()}</span>
           </button>
 
           <button
