@@ -3,23 +3,18 @@ import { useApp, UploadedFileItem } from '../context/AppContext';
 import { ProgressStepper } from './ProgressStepper';
 import {
   Upload,
-  FileCheck,
   Trash2,
   AlertCircle,
   CheckCircle2,
-  HelpCircle,
   FileText,
   Image as ImageIcon,
   ArrowLeft,
-  ArrowRight,
-  ShieldCheck,
-  Sparkles
+  ArrowRight
 } from 'lucide-react';
 
 export const Page06AddEvidence: React.FC = () => {
   const {
     t,
-    selectedCategory,
     uploadedFiles,
     setUploadedFiles,
     noEvidenceChecked,
@@ -115,15 +110,19 @@ export const Page06AddEvidence: React.FC = () => {
     : [t.evidenceCheck1, t.evidenceCheck2, t.evidenceCheck3, t.evidenceCheck4];
 
   return (
-    <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-hidden">
-      {/* 1. Official Approved Background Image Asset for Page 06 */}
+    <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-x-hidden min-h-screen">
+      {/* 1. Subtle, Right-Aligned Indian Cybercrime Background Layer */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-85"
-        style={{ backgroundImage: "url('/images/indian-cybercrime-background.png')" }}
+        className="absolute inset-0 bg-no-repeat pointer-events-none z-0 opacity-20"
+        style={{
+          backgroundImage: "url('/images/indian-cybercrime-background.png')",
+          backgroundPosition: 'right top',
+          backgroundSize: 'cover'
+        }}
         aria-hidden="true"
       />
-      {/* Soft warm overlay to ensure 100% text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6]/90 via-[#FAF9F6]/75 to-transparent pointer-events-none" aria-hidden="true" />
+      {/* Soft warm gradient overlay to keep evidence cards 100% focused */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6] via-[#FAF9F6]/90 to-[#FAF9F6]/40 pointer-events-none z-0" aria-hidden="true" />
 
       {/* 2. Progress Stepper Bar (Step 5 Active) */}
       <ProgressStepper activeStep={5} />
@@ -192,7 +191,7 @@ export const Page06AddEvidence: React.FC = () => {
               </p>
               <button
                 type="button"
-                className="mt-4 bg-[#0F2540] hover:bg-[#1A365D] text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow-xs transition-colors"
+                className="mt-4 bg-[#0F2540] hover:bg-[#1A365D] text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow-xs transition-colors cursor-pointer"
               >
                 {t.uploadBtn}
               </button>
@@ -238,7 +237,7 @@ export const Page06AddEvidence: React.FC = () => {
                           e.stopPropagation();
                           handleRemoveFile(file.id);
                         }}
-                        className="flex items-center gap-1 text-xs font-semibold text-red-600 hover:text-red-800 p-1.5 rounded-lg hover:bg-red-50 transition-colors shrink-0"
+                        className="flex items-center gap-1 text-xs font-semibold text-red-600 hover:text-red-800 p-1.5 rounded-lg hover:bg-red-50 transition-colors shrink-0 cursor-pointer"
                       >
                         <Trash2 className="w-4 h-4" />
                         <span>{t.removeFileBtn}</span>
@@ -291,7 +290,7 @@ export const Page06AddEvidence: React.FC = () => {
         <div className="mt-8 flex items-center justify-between pt-4 border-t border-gray-200/80">
           <button
             onClick={handleBack}
-            className="flex items-center gap-1.5 text-gray-700 hover:text-gov-navy font-bold text-sm hover:underline outline-none"
+            className="flex items-center gap-1.5 text-gray-700 hover:text-gov-navy font-bold text-sm hover:underline outline-none cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{t.backBtn}</span>

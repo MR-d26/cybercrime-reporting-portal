@@ -67,15 +67,19 @@ export const Page05AddDetails: React.FC = () => {
   const cat = selectedCategory || (geminiAnalysis ? geminiAnalysis.mappedCategoryId : 'other');
 
   return (
-    <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-hidden">
-      {/* 1. Official Approved Background Image Asset for Page 05 */}
+    <div className="flex-1 flex flex-col bg-[#FAF9F6] relative overflow-x-hidden min-h-screen">
+      {/* 1. Subtle, Right-Aligned Indian Cybercrime Background Layer */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-85"
-        style={{ backgroundImage: "url('/images/indian-cybercrime-background.png')" }}
+        className="absolute inset-0 bg-no-repeat pointer-events-none z-0 opacity-20"
+        style={{
+          backgroundImage: "url('/images/indian-cybercrime-background.png')",
+          backgroundPosition: 'right top',
+          backgroundSize: 'cover'
+        }}
         aria-hidden="true"
       />
-      {/* Soft warm overlay to ensure 100% text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6]/90 via-[#FAF9F6]/75 to-transparent pointer-events-none" aria-hidden="true" />
+      {/* Soft warm gradient overlay to keep form cards 100% focused */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF9F6] via-[#FAF9F6]/90 to-[#FAF9F6]/40 pointer-events-none z-0" aria-hidden="true" />
 
       {/* 2. Progress Stepper Bar (Step 4 Active) */}
       <ProgressStepper activeStep={4} />
