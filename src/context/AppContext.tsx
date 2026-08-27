@@ -42,6 +42,8 @@ export interface AppContextType {
   // Complaint, Router & Extracted State
   complaintText: string;
   setComplaintText: (text: string) => void;
+  voiceLanguage: LanguageCode;
+  setVoiceLanguage: (lang: LanguageCode) => void;
   voiceTranscript: string;
   setVoiceTranscript: (transcript: string) => void;
   selectedCategory: CategoryId | null;
@@ -137,6 +139,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Complaint, Router & Extraction state
   const [complaintText, setComplaintTextState] = useState<string>('');
+  const [voiceLanguage, setVoiceLanguageState] = useState<LanguageCode>('hi');
   const [voiceTranscript, setVoiceTranscriptState] = useState<string>('');
   const [selectedCategory, setSelectedCategoryState] = useState<CategoryId | null>(null);
   const [extractedIncident, setExtractedIncidentState] = useState<string>('');
@@ -394,6 +397,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
+  const setVoiceLanguage = (lang: LanguageCode) => {
+    console.log(`[AppContext] Voice input language changed independently to: "${lang}"`);
+    setVoiceLanguageState(lang);
+  };
+
   const setComplaintText = (text: string) => {
     setComplaintTextState(text);
     // Clear old/stale Gemini result & form pre-fills when user edits story on Page 02
@@ -493,6 +501,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       lastSavedTime,
       complaintText,
       setComplaintText,
+      voiceLanguage,
+      setVoiceLanguage,
       voiceTranscript,
       setVoiceTranscript,
       selectedCategory,

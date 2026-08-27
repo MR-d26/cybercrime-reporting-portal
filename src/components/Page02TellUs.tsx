@@ -22,6 +22,8 @@ export const Page02TellUs: React.FC = () => {
   const {
     t,
     language,
+    voiceLanguage,
+    setVoiceLanguage,
     complaintText,
     setComplaintText,
     voiceTranscript,
@@ -63,7 +65,8 @@ export const Page02TellUs: React.FC = () => {
     setTranscribeError(null);
 
     try {
-      const result = await transcribeAudio(audioBlob, language);
+      console.log(`[Page02 Voice Debug] Calling Sarvam STT with independent voiceLanguage: "${voiceLanguage}" (Global UI language is "${language}")`);
+      const result = await transcribeAudio(audioBlob, voiceLanguage);
       console.log(`[Pipeline Step 3: Value immediately after Sarvam service in Page02]`, result.transcript);
       setVoiceTranscript(result.transcript);
       setEditableTranscript(result.transcript);
@@ -158,7 +161,7 @@ export const Page02TellUs: React.FC = () => {
 
             {/* SARVAM INTEGRATED VOICE INPUT AREA */}
             <div className="bg-amber-50/50 border border-amber-200/80 rounded-xl p-5 space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <h3 className="text-sm font-bold text-gov-navy flex items-center gap-1.5">
                     <Mic className="w-4 h-4 text-gov-saffron" />
@@ -169,8 +172,25 @@ export const Page02TellUs: React.FC = () => {
                   </p>
                 </div>
 
-                {/* RECORDING / PROCESSING / START BUTTON CONTROLS */}
-                <div>
+                {/* INDEPENDENT VOICE LANGUAGE SELECTOR & RECORD CONTROL */}
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <div className="flex items-center gap-1.5 bg-white border border-amber-300 px-2.5 py-1.5 rounded-xl shadow-xs">
+                    <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Voice:</span>
+                    <select
+                      value={voiceLanguage}
+                      onChange={(e) => setVoiceLanguage(e.target.value as any)}
+                      className="bg-transparent text-gov-navy text-xs font-bold outline-none cursor-pointer"
+                      aria-label="Select spoken language for voice input"
+                    >
+                      <option value="hi">हिंदी (Hindi)</option>
+                      <option value="en">English</option>
+                      <option value="mr">मराठी (Marathi)</option>
+                      <option value="ta">தமிழ் (Tamil)</option>
+                      <option value="bn">বাংলা (Bengali)</option>
+                      <option value="te">తెలుగు (Telugu)</option>
+                    </select>
+                  </div>
+
                   {isRecording ? (
                     <button
                       type="button"

@@ -23,7 +23,7 @@ export const transcribeAudio = async (
 ): Promise<TranscribeResult> => {
   const langCode = mapLanguageToSarvamCode(language);
 
-  console.log(`[Sarvam DEBUG] UI selected language: ${language}`);
+  console.log(`[Sarvam DEBUG] Independent Voice selected language: ${language}`);
   console.log(`[Sarvam DEBUG] mapped Sarvam language: ${langCode}`);
   console.log(`[Sarvam DEBUG] final language sent to backend: ${langCode}`);
 
