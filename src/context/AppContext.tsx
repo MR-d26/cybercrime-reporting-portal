@@ -378,7 +378,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const setLanguage = (lang: LanguageCode) => {
+    console.log(`[AppContext] Language changed to: "${lang}"`);
     setLanguageState(lang);
+    try {
+      localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify({
+        language: lang,
+        fontScale,
+        contrastMode,
+        lineHeight,
+        letterSpacing,
+        focusRing
+      }));
+    } catch (e) {
+      console.warn("Failed to persist language setting:", e);
+    }
   };
 
   const setComplaintText = (text: string) => {
