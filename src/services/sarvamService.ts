@@ -61,6 +61,10 @@ export const transcribeAudio = async (
     const data = await response.json();
     const transcriptText = data.transcript || data.text || data.rawResponse?.transcript || '';
 
+    console.log(`[Pipeline Step 1: Raw Sarvam API Response]`, data);
+    console.log(`[Pipeline Step 2: Raw Sarvam Transcript]`, transcriptText);
+    console.log(`[Pipeline Step 3: Value immediately after Sarvam service]`, transcriptText.trim());
+
     console.log(`[Sarvam] requested language: ${langCode}`);
     console.log(`[Sarvam] mode: transcribe`);
     console.log(`[Sarvam] returned language: ${data.languageCodeUsed || langCode}`);

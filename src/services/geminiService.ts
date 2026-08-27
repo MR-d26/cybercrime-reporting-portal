@@ -91,6 +91,7 @@ export const analyzeComplaintWithGemini = async (
     throw new Error("Complaint text is empty.");
   }
 
+  console.log(`[Pipeline Step 4: Value passed to Gemini]`, complaintText);
   console.log(`[GeminiService Client] Calling /api/gemini/analyze for text length ${complaintText.length}...`);
 
   const response = await fetch('/api/gemini/analyze', {
@@ -113,6 +114,8 @@ export const analyzeComplaintWithGemini = async (
 
   const data = await response.json();
   const analysis = data.analysis;
+
+  console.log(`[Pipeline Step 5: Gemini response]`, analysis);
 
   if (!analysis || typeof analysis !== 'object') {
     console.error("[GeminiService Client] Invalid structured output:", data);

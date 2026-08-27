@@ -64,6 +64,7 @@ export const Page02TellUs: React.FC = () => {
 
     try {
       const result = await transcribeAudio(audioBlob, language);
+      console.log(`[Pipeline Step 3: Value immediately after Sarvam service in Page02]`, result.transcript);
       setVoiceTranscript(result.transcript);
       setEditableTranscript(result.transcript);
       saveDraft({ voiceTranscript: result.transcript });
@@ -239,9 +240,12 @@ export const Page02TellUs: React.FC = () => {
                       className="w-full p-3 rounded-lg border border-amber-300 outline-none text-sm text-gray-800 focus:ring-2 focus:ring-amber-400/20"
                     />
                   ) : (
-                    <p className="text-sm font-semibold text-gray-800 bg-amber-50/50 p-3 rounded-lg border border-amber-200/60 leading-relaxed italic">
-                      "{voiceTranscript}"
-                    </p>
+                    <>
+                      {console.log(`[Pipeline Step 6: Value finally displayed in "HERE'S WHAT WE HEARD"]`, voiceTranscript)}
+                      <p className="text-sm font-semibold text-gray-800 bg-amber-50/50 p-3 rounded-lg border border-amber-200/60 leading-relaxed italic">
+                        "{voiceTranscript}"
+                      </p>
+                    </>
                   )}
 
                   <div className="flex flex-wrap items-center justify-end gap-2 pt-1">
