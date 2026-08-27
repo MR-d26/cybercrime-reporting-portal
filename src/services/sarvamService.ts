@@ -59,20 +59,21 @@ export const transcribeAudio = async (
     }
 
     const data = await response.json();
-    console.log("[SarvamService Debug] Stage 8 (Transcript Parsing): Response payload:", data);
-
     const transcriptText = data.transcript || data.text || data.rawResponse?.transcript || '';
 
+    console.log(`[Sarvam] requested language: ${langCode}`);
+    console.log(`[Sarvam] mode: transcribe`);
+    console.log(`[Sarvam] returned language: ${data.languageCodeUsed || langCode}`);
+    console.log(`[Sarvam] raw transcript: "${transcriptText}"`);
+
     if (!transcriptText || !transcriptText.trim()) {
-      console.warn("[SarvamService Debug] Stage 8 Warning: Empty transcript text received.");
+      console.warn("[Sarvam] Stage 8 Warning: Empty transcript text received.");
       throw new Error("No speech could be recognized from the recording. Please speak clearly or type your complaint instead.");
     }
 
-    console.log(`[SarvamService Debug] Stage 8 (Success): Final transcript ("${transcriptText}") successfully mapped to application state.`);
-
     return {
       transcript: transcriptText.trim(),
-      languageCodeUsed: langCode
+      languageCodeUsed: data.languageCodeUsed || langCode
     };
   } catch (error: any) {
     console.error("[SarvamService Debug] Transcription pipeline error:", error);

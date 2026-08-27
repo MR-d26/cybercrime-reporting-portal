@@ -45,29 +45,35 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const formData = new FormData();
       formData.append('file', audioFile);
       formData.append('model', modelName);
+      formData.append('mode', 'transcribe');
       if (includeLang && langCode) {
         formData.append('language_code', langCode);
       }
       return formData;
     };
 
+    console.log(`[Sarvam] requested language: ${langCode}`);
+    console.log(`[Sarvam] mode: transcribe`);
+    console.log(`[Sarvam] sending request to https://api.sarvam.ai/speech-to-text with model saaras:v3...`);
+
     let response = await fetch('https://api.sarvam.ai/speech-to-text', {
       method: 'POST',
       headers: {
         'api-subscription-key': apiKey.trim()
       },
-      body: createSarvamFormData('saarika:v2.5', true)
+      body: createSarvamFormData('saaras:v3', true)
     });
 
     let responseText = await response.text();
 
     if (!response.ok) {
+      console.warn(`[Sarvam] saaras:v3 failed (${response.status}). Retrying saarika:v2.5...`);
       response = await fetch('https://api.sarvam.ai/speech-to-text', {
         method: 'POST',
         headers: {
           'api-subscription-key': apiKey.trim()
         },
-        body: createSarvamFormData('saaras:v3', true)
+        body: createSarvamFormData('saarika:v2.5', true)
       });
       responseText = await response.text();
     }
@@ -84,10 +90,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const transcript = jsonResponse?.transcript || jsonResponse?.text || jsonResponse?.results?.[0]?.transcript || '';
+    const returnedLang = jsonResponse?.language_code || langCode;
+
+    console.log(`[Sarvam] returned language: ${returnedLang}`);
+    console.log(`[Sarvam] raw transcript: "${transcript}"`);
 
     return res.status(200).json({
       success: true,
       transcript: transcript,
+      languageCodeUsed: returnedLang,
       rawResponse: jsonResponse
     });
 

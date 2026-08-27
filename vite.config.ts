@@ -63,37 +63,39 @@ function serverApiPlugin(): Plugin {
             const formData = new FormData();
             formData.append('file', audioFile);
             formData.append('model', modelName);
+            formData.append('mode', 'transcribe');
             if (includeLang && langCode) {
               formData.append('language_code', langCode);
             }
             return formData;
           };
 
-          // Primary model "saarika:v2.5", Fallback "saaras:v3"
-          console.log(`[Sarvam Proxy Debug] Stage 6: Sending Sarvam STT POST with model "saarika:v2.5" and language_code "${langCode}"...`);
+          console.log(`[Sarvam] requested language: ${langCode}`);
+          console.log(`[Sarvam] mode: transcribe`);
+          console.log(`[Sarvam] sending request to https://api.sarvam.ai/speech-to-text with model saaras:v3...`);
           
           let response = await fetch('https://api.sarvam.ai/speech-to-text', {
             method: 'POST',
             headers: {
               'api-subscription-key': apiKey.trim()
             },
-            body: createSarvamFormData('saarika:v2.5', true)
+            body: createSarvamFormData('saaras:v3', true)
           });
 
           let responseText = await response.text();
-          console.log(`[Sarvam Proxy Debug] Model "saarika:v2.5" HTTP Status: ${response.status}. Response length: ${responseText.length}`);
+          console.log(`[Sarvam Proxy Debug] Model "saaras:v3" HTTP Status: ${response.status}. Response length: ${responseText.length}`);
 
           if (!response.ok) {
-            console.warn(`[Sarvam Proxy Debug] Model "saarika:v2.5" failed (${response.status}). Retrying model "saaras:v3"...`);
+            console.warn(`[Sarvam Proxy Debug] Model "saaras:v3" failed (${response.status}). Retrying model "saarika:v2.5"...`);
             response = await fetch('https://api.sarvam.ai/speech-to-text', {
               method: 'POST',
               headers: {
                 'api-subscription-key': apiKey.trim()
               },
-              body: createSarvamFormData('saaras:v3', true)
+              body: createSarvamFormData('saarika:v2.5', true)
             });
             responseText = await response.text();
-            console.log(`[Sarvam Proxy Debug] Model "saaras:v3" HTTP Status: ${response.status}. Response:`, responseText);
+            console.log(`[Sarvam Proxy Debug] Model "saarika:v2.5" HTTP Status: ${response.status}. Response:`, responseText);
           }
 
           if (!response.ok) {
@@ -111,13 +113,17 @@ function serverApiPlugin(): Plugin {
           }
 
           const transcript = jsonResponse?.transcript || jsonResponse?.text || jsonResponse?.results?.[0]?.transcript || '';
-          console.log(`[Sarvam Proxy Debug] Stage 8 Success: Parsed transcript (${transcript.length} chars): "${transcript}"`);
+          const returnedLang = jsonResponse?.language_code || langCode;
+
+          console.log(`[Sarvam] returned language: ${returnedLang}`);
+          console.log(`[Sarvam] raw transcript: "${transcript}"`);
 
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
           res.end(JSON.stringify({
             success: true,
             transcript: transcript,
+            languageCodeUsed: returnedLang,
             rawResponse: jsonResponse
           }));
 
