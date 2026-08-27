@@ -4,8 +4,14 @@ import { X, Home, Info, PhoneCall, HelpCircle, ShieldAlert, ArrowRight } from 'l
 
 export const MenuModal: React.FC = () => {
   const { t, isMenuModalOpen, setIsMenuModalOpen, setCurrentPage } = useApp();
+  const [prototypeNotice, setPrototypeNotice] = React.useState<string | null>(null);
 
   if (!isMenuModalOpen) return null;
+
+  const handleClose = () => {
+    setPrototypeNotice(null);
+    setIsMenuModalOpen(false);
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-150">
@@ -16,7 +22,7 @@ export const MenuModal: React.FC = () => {
             <h2 className="text-lg font-bold">{t.menuTitle}</h2>
           </div>
           <button
-            onClick={() => setIsMenuModalOpen(false)}
+            onClick={handleClose}
             className="text-gray-300 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors focus:ring-2 focus:ring-amber-300 outline-none"
             aria-label="Close menu"
           >
@@ -25,12 +31,31 @@ export const MenuModal: React.FC = () => {
         </div>
 
         <div className="p-4 space-y-2">
+          {/* Professional Prototype Notice Banner */}
+          {prototypeNotice && (
+            <div className="p-3 bg-amber-50 border border-amber-300 text-amber-900 rounded-xl text-xs font-semibold flex items-center justify-between animate-in fade-in duration-150 mb-2 shadow-xs">
+              <div className="flex items-center gap-2">
+                <Info className="w-4 h-4 text-[#E65100] shrink-0" />
+                <span>{prototypeNotice}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setPrototypeNotice(null)}
+                className="text-amber-800 hover:text-amber-950 p-1 rounded-md hover:bg-amber-100 transition-colors"
+                aria-label="Dismiss notice"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+
+          {/* Option 1: Home */}
           <button
             onClick={() => {
               setCurrentPage(1);
-              setIsMenuModalOpen(false);
+              handleClose();
             }}
-            className="w-full flex items-center justify-between p-3.5 rounded-xl hover:bg-amber-50 text-left border border-transparent hover:border-amber-200 text-gov-navy font-semibold text-sm transition-all group"
+            className="w-full flex items-center justify-between p-3.5 rounded-xl hover:bg-amber-50 text-left border border-transparent hover:border-amber-200 text-gov-navy font-semibold text-sm transition-all group cursor-pointer"
           >
             <div className="flex items-center gap-3">
               <div className="p-2 bg-amber-100/80 rounded-lg text-gov-saffron group-hover:bg-gov-saffron group-hover:text-white transition-colors">
@@ -41,12 +66,12 @@ export const MenuModal: React.FC = () => {
             <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-gov-saffron transition-colors" />
           </button>
 
+          {/* Option 2: About Portal (Prototype Notice) */}
           <button
             onClick={() => {
-              setIsMenuModalOpen(false);
-              alert("National Cybercrime Coordination Centre (I4C) under Ministry of Home Affairs, Govt of India.");
+              setPrototypeNotice("This feature is available in the full portal.");
             }}
-            className="w-full flex items-center justify-between p-3.5 rounded-xl hover:bg-amber-50 text-left border border-transparent hover:border-amber-200 text-gov-navy font-semibold text-sm transition-all group"
+            className="w-full flex items-center justify-between p-3.5 rounded-xl hover:bg-amber-50 text-left border border-transparent hover:border-amber-200 text-gov-navy font-semibold text-sm transition-all group cursor-pointer"
           >
             <div className="flex items-center gap-3">
               <div className="p-2 bg-amber-100/80 rounded-lg text-gov-saffron group-hover:bg-gov-saffron group-hover:text-white transition-colors">
@@ -57,9 +82,10 @@ export const MenuModal: React.FC = () => {
             <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-gov-saffron transition-colors" />
           </button>
 
+          {/* Option 3: Emergency Helplines */}
           <a
             href="tel:1930"
-            className="w-full flex items-center justify-between p-3.5 rounded-xl hover:bg-amber-50 text-left border border-transparent hover:border-amber-200 text-gov-navy font-semibold text-sm transition-all group"
+            className="w-full flex items-center justify-between p-3.5 rounded-xl hover:bg-amber-50 text-left border border-transparent hover:border-amber-200 text-gov-navy font-semibold text-sm transition-all group cursor-pointer"
           >
             <div className="flex items-center gap-3">
               <div className="p-2 bg-amber-100/80 rounded-lg text-gov-saffron group-hover:bg-gov-saffron group-hover:text-white transition-colors">
@@ -70,12 +96,12 @@ export const MenuModal: React.FC = () => {
             <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-gov-saffron transition-colors" />
           </a>
 
+          {/* Option 4: FAQ & Guidance (Prototype Notice) */}
           <button
             onClick={() => {
-              setIsMenuModalOpen(false);
-              alert("FAQ & Citizen Guidance section is part of the NCRP UX Prototype.");
+              setPrototypeNotice("This feature is not included in this prototype.");
             }}
-            className="w-full flex items-center justify-between p-3.5 rounded-xl hover:bg-amber-50 text-left border border-transparent hover:border-amber-200 text-gov-navy font-semibold text-sm transition-all group"
+            className="w-full flex items-center justify-between p-3.5 rounded-xl hover:bg-amber-50 text-left border border-transparent hover:border-amber-200 text-gov-navy font-semibold text-sm transition-all group cursor-pointer"
           >
             <div className="flex items-center gap-3">
               <div className="p-2 bg-amber-100/80 rounded-lg text-gov-saffron group-hover:bg-gov-saffron group-hover:text-white transition-colors">
@@ -89,8 +115,8 @@ export const MenuModal: React.FC = () => {
 
         <div className="bg-gray-50 border-t border-gray-100 p-4 text-center">
           <button
-            onClick={() => setIsMenuModalOpen(false)}
-            className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 rounded-lg text-xs transition-colors"
+            onClick={handleClose}
+            className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 rounded-lg text-xs transition-colors cursor-pointer"
           >
             {t.closeBtn}
           </button>
