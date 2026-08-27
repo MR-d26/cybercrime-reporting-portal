@@ -66,6 +66,8 @@ function serverApiPlugin(): Plugin {
             if (includeLang && langCode) {
               formData.append('language_code', langCode);
             }
+            formData.append('with_translation', 'false');
+            formData.append('with_script_conversion', 'false');
             return formData;
           };
 
@@ -183,6 +185,9 @@ Your job is to analyze the citizen's description of what happened (which may be 
 YOU ARE NOT A LEGAL AUTHORITY.
 DO NOT assign priority, urgency, critical score, severity score, risk probability, fraud score, or legal validity.
 Suggestions must be presented strictly as guidance.
+
+LANGUAGE PRESERVATION RULE:
+You MUST preserve the citizen's original language in 'whatHappened'. If the citizen wrote/spoke in Hindi (e.g. "मैंने OTP डाला"), 'whatHappened' MUST be kept in Hindi or the citizen's original language script. Do NOT translate the user's story or summary into English.
 
 CATEGORY SELECTION RULE:
 The suggestedCategory MUST be EXACTLY ONE of the following 5 allowed application categories:
