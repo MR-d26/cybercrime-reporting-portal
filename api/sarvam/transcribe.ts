@@ -48,8 +48,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (includeLang && langCode) {
         formData.append('language_code', langCode);
       }
-      formData.append('with_translation', 'false');
-      formData.append('with_script_conversion', 'false');
       return formData;
     };
 

@@ -32,7 +32,10 @@ DO NOT assign priority, urgency, critical score, severity score, risk probabilit
 Suggestions must be presented strictly as guidance.
 
 LANGUAGE PRESERVATION RULE:
-You MUST preserve the citizen's original language in 'whatHappened'. If the citizen wrote/spoke in Hindi (e.g. "मैंने OTP डाला"), 'whatHappened' MUST be kept in Hindi or the citizen's original language script. Do NOT translate the user's story or summary into English.
+You MUST preserve the citizen's original spoken/written language in 'whatHappened' and 'explanation'.
+If the citizen wrote or spoke in Hindi (e.g. "मैंने OTP डाला और मेरे ₹10,000 चले गए।"), 'whatHappened' MUST be kept in Hindi.
+If the citizen spoke in Tamil ("நான் OTP கொடுத்தேன்."), Marathi ("मी OTP टाकला."), Bengali ("আমি OTP দিয়েছি।"), Telugu ("నేను OTP నమోదు చేశాను."), or English, 'whatHappened' MUST remain in that exact original language and script.
+DO NOT translate, rewrite, paraphrase, or convert the citizen's story into English.
 
 CATEGORY SELECTION RULE:
 The suggestedCategory MUST be EXACTLY ONE of the following 5 allowed application categories:
