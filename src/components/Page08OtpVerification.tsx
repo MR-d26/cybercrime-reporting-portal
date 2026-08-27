@@ -10,7 +10,8 @@ import {
   RefreshCw,
   ArrowLeft,
   ArrowRight,
-  Info
+  Info,
+  Sparkles
 } from 'lucide-react';
 
 export const Page08OtpVerification: React.FC = () => {
@@ -35,6 +36,24 @@ export const Page08OtpVerification: React.FC = () => {
     }, 1000);
     return () => clearInterval(timer);
   }, [cooldown]);
+
+  const validateOtp = (otp: string) => {
+    if (verifyMockOtp(otp)) {
+      setOtpVerified(true);
+      setErrorMessage(null);
+      saveDraft({ otpVerified: true });
+    } else {
+      setOtpVerified(false);
+      setErrorMessage(t.otpErrorText);
+    }
+  };
+
+  const handleFillDemoOtp = () => {
+    const demoDigits = ['1', '2', '3', '4', '5', '6'];
+    setDigits(demoDigits);
+    setErrorMessage(null);
+    validateOtp('123456');
+  };
 
   // Handle individual digit change
   const handleChange = (index: number, value: string) => {
@@ -88,17 +107,6 @@ export const Page08OtpVerification: React.FC = () => {
       validateOtp(pastedData);
     } else {
       inputRefs.current[pastedData.length]?.focus();
-    }
-  };
-
-  const validateOtp = (otp: string) => {
-    if (verifyMockOtp(otp)) {
-      setOtpVerified(true);
-      setErrorMessage(null);
-      saveDraft({ otpVerified: true });
-    } else {
-      setOtpVerified(false);
-      setErrorMessage(t.otpErrorText);
     }
   };
 
@@ -160,12 +168,21 @@ export const Page08OtpVerification: React.FC = () => {
                 <span>{t.maskedNumberNotice}</span>
               </div>
 
-              {/* DEMO MODE HINT BADGE */}
-              <div>
-                <span className="inline-flex items-center gap-1.5 bg-amber-100/80 border border-amber-300 text-amber-900 px-3 py-1 rounded-full text-xs font-bold">
-                  <Info className="w-3.5 h-3.5 text-amber-700 shrink-0" />
-                  <span>{t.demoModeBadge}</span>
+              {/* DEMO MODE HINT BADGE & AUTO-FILL BUTTON */}
+              <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+                <span className="inline-flex items-center gap-1.5 bg-amber-100/90 border border-amber-300 text-amber-950 px-3.5 py-1.5 rounded-xl text-xs font-extrabold shadow-xs">
+                  <Info className="w-4 h-4 text-amber-700 shrink-0" />
+                  <span>Demo mode — use OTP 123456</span>
                 </span>
+
+                <button
+                  type="button"
+                  onClick={handleFillDemoOtp}
+                  className="inline-flex items-center gap-1.5 bg-[#0F2540] hover:bg-[#1A365D] text-white text-xs font-bold px-3.5 py-1.5 rounded-xl shadow-xs transition-all cursor-pointer active:scale-95"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Use demo OTP</span>
+                </button>
               </div>
             </div>
 
